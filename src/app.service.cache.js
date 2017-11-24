@@ -1,19 +1,17 @@
-'use strict'
-
-import Config from './app.config.js'
-import request from 'axios'
-import localforage from 'localforage'
+import Config from "./app.config.js";
+import request from "axios";
+import localforage from "localforage";
 
 const cacheService = {
-  store: '',
-  storeCacheTime: '',
-  currentTime: '',
+  store: "",
+  storeCacheTime: "",
+  currentTime: "",
   isBrowser: false,
   networkRequest: (path, cacheTime, resolve, reject) => {
     cacheService
       .networkFirstStrategy(path, cacheTime)
       .then(response => resolve(response))
-      .catch(err => reject(err))
+      .catch(err => reject(err));
   },
   networkFirstStrategy: (path, cacheTime) => {
     return new Promise((resolve, reject) => {
@@ -23,49 +21,49 @@ const cacheService = {
           // Response returned, cache it and return it
           if (response.status === 200) {
             if (!cacheService.isBrowser) {
-              resolve(response)
-              return
+              resolve(response);
+              return;
             }
             cacheService.storeCacheTime.setItem(
               path,
               cacheService.currentTime + cacheTime
-            )
+            );
             cacheService.store
               .setItem(path, {
                 data: response.data,
                 headers: response.headers
               })
               .then(response => resolve(response))
-              .catch(err => reject(err))
+              .catch(err => reject(err));
 
-            return
+            return;
           }
 
           if (!cacheService.isBrowser) {
-            reject(new Error('Cannot get ' + path))
-            return
+            reject(new Error("Cannot get " + path));
+            return;
           }
 
           cacheService.store
             .getItem(path)
             .then(response => resolve(response))
-            .catch(err => reject(err))
+            .catch(err => reject(err));
         })
         .catch(error => {
-          console.log(error)
-        })
-    })
+          console.log(error);
+        });
+    });
   },
   offlineFirstStrategy: (path, cacheTime) => {
     return new Promise((resolve, reject) => {
       cacheService.storeCacheTime
         .getItem(path)
-        .then(function (timeLastCached) {
+        .then(function(timeLastCached) {
           // Cache has expired
           if (timeLastCached < cacheService.currentTime) {
-            cacheService.networkRequest(path, cacheTime, resolve, reject)
+            cacheService.networkRequest(path, cacheTime, resolve, reject);
 
-            return
+            return;
           }
 
           cacheService.store
@@ -73,60 +71,60 @@ const cacheService = {
             .then(response => {
               if (response) {
                 // Is in cache perfect!
-                resolve(response)
+                resolve(response);
               } else {
                 // Doesn't exist in cache try network
-                cacheService.networkRequest(path, cacheTime, resolve, reject)
+                cacheService.networkRequest(path, cacheTime, resolve, reject);
               }
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               // Doesn't exist in cache try network
-              cacheService.networkRequest(path, cacheTime, resolve, reject)
-            })
+              cacheService.networkRequest(path, cacheTime, resolve, reject);
+            });
         })
         .catch(error => {
-          console.log(error)
+          console.log(error);
           // Doesn't exist in cache timeouts try network
-          cacheService.networkRequest(path, cacheTime, resolve, reject)
-        })
-    })
+          cacheService.networkRequest(path, cacheTime, resolve, reject);
+        });
+    });
   },
-  get: function (path, cacheTime) {
+  get: function(path, cacheTime) {
     // path = Config.wpDomain + path
 
     return new Promise((resolve, reject) => {
-      cacheService.currentTime = Math.floor(Date.now() / 1000)
-      cacheService.isBrowser = typeof window !== 'undefined'
+      cacheService.currentTime = Math.floor(Date.now() / 1000);
+      cacheService.isBrowser = typeof window !== "undefined";
 
       if (cacheService.isBrowser) {
         cacheService.store = localforage.createInstance({
           name: Config.loadDbName
-        })
+        });
         cacheService.storeCacheTime = localforage.createInstance({
-          name: Config.loadDbName + '_cacheTime'
-        })
+          name: Config.loadDbName + "_cacheTime"
+        });
       }
 
       if (!cacheTime || cacheTime === 0) {
         cacheService
           .networkFirstStrategy(path, 0)
           .then(response => {
-            resolve(response || '')
+            resolve(response || "");
           })
           .catch(err => {
-            reject(err)
-          })
+            reject(err);
+          });
       } else {
         cacheService
           .offlineFirstStrategy(path, cacheTime)
           .then(response => {
-            resolve(response || '')
+            resolve(response || "");
           })
-          .catch(err => reject(err))
+          .catch(err => reject(err));
       }
-    })
+    });
   }
-}
+};
 
-export default cacheService
+export default cacheService;

@@ -9,7 +9,7 @@
         </div>
         <div class="has-text-right is-pulled-right">
           Follow us on
-          <a href="https://twitter.com/dotnetweekly" target="_blank">dotNET Weekly</a>
+          <a href="https://twitter.com/dotnetweekly" target="_blank">Twitter</a>
         </div>
       </div>
     </div>

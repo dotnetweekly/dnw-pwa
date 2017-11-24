@@ -101,6 +101,7 @@ app.get("*", (req, res) => {
   const context = { url: req.url };
   renderer.renderToString(context, (err, html) => {
     if (err) {
+      console.log(err);
       return res.status(500).send("Server Error");
     }
     html = indexHTML.replace('<div id="app"></div>', html);

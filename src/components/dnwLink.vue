@@ -3,9 +3,9 @@
     <div class="columns card-padding constant-flex">
       <dnw-upvote class="column upvote-column">1</dnw-upvote>
       <div class="column link-content">
-        <a target="_blank" :href="link.url">{{ link.title }}</a>
+        <router-link :to="`${link.category.slug}/${link.slug}`">{{ link.title }}</router-link>
         <p class="link-subline">
-          by <a>{{ link.user.username }}</a>, 
+          by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, 
           <time :datetime="link.createdOn">{{ link.createdOn }}</time>
         </p>
         <p class="link-tags">

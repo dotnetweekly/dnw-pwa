@@ -3,6 +3,11 @@ import AppLayout from "./theme/Layout.vue";
 import store from "./store";
 import router from "./router";
 
+import axios from "axios";
+import config from "./app.config";
+
+axios.defaults.baseURL = config.apiDomain;
+
 if (typeof window !== "undefined") {
   window.IntersectionObserver = require("intersection-observer-polyfill/dist/IntersectionObserver.global");
 }

@@ -2,7 +2,7 @@
 <div class="columns">
   <dnw-menu></dnw-menu>
   <div class="column">
-    <dnw-link v-for="post in posts" v-bind:key="post._id" :link="post"></dnw-link>
+    <dnw-link v-for="link in links" v-bind:key="link._id" :link="links"></dnw-link>
   </div>
 </div>
 </template>
@@ -10,60 +10,38 @@
 import dnwLink from "../components/dnwLink";
 import dnwMenu from "../components/dnwMenu";
 
+import { mapGetters } from "vuex";
+
+const fetchInitialData = (store, route) => {
+  route.params.page = route.params.page || 1;
+  route.params.id = route.params.id || "";
+  return store.dispatch(`linksModule/getLinks`, {
+    categoryId: route.params.id,
+    page: route.params.page
+  });
+};
+
 export default {
   components: {
     "dnw-link": dnwLink,
     "dnw-menu": dnwMenu
   },
-  data() {
-    return {
-      posts: [
-        {
-          _id: "5a0fc657b3271d172760b822",
-          title:
-            "CI/CD with .NET Core 2.0, VS Code, GitHub, Azure, and Docker (mikewilliams.io)",
-          tags: [
-            { _id: "5a1256b82ef3181cec1fe628", name: "dotnet" },
-            { _id: "5a1276402e3a2e34e298e122", name: "azure" }
-          ],
-          url: "http://querystorm.com/documentation.html",
-          createdOn: "2017-11-18T05:34:15.476Z",
-          user: {
-            username: "bstavroulakis"
-          }
-        },
-
-        {
-          _id: "5a0fc657b3271d172760b822",
-          title:
-            "CI/CD with .NET Core 2.0, VS Code, GitHub, Azure, and Docker (mikewilliams.io)",
-          tags: [
-            { _id: "5a1256b82ef3181cec1fe628", name: "dotnet" },
-            { _id: "5a1276402e3a2e34e298e122", name: "azure" }
-          ],
-          url: "http://querystorm.com/documentation.html",
-          createdOn: "2017-11-18T05:34:15.476Z",
-          user: {
-            username: "bstavroulakis"
-          }
-        },
-
-        {
-          _id: "5a0fc657b3271d172760b822",
-          title:
-            "CI/CD with .NET Core 2.0, VS Code, GitHub, Azure, and Docker (mikewilliams.io)",
-          tags: [
-            { _id: "5a1256b82ef3181cec1fe628", name: "dotnet" },
-            { _id: "5a1276402e3a2e34e298e122", name: "azure" }
-          ],
-          url: "http://querystorm.com/documentation.html",
-          createdOn: "2017-11-18T05:34:15.476Z",
-          user: {
-            username: "bstavroulakis"
-          }
-        }
-      ]
-    };
+  computed: {
+    ...mapGetters("linksModule", ["links"])
+  },
+  methods: {
+    loadLinks() {
+      fetchInitialData(this.$store, this.$route);
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.loadLinks();
+    }
+  },
+  prefetch: fetchInitialData,
+  created() {
+    this.loadLinks();
   }
 };
 </script>
