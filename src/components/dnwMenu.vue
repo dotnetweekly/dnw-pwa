@@ -3,7 +3,7 @@
     <router-link to="/">All</router-link>
     <router-link to="/articles">Articles</router-link>
     <router-link to="/books">Books</router-link>
-    <router-link to="/events-seminars">Events/ Seminars</router-link>
+    <router-link to="/events-training">Events/ Training</router-link>
     <router-link to="/libraries-tools">Libraries/ Tools</router-link>
     <router-link to="/videos">Videos</router-link>
   </div>

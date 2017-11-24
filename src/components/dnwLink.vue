@@ -1,6 +1,6 @@
 <template>
-  <div class="card card-content content">
-    <div class="columns constant-flex">
+  <div class="card card-padding content">
+    <div class="columns card-padding constant-flex">
       <dnw-upvote class="column upvote-column">1</dnw-upvote>
       <div class="column link-content">
         <a target="_blank" :href="link.url">{{ link.title }}</a>
@@ -9,7 +9,9 @@
           <time :datetime="link.createdOn">{{ link.createdOn }}</time>
         </p>
         <p class="link-tags">
-          <a v-for="tag in link.tags" v-bind:key="tag._id" class="tag is-light">{{ tag.name }}</a>
+          <router-link v-for="tag in link.tags" v-bind:key="tag._id" 
+            :to="'/tags/' + tag.name"
+            class="tag is-light">{{ tag.name }}</router-link>
         </p>
       </div>
     </div>
@@ -26,7 +28,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../_variables";
-
+.card-padding {
+  padding: 1rem 1rem 0.5rem 1rem;
+  margin-bottom: 0;
+}
 .link-content {
   padding: 0 0 0 $is-size-4;
 }

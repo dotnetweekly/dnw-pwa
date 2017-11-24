@@ -21,7 +21,8 @@ export default {
   background-color: $background;
   box-shadow: $body-border;
   width: 60px;
-  height: 80px;
+  height: 60px;
   flex: none;
+  padding: 0;
 }
 </style>
