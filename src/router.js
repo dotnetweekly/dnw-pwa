@@ -1,8 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import OfflineRedirect from "./theme/OfflineRedirect.vue";
-
-const Category = () => System.import("./page/Category.vue");
+import Category from "./page/Category.vue";
 
 Vue.use(VueRouter);
 

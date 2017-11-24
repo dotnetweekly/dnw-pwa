@@ -27,8 +27,21 @@ export default {
 @import "~bulma";
 @import "../assets/fontello/css/fontello.css";
 
+body {
+  font-size: $font-size;
+}
+
+.constant-flex {
+  display: flex !important;
+}
+
+.tight {
+  padding: 0;
+  margin: 0;
+}
+
 .main-section.section {
-  background-color: #fafafa;
+  background-color: $background;
 }
 
 footer.footer {
