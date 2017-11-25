@@ -2,15 +2,14 @@
 <div class="columns">
   <dnw-menu></dnw-menu>
   <div class="column">
-    <dnw-link v-for="link in links" v-bind:key="link._id" :link="links"></dnw-link>
+    <dnw-link v-for="link in links" v-bind:key="link._id" :link="link"></dnw-link>
   </div>
 </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import dnwLink from "../components/dnwLink";
 import dnwMenu from "../components/dnwMenu";
-
-import { mapGetters } from "vuex";
 
 const fetchInitialData = (store, route) => {
   route.params.page = route.params.page || 1;

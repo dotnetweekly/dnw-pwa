@@ -19,7 +19,7 @@
 @import "../_variables";
 
 .footer {
-  padding: $is-size-4 $is-size-6;
+  padding: $is-size-6;
 }
 .footer-menu a {
   padding-right: $is-size-4;

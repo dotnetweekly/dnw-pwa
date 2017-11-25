@@ -7,7 +7,7 @@ const linksService = {
       appCache
         .get(path, cacheTime)
         .then(response => {
-          resolve(response);
+          resolve(response.data);
         })
         .catch(err => {
           reject(err);
@@ -16,10 +16,9 @@ const linksService = {
   },
   getLinks(categoryId, page, order = "desc") {
     return new Promise((resolve, reject) => {
-      let path =
-        Config.apiDomain +
-        `links?category=${categoryId}&page=${page}&order=${order}`;
-      this.cacheRequest(path, 0)
+      let path = `links?category=${categoryId}&page=${page}&order=${order}`;
+      linksService
+        .cacheRequest(path, 0)
         .then(response => {
           const totalPages = response.data.totalPages || 0;
           const responseData = {

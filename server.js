@@ -13,7 +13,7 @@ const serialize = require("serialize-javascript");
 const createBundleRenderer = require("vue-server-renderer")
   .createBundleRenderer;
 
-var allowCrossDomain = function(req, res, next) {
+const allowCrossDomain = function(req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type");
 
@@ -27,7 +27,7 @@ function shouldCompress(req, res) {
   return true;
 }
 
-var cacheControl = function(req, res, next) {
+const cacheControl = function(req, res, next) {
   if (isProd) {
     res.header("Cache-Control", "public, max-age=86400, no-cache");
   } else {
@@ -36,7 +36,7 @@ var cacheControl = function(req, res, next) {
   next();
 };
 
-var strictTransportSecurity = function(req, res, next) {
+const strictTransportSecurity = function(req, res, next) {
   res.header(
     "Strict-Transport-Security",
     "max-age=31536000; includeSubDomains; preload"

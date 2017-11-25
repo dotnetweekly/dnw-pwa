@@ -5,7 +5,7 @@
       <div class="column link-content">
         <router-link :to="`${link.category.slug}/${link.slug}`">{{ link.title }}</router-link>
         <p class="link-subline">
-          by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, 
+          <span v-if="link.user">by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, </span>
           <time :datetime="link.createdOn">{{ link.createdOn }}</time>
         </p>
         <p class="link-tags">

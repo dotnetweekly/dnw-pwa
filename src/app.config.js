@@ -1,5 +1,3 @@
-"use strict";
-
 const Config = {
   appTitle: "dotNET Weekly",
   appTitleShort: "DNW",
@@ -8,7 +6,7 @@ const Config = {
   appBgColor: "#ffffff",
   appIcon: "assets/app-icon.png",
   apiDomain: "http://localhost:3000/api/v1/",
-  client: "http://localhost:4000/",
+  client: "http://localhost:5000/",
   loadDbName: "dnwLocal",
   analyticsPath: "//www.google-analytics.com/analytics.js"
 };
