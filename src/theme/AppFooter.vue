@@ -11,6 +11,7 @@
           Follow us on
           <a href="https://twitter.com/dotnetweekly" target="_blank">Twitter</a>
         </div>
+        <div class="is-clearfix"></div>
       </div>
     </div>
   </footer>
@@ -19,7 +20,7 @@
 @import "../_variables";
 
 .footer {
-  padding: $is-size-6;
+  padding: $is-size-4 $is-size-6;
 }
 .footer-menu a {
   padding-right: $is-size-4;

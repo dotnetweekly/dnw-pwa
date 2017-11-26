@@ -36,21 +36,18 @@ const cacheService = {
               .then(response => resolve(response))
               .catch(err => reject(err));
 
+            cacheService.store
+              .getItem(path)
+              .then(response => resolve(response))
+              .catch(err => reject(err));
+          } else {
+            reject(response);
+
             return;
           }
-
-          if (!cacheService.isBrowser) {
-            reject(new Error("Cannot get " + path));
-            return;
-          }
-
-          cacheService.store
-            .getItem(path)
-            .then(response => resolve(response))
-            .catch(err => reject(err));
         })
         .catch(error => {
-          console.log(error);
+          reject(error);
         });
     });
   },
@@ -113,6 +110,9 @@ const cacheService = {
             resolve(response || "");
           })
           .catch(err => {
+            if (err.response.status === 401 && cacheService.isBrowser) {
+              window.location = "/login";
+            }
             reject(err);
           });
       } else {

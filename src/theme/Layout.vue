@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <router-view name="modal"></router-view>
     <app-header></app-header>
     <section class="main-section section">
       <div class="container content">
@@ -27,29 +28,6 @@ export default {
 @import "~bulma";
 @import "../assets/fontello/css/fontello.css";
 
-body {
-  font-size: $font-size;
-}
-
-.constant-flex {
-  display: flex !important;
-}
-
-.tight {
-  padding: 0;
-  margin: 0;
-}
-
-.main-section.section {
-  background-color: $background;
-}
-
-footer.footer {
-  background-color: $white;
-  box-shadow: 0px -1px 2px 0px rgba(10, 10, 10, 0.1);
-}
-
-.columns {
-  flex-wrap: wrap;
-}
+@import "../styles/_main";
+@import "../styles/_modals";
 </style>

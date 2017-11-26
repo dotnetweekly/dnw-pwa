@@ -12,7 +12,6 @@ const actions = {
           }
           state.links = response.links;
           state.totalPages = response.totalPages;
-          console.log(state);
           resolve();
         })
         .catch(error => {

@@ -6,10 +6,12 @@
       </router-link>
       <div class="column tight"></div>
       <div class="header-cta">
-        <router-link to="/add" class="is-text">+ Add a link</router-link>
+        <router-link v-if="isAuthenticated" to="/add" class="is-text">+ Add a link</router-link>
+        <router-link v-if="!isAuthenticated" to="/login" class="is-text">+ Add a link</router-link>
       </div>
       <div class="header-profile">
-        <router-link to="/profile"><i class="icon-user" aria-hidden="true"></i></router-link>
+        <router-link v-if="isAuthenticated" to="/profile"><i class="icon-user" aria-hidden="true"></i></router-link>
+        <router-link v-if="!isAuthenticated" to="/login"><i class="icon-user" aria-hidden="true"></i></router-link>
       </div>
     </div>
   </nav>

@@ -8,6 +8,29 @@ import config from "./app.config";
 
 axios.defaults.baseURL = config.apiDomain;
 
+axios.interceptors.request.use(function(config) {
+  if (typeof window === "undefined") {
+    return config;
+  }
+  const token = window.localStorage.getItem("dnwToken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+axios.interceptors.response.use(undefined, err => {
+  let res = err.response;
+  if (res.status === 401 || (res.body && !res.body.success)) {
+    return Promise.reject(error);
+  }
+});
+
+router.afterEach((to, from) => {
+  store.dispatch(`authModule/setLatestPath`, from.path);
+});
+
 if (typeof window !== "undefined") {
   window.IntersectionObserver = require("intersection-observer-polyfill/dist/IntersectionObserver.global");
 }

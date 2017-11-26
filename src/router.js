@@ -6,6 +6,8 @@ import NotFound from "./page/NotFound.vue";
 
 import Login from "./page/Login.vue";
 import Register from "./page/Register.vue";
+import AddLink from "./page/AddLink.vue";
+import User from "./page/User.vue";
 
 Vue.use(VueRouter);
 
@@ -15,8 +17,10 @@ const router = new VueRouter({
   base: __dirname,
   scrollBehavior: () => ({ y: 0 }),
   routes: [
-    { path: "/login", component: Login },
+    { path: "/login", components: { modal: Login } },
     { path: "/register", component: Register },
+    { path: "/add", component: AddLink },
+    { path: "/profile", component: User },
     { path: "/offline-redirect", component: OfflineRedirect },
     { path: "/", component: Category },
     { path: "*", component: NotFound }
