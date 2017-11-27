@@ -1,28 +1,18 @@
 import Config from "../app.config.js";
 import appCache from "../app.service.cache.js";
+import axios from "axios";
 
 const userService = {
-  cacheRequest(path, cacheTime) {
-    return new Promise((resolve, reject) => {
-      appCache
-        .get(path, cacheTime)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-  },
   getProfile() {
     return new Promise((resolve, reject) => {
-      let path = `user/profile`;
-      userService
-        .cacheRequest(path, 0)
+      const path = `/user/profile`;
+      appCache.get(path, 0)
         .then(response => {
-          resolve(response.data);
+          resolve(response.data.data);
         })
-        .catch(error => reject(error));
+        .catch(error => {
+          reject(error)
+        });
     });
   }
 };

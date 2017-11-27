@@ -8,7 +8,7 @@ import config from "./app.config";
 
 axios.defaults.baseURL = config.apiDomain;
 
-axios.interceptors.request.use(function(config) {
+axios.interceptors.request.use(function (config) {
   if (typeof window === "undefined") {
     return config;
   }
@@ -22,7 +22,7 @@ axios.interceptors.request.use(function(config) {
 
 axios.interceptors.response.use(undefined, err => {
   let res = err.response;
-  if (res.status === 401 || (res.body && !res.body.success)) {
+  if (res && res.status && res.status === 401 || (res && res.body && !res.body.success)) {
     return Promise.reject(error);
   }
 });

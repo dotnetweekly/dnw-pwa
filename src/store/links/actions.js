@@ -14,9 +14,7 @@ const actions = {
           state.totalPages = response.totalPages;
           resolve();
         })
-        .catch(error => {
-          reject(new Error(error));
-        });
+        .catch(error => reject(error));
     });
   }
 };

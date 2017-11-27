@@ -1,6 +1,5 @@
 import actions from "./actions";
 import * as getters from "./getters";
-import * as mutations from "./mutations";
 import defaultState from "./defaultState";
 
 const inBrowser = typeof window !== "undefined";
@@ -13,6 +12,5 @@ export default {
   namespaced: true,
   state,
   actions,
-  mutations,
   getters
 };

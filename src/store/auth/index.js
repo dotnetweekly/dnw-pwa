@@ -10,12 +10,11 @@ const state =
     : defaultState;
 
 if (typeof window !== "undefined") {
-  document.addEventListener("DOMContentLoaded", function(event) {
+  document.addEventListener("DOMContentLoaded", function (event) {
     let expiration = window.localStorage.getItem("dnwTokenExpiration");
     var unixTimestamp = new Date().getTime() / 1000;
     if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
       state.isAuthenticated = true;
-      console.log("OOk");
     }
   });
 }

@@ -13,38 +13,39 @@ const cacheService = {
       .then(response => resolve(response))
       .catch(err => reject(err));
   },
+  cacheResponse: (path, cacheTime, response, resolve, reject) => {
+    cacheService.storeCacheTime
+      .setItem(path,
+      cacheService.currentTime + cacheTime
+      );
+
+    cacheService.store
+      .setItem(path, {
+        data: response.data,
+        headers: response.headers
+      });
+
+    cacheService.store
+      .getItem(path)
+      .then(response => resolve(response))
+      .catch(err => reject(err));
+  },
   networkFirstStrategy: (path, cacheTime) => {
     return new Promise((resolve, reject) => {
       request
         .get(path)
         .then(response => {
           // Response returned, cache it and return it
-          if (response.status === 200) {
-            if (!cacheService.isBrowser) {
-              resolve(response);
-              return;
+          if (response && response.status && response.status === 200) {
+            if (cacheService.isBrowser) {
+              cacheService.cacheResponse(path, cacheTime, response, resolve, reject);
             }
-            cacheService.storeCacheTime.setItem(
-              path,
-              cacheService.currentTime + cacheTime
-            );
-            cacheService.store
-              .setItem(path, {
-                data: response.data,
-                headers: response.headers
-              })
-              .then(response => resolve(response))
-              .catch(err => reject(err));
-
-            cacheService.store
-              .getItem(path)
-              .then(response => resolve(response))
-              .catch(err => reject(err));
-          } else {
-            reject(response);
-
+            resolve(response);
             return;
           }
+
+          reject(response);
+          return;
         })
         .catch(error => {
           reject(error);
@@ -55,7 +56,7 @@ const cacheService = {
     return new Promise((resolve, reject) => {
       cacheService.storeCacheTime
         .getItem(path)
-        .then(function(timeLastCached) {
+        .then(function (timeLastCached) {
           // Cache has expired
           if (timeLastCached < cacheService.currentTime) {
             cacheService.networkRequest(path, cacheTime, resolve, reject);
@@ -72,22 +73,28 @@ const cacheService = {
               } else {
                 // Doesn't exist in cache try network
                 cacheService.networkRequest(path, cacheTime, resolve, reject);
+
+                return;
               }
             })
             .catch(error => {
               console.log(error);
               // Doesn't exist in cache try network
               cacheService.networkRequest(path, cacheTime, resolve, reject);
+
+              return;
             });
         })
         .catch(error => {
           console.log(error);
           // Doesn't exist in cache timeouts try network
           cacheService.networkRequest(path, cacheTime, resolve, reject);
+
+          return;
         });
     });
   },
-  get: function(path, cacheTime) {
+  get: function (path, cacheTime) {
     // path = Config.wpDomain + path
 
     return new Promise((resolve, reject) => {
@@ -103,14 +110,14 @@ const cacheService = {
         });
       }
 
-      if (!cacheTime || cacheTime === 0) {
+      if (!cacheService.isBrowser || !cacheTime || cacheTime === 0) {
         cacheService
           .networkFirstStrategy(path, 0)
           .then(response => {
             resolve(response || "");
           })
           .catch(err => {
-            if (err.response.status === 401 && cacheService.isBrowser) {
+            if (cacheService.isBrowse && err.response.status === 401) {
               window.location = "/login";
             }
             reject(err);

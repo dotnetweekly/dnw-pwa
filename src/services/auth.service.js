@@ -9,7 +9,7 @@ const service = {
           resolve(response.data);
         })
         .catch(response => {
-          reject(response.status);
+          reject(response);
         });
     });
   }

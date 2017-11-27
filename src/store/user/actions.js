@@ -7,13 +7,10 @@ const actions = {
       userService
         .getProfile()
         .then(response => {
-          console.log(response);
-          state.user = response;
+          state.profile = response;
           resolve();
         })
-        .catch(error => {
-          reject(error);
-        });
+        .catch(error => reject(error));
     });
   }
 };
