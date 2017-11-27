@@ -1,8 +1,8 @@
 const mutations = {
   logout(state) {
     if (typeof window !== "undefined") {
-      window.localStorage.setItem("dnwToken", null);
-      window.localStorage.setItem("dnwTokenExpiration", null);
+      window.localStorage.removeItem("dnwToken");
+      window.localStorage.removeItem("dnwTokenExpiration");
     }
     state.isAuthenticated = false;
   },

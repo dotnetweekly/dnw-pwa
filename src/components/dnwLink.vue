@@ -1,7 +1,7 @@
 <template>
   <div class="card card-padding content">
     <div class="columns card-padding constant-flex">
-      <dnw-upvote class="column upvote-column">1</dnw-upvote>
+      <dnw-upvote class="column upvote-column">{{link.upvotes}}</dnw-upvote>
       <div class="column link-content">
         <router-link :to="`${link.category.slug}/${link.slug}`">{{ link.title }}</router-link>
         <p class="link-subline">
@@ -9,7 +9,7 @@
           <time :datetime="link.createdOn">{{ link.createdOn }}</time>
         </p>
         <p class="link-tags">
-          <router-link v-for="tag in link.tags" v-bind:key="tag._id" 
+          <router-link v-for="tag in link.tags" v-bind:key="tag._id"
             :to="'/tags/' + tag.name"
             class="tag is-light">{{ tag.name }}</router-link>
         </p>

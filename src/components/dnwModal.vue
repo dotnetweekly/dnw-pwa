@@ -4,7 +4,7 @@
       <div class="container content">
         <div class="columns content-header">
           <div class="column">
-            <h2>Login {{latestPath}}</h2>
+            <h2>Login</h2>
           </div>
           <div class="column modal-exit">
             <a class="button is-link is-outlined" v-on:click="closeModal">
@@ -32,7 +32,6 @@ export default {
       if (typeof window === "undefined") {
         return;
       }
-      console.log(this.latestPath, this.$route.query.redirect);
       if (this.$route.query && this.$route.query.redirect) {
         this.$router.push(this.$route.query.redirect);
 

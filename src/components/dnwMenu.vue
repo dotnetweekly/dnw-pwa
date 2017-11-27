@@ -1,6 +1,6 @@
 <template>
   <div class="column is-one-fifth main-menu tight">
-    <router-link to="/">All</router-link>
+    <router-link to="/" exact>All</router-link>
     <router-link to="/articles">Articles</router-link>
     <router-link to="/books">Books</router-link>
     <router-link to="/events-training">Events/ Training</router-link>

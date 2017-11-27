@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar has-shadow">
     <div class="container">
-      <router-link class="navbar-item main-logo" to="/" title="dotNET Weekly">
+      <router-link class="navbar-item main-logo" to="/" title="dotNET Weekly" exact>
         <img src="/assets/logo.jpg" /><span class="dnw-logo-txt">dotNET Weekly</span>
       </router-link>
       <div class="column tight"></div>

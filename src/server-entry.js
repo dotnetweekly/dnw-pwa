@@ -16,7 +16,6 @@ export default context => {
       console.log(`data pre-fetch: ${Date.now() - s}ms`);
       // set initial store on context
       // the request handler will inline the state in the HTML response.
-      console.log(store.state);
       context.initialState = store.state;
       return app;
     })
