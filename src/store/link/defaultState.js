@@ -1,6 +1,5 @@
 const defaultState = {
-  link: {},
-  comments: []
+  link: {}
 };
 
 export default defaultState;

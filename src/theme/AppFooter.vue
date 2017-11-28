@@ -4,6 +4,7 @@
       <div class="content">
         <div class="footer-menu has-text-left is-pulled-left">
           <router-link to="/newsletters">Newsletters</router-link>
+          <router-link to="/about">About</router-link>
           <router-link to="/code-of-conduct">Code of Conduct</router-link>
           <router-link to="/advertise">Advertise</router-link>
         </div>

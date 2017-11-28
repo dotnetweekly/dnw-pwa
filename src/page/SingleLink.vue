@@ -15,12 +15,12 @@
     </p>
     <p class="link-content">{{link.content}}</p>
     <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
-    <dnw-comments v-if="link._id" v-bind:link="link._id">{{link._id}}</dnw-comments>
+    <dnw-comment v-for="comment in link.comments" v-bind:comment="comment" v-bind:key="comment._id"></dnw-comment>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import DNWComments from "../components/dnwComments.vue";
+import DNWComment from "../components/dnwComment.vue";
 
 const fetchInitialData = (store, route) => {
   return store.dispatch(`linkModule/getLink`, route.params.id);
@@ -28,7 +28,7 @@ const fetchInitialData = (store, route) => {
 
 export default {
   components: {
-    "dnw-comments": DNWComments,
+    "dnw-comment": DNWComment,
   },
   computed: {
     ...mapGetters("linkModule", ["link"]),
@@ -69,52 +69,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  @import "../_variables";
-
-  .link-title-wrapper{
-    margin-bottom: 0;
-  }
-
-  .link-content, .link-more {
-    font-size: 20px;
-  }
-
-  .link-subline{
-    font-size: 80%;
-    margin-bottom: $is-size-7 !important;
-  }
-
-  .link-title{
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .link-back-button {
-    padding-right: $is-size-4;
-    width: 50px;
-    flex: none;
-  }
-
-  .link-back-button a{
-    padding-top: $is-size-7;
-    display: block;
-  }
-
-  .is-pulled-left {
-    float: left;
-  }
-
-  .link-content {
-    padding-bottom: $is-size-2;
-  }
-
-  .link-more {
-    width: 100%;
-    text-align: center;
-  }
-
-  .link-more a {
-    padding: $is-size-4;
-    font-size: 20px;
-  }
+  @import "../styles/_singleLink";
 </style>

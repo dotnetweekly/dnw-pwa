@@ -1,0 +1,49 @@
+
+@import "../_variables";
+
+.link-title-wrapper{
+  margin-bottom: 0;
+}
+
+.link-content, .link-more {
+  font-size: 20px;
+}
+
+.link-subline{
+  font-size: 80%;
+  margin-bottom: $is-size-7 !important;
+}
+
+.link-title{
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.link-back-button {
+  padding-right: $is-size-4;
+  width: 50px;
+  flex: none;
+}
+
+.link-back-button a{
+  padding-top: $is-size-7;
+  display: block;
+}
+
+.is-pulled-left {
+  float: left;
+}
+
+.link-content {
+  padding-bottom: $is-size-2;
+}
+
+.link-more {
+  width: 100%;
+  text-align: center;
+}
+
+.link-more a {
+  padding: $is-size-4;
+  font-size: 20px;
+}
