@@ -15,12 +15,12 @@
     </p>
     <p class="link-content">{{link.content}}</p>
     <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
-    <dnw-comment v-for="comment in link.comments" v-bind:comment="comment" v-bind:key="comment._id"></dnw-comment>
+    <dnw-comments v-bind:comments="link.comments"></dnw-comments>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import DNWComment from "../components/dnwComment.vue";
+import DNWComments from "../components/dnwComments.vue";
 
 const fetchInitialData = (store, route) => {
   return store.dispatch(`linkModule/getLink`, route.params.id);
@@ -28,7 +28,7 @@ const fetchInitialData = (store, route) => {
 
 export default {
   components: {
-    "dnw-comment": DNWComment,
+    "dnw-comments": DNWComments,
   },
   computed: {
     ...mapGetters("linkModule", ["link"]),

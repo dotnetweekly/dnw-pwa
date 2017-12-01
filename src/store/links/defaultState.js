@@ -1,7 +1,9 @@
 const defaultState = {
-  links: [],
-  categoryId: "",
-  page: 1
+	links: [],
+	filter: {
+		categoryId: '',
+		date: Date.now()
+	}
 };
 
 export default defaultState;
