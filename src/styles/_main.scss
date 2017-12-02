@@ -2,8 +2,20 @@ body {
   font-size: $font-size;
 }
 
+.is-full-width{
+  width: 100%;
+}
+
+.is-margin-center{
+  margin:0 auto;
+}
+
 .constant-flex {
   display: flex !important;
+}
+
+.is-pointer{
+  cursor: pointer;
 }
 
 .tight {

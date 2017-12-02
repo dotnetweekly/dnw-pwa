@@ -5,7 +5,7 @@ const actions = {
 	getLinks({ commit, state }, params) {
 		return new Promise((resolve, reject) => {
 			linksService
-				.getLinks(params.categoryId, params.page)
+				.getLinks(params)
 				.then((response) => {
 					if (state) {
 						Object.assign(state, {}, defaultState);

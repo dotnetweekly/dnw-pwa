@@ -3,9 +3,9 @@ import appCache from '../app.service.cache.js';
 import axios from 'axios';
 
 const linksService = {
-	getLinks(categoryId, page, order = 'desc') {
+	getLinks(filter) {
 		return new Promise((resolve, reject) => {
-			const path = `/links?category=${categoryId}&page=${page}&order=${order}`;
+			const path = `/links?category=${filter.category}&week=${filter.week}&year=${filter.year}`;
 			appCache
 				.get(path, 0)
 				.then((response) => {

@@ -70,8 +70,8 @@ const getCalendar = function(date) {
 	let day = dateNow.getDate();
 	let year = dateNow.getFullYear();
 	let nextDate = new Date(nextMonth + ' 1 ,' + year);
-	let weekdays = nextDate.getDay() + (isISO(nextDate) ? 0 : -1);
-	let weekdays2 = weekdays;
+	let weekdays = nextDate.getDay() - 1;
+	let weekdays2 = weekdays === -1 ? 0 : weekdays;
 	let numOfDays = dayPerMonth[month];
 	let lastDayCounted = dateNow;
 
@@ -79,23 +79,31 @@ const getCalendar = function(date) {
 	let week = [];
 	const firstDay = new Date(year, month, counter);
 
+	if (weekdays === -1) {
+		weekdays = 6;
+	}
+
 	while (weekdays > 0) {
 		firstDay.setDate(firstDay.getDate() - 1);
 		week.push({
 			date: new Date(firstDay),
-			week: getWeek(firstDay)
+			week: getWeek(firstDay),
+			inPast: true
 		});
 		weekdays--;
 	}
 
 	week.reverse();
 
+	weekdays2 = week.length;
+
 	while (counter <= numOfDays) {
 		if (weekdays2 > 6) {
 			weekdays2 = 0;
 			weeks.push({
 				days: week,
-				week: getWeek(week[0].date)
+				week: getWeek(week[0].date),
+				year: week[0].date.getFullYear()
 			});
 			week = [];
 		}
@@ -112,20 +120,24 @@ const getCalendar = function(date) {
 		counter++;
 	}
 
+	lastDayCounted.setDate(lastDayCounted.getDate() + 1);
 	let lastDay = new Date(lastDayCounted);
-	const daysRemaining = 7 - week.length;
+	const daysRemaining = 7 - week.length - 1;
 
 	for (var i = 0; i <= daysRemaining; i++) {
 		week.push({
 			date: new Date(lastDay),
-			week: getWeek(lastDay)
+			week: getWeek(lastDay),
+			inFuture: true
 		});
 		lastDay.setDate(lastDay.getDate() + 1);
 	}
 
 	weeks.push({
 		days: week,
-		week: getWeek(week[0].date)
+		week: getWeek(week[0].date),
+		year: week[0].date.getFullYear(),
+		inFuture: true
 	});
 
 	return {

@@ -1,8 +1,11 @@
 const defaultState = {
 	links: [],
 	filter: {
-		categoryId: '',
-		date: Date.now()
+		category: '',
+		date: Date.now(),
+		dateYear: '',
+		dateWeek: '',
+		calendar: {}
 	}
 };
 
