@@ -21,7 +21,7 @@ const fetchInitialData = (store, route) => {
   if(route.params.week && route.params.year){
     route.params.date = calendarHelper.getDateRangeOfWeek(route.params.week, route.params.year).from;
   }
-
+  console.log(calendarHelper.getDateRangeOfWeek(route.params.week, route.params.year));
   return store.dispatch(`linksModule/getLinks`, {
     week: route.params.week,
     year: route.params.year,

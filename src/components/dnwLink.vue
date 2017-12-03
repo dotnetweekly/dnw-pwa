@@ -3,7 +3,7 @@
     <div class="columns card-padding constant-flex">
       <dnw-upvote class="column upvote-column">{{link.upvotes}}</dnw-upvote>
       <div class="column link-content">
-        <router-link :to="`${link.category.slug}/${link.slug}`">{{ link.title }}</router-link>
+        <router-link :to="`/${link.category.slug}/${link.slug}`">{{ link.title }}</router-link>
         <p class="link-subline">
           <span v-if="link.user">by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, </span>
           <time :datetime="link.createdOn">{{ link.createdOn }}</time>

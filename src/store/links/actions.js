@@ -4,7 +4,6 @@ import * as calendarHelper from '../../helpers/calendar';
 
 const actions = {
 	getLinks({ commit, state }, params) {
-		console.log(params);
 		return new Promise((resolve, reject) => {
 			linksService
 				.getLinks(params)
@@ -22,9 +21,6 @@ const actions = {
 	},
 	setFilterCategory({ commit, state }, category) {
 		state.filter.category = category;
-	},
-	setFilterDate({ commit, state }, date) {
-		state.filter.date = date;
 	}
 };
 

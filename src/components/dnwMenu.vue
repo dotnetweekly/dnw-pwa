@@ -21,11 +21,11 @@
   import { mapGetters, mapActions } from "vuex";
   import dnwCalendar from "./dnwCalendar";
   import dnwCategoryIcon from "./dnwCategoryIcon";
-  import Vue from "vue"
+  import * as calendarHelper from "../helpers/calendar";
   export default {
     computed: {
       ...mapGetters("linksModule", ["links", "filterCategory", "filter",
-        "filterCategories", "filterDateWeek", "filterDateYear"])
+        "filterCategories", "filterDate"])
     },
     components: {
       "dnw-category-icon": dnwCategoryIcon,
@@ -36,14 +36,17 @@
         setFilterCategory: "setFilterCategory"
       }),
       updateCategory(e) {
+        const date = new Date(this.filterDate);
+        const week = calendarHelper.getWeek(date);
+        const year = date.getFullYear();
         const newCategory = e.target.value;
-        this.setFilterCategory(newCategory);
+
         if (newCategory) {
-          this.$router.push(`/${newCategory}/week/${this.filterDateWeek}/year/${this.filterDateYear}`);
+          this.$router.push(`/${newCategory}/week/${week}/year/${year}`);
 
           return;
         }
-        this.$router.push(`/week/${this.filterDateWeek}/year/${this.filterDateYear}`);
+        this.$router.push(`/week/${week}/year/${year}`);
       },
       isSelected(categoryLabel) {
         return categoryLabel.trim() === this.filterCategory.trim()
@@ -62,7 +65,7 @@
 }
 .main-menu {
   list-style-type: none;
-  min-width: 150px;
+  min-width: 200px !important;
 }
 .main-menu a {
   padding: $is-size-8;
