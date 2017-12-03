@@ -2,11 +2,14 @@
   <div>
     <div class="columns link-title-wrapper">
       <div class="column link-back-button"><a v-on:click="goBack()"><i class="icon-left-open" aria-hidden="true"></i></a></div>
-      <h1 class="column link-title">{{link.title}}</h1>
+      <h1 class="column link-title">
+        <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>
+        <span>{{link.title}}</span>
+      </h1>
     </div>
     <p class="link-subline">
       <span v-if="link.user">by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, </span>
-      <time :datetime="link.createdOn">{{ link.createdOn }}</time>
+      <time :datetime="link.createdOn">{{ link.createdOn | formatDate }}</time>
     </p>
     <p class="link-tags">
       <router-link v-for="tag in link.tags" v-bind:key="tag._id"
@@ -21,6 +24,7 @@
 <script>
 import { mapGetters } from "vuex";
 import DNWComments from "../components/dnwComments.vue";
+import dnwCategoryIcon from "../components/dnwCategoryIcon";
 
 const fetchInitialData = (store, route) => {
   return store.dispatch(`linkModule/getLink`, route.params.id);
@@ -28,6 +32,7 @@ const fetchInitialData = (store, route) => {
 
 export default {
   components: {
+    "dnw-category-icon": dnwCategoryIcon,
     "dnw-comments": DNWComments,
   },
   computed: {
@@ -70,4 +75,13 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import "../styles/_singleLink";
+  .link-category-icon {
+    padding-right: 0.5rem;
+    font-size: 70%;
+    bottom: 0.2rem;
+    position: relative;
+  }
+  .link-subline, .link-tags {
+    margin-left: 3rem;
+  }
 </style>

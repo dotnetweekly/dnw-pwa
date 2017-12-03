@@ -66,7 +66,6 @@
       },
       isCurrentWeek(week) {
         const weekNow = calendarHelper.getWeek(this.filterDate);
-        console.log(weekNow, week, this.filterDate);
         if (week === weekNow) {
           return true;
         }
@@ -154,6 +153,10 @@
 </script>
 <style lang="scss" scoped>
 @import "../_variables";
+
+.dnwCalendarHeader {
+  font-size: 90%;
+}
 
 @media screen and (max-width: $tablet-large) {
   .date-arrow{

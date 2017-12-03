@@ -27,6 +27,10 @@ const getMonthName = function(number) {
 	return monthNames[number];
 };
 
+const getDayName = function(number) {
+	return dayNames[number];
+};
+
 const getWeek = function(dateValue) {
 	const target = new Date(dateValue);
 	const dayNr = (target.getDay() + 6) % 7;
@@ -152,4 +156,4 @@ const getCalendar = function(date) {
 	};
 };
 
-export { getWeek, getDateRangeOfWeek, getMonthName, getFebruaryDays, getCalendar };
+export { getWeek, getDateRangeOfWeek, getMonthName, getFebruaryDays, getCalendar, getDayName };
