@@ -39,12 +39,13 @@ const getWeek = function(dateValue) {
 	return 1 + Math.ceil((firstThursday - target) / 604800000);
 };
 
-const getDateRangeOfWeek = function(dateValue) {
-	const date = new Date(dateValue);
-	const from = new Date(date.setDate(date.getDate() - date.getDay() + (isISO(date) ? 1 : 0)));
+const getDateRangeOfWeek = function(week, year) {
+	console.log(week, year);
+	var date = new Date(year, 0, 1);
+	date.setDate(date.getDate() + week * 7);
 	return {
-		from,
-		to: new Date(from.setDate(from.getDate() + 7))
+		from: new Date(date),
+		to: new Date(date.setDate(date.getDate() + 7))
 	};
 };
 
@@ -60,6 +61,7 @@ const getFebruaryDays = function(dateValue) {
 };
 
 const getCalendar = function(date) {
+	const today = Date.now();
 	const dateNow = new Date(date);
 	const dayPerMonth = monthDays;
 	dayPerMonth[1] = getFebruaryDays(dateNow);

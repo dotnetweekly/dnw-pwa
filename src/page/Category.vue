@@ -10,13 +10,23 @@
 import { mapGetters } from "vuex";
 import dnwLink from "../components/dnwLink";
 import dnwMenu from "../components/dnwMenu";
+import * as calendarHelper from "../helpers/calendar";
 
 const fetchInitialData = (store, route) => {
-  route.params.page = route.params.page || 1;
-  route.params.id = route.params.id || "";
+  route.params.week = route.params.week || "";
+  route.params.year = route.params.year || "";
+  route.params.category = route.params.category || "";
+  route.params.date = Date.now();
+
+  if(route.params.week && route.params.year){
+    route.params.date = calendarHelper.getDateRangeOfWeek(route.params.week, route.params.year).from;
+  }
+
   return store.dispatch(`linksModule/getLinks`, {
-    categoryId: route.params.id,
-    page: route.params.page
+    week: route.params.week,
+    year: route.params.year,
+    category: route.params.category,
+    date: route.params.date
   });
 };
 

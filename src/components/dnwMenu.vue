@@ -3,45 +3,51 @@
     <p></p>
     <dnw-calendar></dnw-calendar>
     <p></p>
-    <div class="calendar-select select is-full-width">
-      <select class="is-full-width" v-model="selectedCategory">
-        <option :value="category.value" v-bind:key="category.label"
-          v-for="category in categories">{{category.label}}</option>
-      </select>
+    <div class="calendar-select control has-icons-left">
+      <div class="select is-full-width">
+        <select class="is-full-width" v-on:change="updateCategory">
+          <option :selected="isSelected(category.value)"
+            :value="category.value" v-bind:key="category.label"
+            v-for="category in filterCategories">
+            {{category.label}}
+            </option>
+        </select>
+      </div>
+      <dnw-category-icon :category="filterCategory"></dnw-category-icon>
     </div>
   </div>
 </template>
 <script>
-  import { mapGetters } from "vuex";
+  import { mapGetters, mapActions } from "vuex";
   import dnwCalendar from "./dnwCalendar";
+  import dnwCategoryIcon from "./dnwCategoryIcon";
   import Vue from "vue"
   export default {
-    data() {
-      return {
-        categories: [
-          {label: "All", value: ""},
-          {label: "Articles", value: "articles"},
-          {label: "Books", value: "books"},
-          {label: "Events/ Training", value: "events-training"},
-          {label: "Libraries/ Tools", value: "libraries-tools"},
-          {label: "Videos", value: "videos"}
-        ],
-        selectedCategory: ""
-      }
-    },
-    watch: {
-      selectedCategory(newCategory) {
-
-      },
-      filterCategory(newCategory) {
-        this.selectedCategory = newCategory;
-      }
-    },
     computed: {
-      ...mapGetters("linksModule", ["links", "filterCategory"])
+      ...mapGetters("linksModule", ["links", "filterCategory", "filter",
+        "filterCategories", "filterDateWeek", "filterDateYear"])
     },
     components: {
+      "dnw-category-icon": dnwCategoryIcon,
       "dnw-calendar": dnwCalendar
+    },
+    methods: {
+      ...mapActions("linksModule", {
+        setFilterCategory: "setFilterCategory"
+      }),
+      updateCategory(e) {
+        const newCategory = e.target.value;
+        this.setFilterCategory(newCategory);
+        if (newCategory) {
+          this.$router.push(`/${newCategory}/week/${this.filterDateWeek}/year/${this.filterDateYear}`);
+
+          return;
+        }
+        this.$router.push(`/week/${this.filterDateWeek}/year/${this.filterDateYear}`);
+      },
+      isSelected(categoryLabel) {
+        return categoryLabel.trim() === this.filterCategory.trim()
+      }
     }
   }
 </script>

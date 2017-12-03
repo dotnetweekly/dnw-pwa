@@ -4,6 +4,9 @@ import axios from 'axios';
 
 const linksService = {
 	getLinks(filter) {
+		if (!filter.category) {
+			filter.category = '';
+		}
 		return new Promise((resolve, reject) => {
 			const path = `/links?category=${filter.category}&week=${filter.week}&year=${filter.year}`;
 			appCache

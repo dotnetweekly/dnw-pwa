@@ -7,7 +7,12 @@
       </div>
       <div class="column has-text-centered">{{getMonth(filterCalendar.month)}} {{filterCalendar.year}}</div>
       <div  class="column is-one-quarter has-text-left is-pointer"
-        v-on:click="getNextMonth(filterCalendar.month, filterCalendar.year)">
+        v-on:click="getNextMonth(filterCalendar.month, filterCalendar.year)"
+        v-show="isMonthInPast(filterCalendar.month, filterCalendar.year)">
+        <i class="icon-right-open" aria-hidden="true"></i>
+      </div>
+      <div class="column is-one-quarter disabled-arrow"
+        v-show="!isMonthInPast(filterCalendar.month, filterCalendar.year)">
         <i class="icon-right-open" aria-hidden="true"></i>
       </div>
     </div>
@@ -24,11 +29,12 @@
               weekInFuture: !isInPast(week.week, week.year)
             }"
             v-for="(week, index) in filterCalendar.weeks" v-bind:key="index">
-          <td>{{week.week}}</td>
+          <td v-on:click="setNewDate(week.days[0].date)">{{week.week}}</td>
           <td v-for="(weekDay, dayIndex) in week.days"
               v-bind:class="{
                 dayInFuture: weekDay.inFuture,
-                dayInPast: weekDay.inPast
+                dayInPast: weekDay.inPast,
+                disabled: isDayDisabled(weekDay.date)
               }"
               v-on:click="setNewDate(weekDay.date)"
               v-bind:key="dayIndex">{{weekDay.date.getDate()}}</td>
@@ -46,7 +52,8 @@
         "filterDate",
         "filterCalendar",
         "filterDateYear",
-        "filterDateWeek"
+        "filterDateWeek",
+        "filterCategory"
       ])
     },
     methods: {
@@ -71,6 +78,9 @@
         }
         return false;
       },
+      isDayDisabled(date) {
+        return (date - Date.now() > 0)
+      },
       getNextMonth(month, year) {
         if (month === 12) {
           year = year + 1;
@@ -88,12 +98,38 @@
           month -= 1;
         }
         this.setFilterDate(new Date(year, month, 1));
+        this.updatePath();
+      },
+      isMonthInPast(month, year) {
+        const yearNow = new Date(Date.now()).getFullYear();
+        const monthNow = new Date(Date.now()).getMonth();
+        if (month === 12) {
+          year = year + 1;
+          month = 1;
+        } else {
+          month += 1;
+        }
+
+        if (year > yearNow || (yearNow <= year && month > monthNow)) {
+          return false;
+        }
+
+        return true;
       },
       setNewDate(newDate) {
-        if (newDate - Date.now() > 0) {
+        if (this.isDayDisabled(newDate)) {
           return;
         }
         this.setFilterDate(newDate);
+        this.updatePath();
+      },
+      updatePath() {
+        if (this.filterCategory) {
+          this.$router.push(`/${this.filterCategory}/week/${this.filterDateWeek}/year/${this.filterDateYear}`);
+
+          return;
+        }
+        this.$router.push(`/week/${this.filterDateWeek}/year/${this.filterDateYear}`);
       }
     }
   }
@@ -110,8 +146,13 @@ table, tr, td{
   text-align: center;
 }
 
-tr.weekInFuture, td.dayInPast, td.dayInFuture{
+.disabled-arrow, tr.weekInFuture, td.dayInPast, td.dayInFuture{
   opacity: 0.5;
+}
+
+td.disabled{
+  text-decoration: line-through;
+  cursor: default;
 }
 
 tr.current, tr.weekInPast:hover{
