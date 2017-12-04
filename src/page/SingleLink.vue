@@ -11,9 +11,8 @@
       <span>{{ link.createdOn | formatDate }}</span>
     </p>
     <p class="link-tags">
-      <router-link v-for="tag in link.tags" v-bind:key="tag._id"
-        :to="'/tags/' + tag.name"
-        class="tag is-light">{{ tag.name }}</router-link>
+      <span v-for="tag in link.tags" v-bind:key="tag._id"
+        class="tag is-light">{{ tag.name }}</span>
     </p>
     <p class="link-content">{{link.content}}</p>
     <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>

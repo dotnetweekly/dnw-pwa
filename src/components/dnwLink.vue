@@ -12,9 +12,8 @@
           <time :datetime="link.createdOn">{{ link.createdOn | formatDate }}</time>
         </p>
         <p class="link-tags">
-          <router-link v-for="tag in link.tags" v-bind:key="tag._id"
-            :to="'/tags/' + tag.name"
-            class="tag is-light">{{ tag.name }}</router-link>
+          <span v-for="tag in link.tags" v-bind:key="tag._id"
+            class="tag is-light">{{ tag.name }}</span>
         </p>
       </div>
     </div>

@@ -4,9 +4,9 @@
       <dnw-user-history-header v-bind:selectedTab.sync="selectedTab"></dnw-user-history-header>
     </div>
     <div class="user-history-body">
-      <dnw-user-submitted v-if="selectedTab === 'submitted'"></dnw-user-submitted>
-      <dnw-user-upvotes v-if="selectedTab === 'upvotes'"></dnw-user-upvotes>
-      <dnw-user-comments v-if="selectedTab === 'comments'"></dnw-user-comments>
+      <dnw-user-submitted :username="username" v-if="selectedTab === 'submitted'"></dnw-user-submitted>
+      <dnw-user-upvotes :username="username" v-if="selectedTab === 'upvotes'"></dnw-user-upvotes>
+      <dnw-user-comments :username="username" v-if="selectedTab === 'comments'"></dnw-user-comments>
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
     'dnw-user-upvotes': dnwUserUpvotes,
     'dnw-user-comments': dnwUserComments
   },
+  props: ["username"],
   data() {
     return {
       selectedTab: 'submitted'

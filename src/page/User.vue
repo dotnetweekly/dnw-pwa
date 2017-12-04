@@ -1,120 +1,24 @@
 <template>
 <div>
-  <h2 v-if="profile">Profile</h2>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Name</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.firstName" placeholder="First Name">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.lastName" placeholder="Last Name">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Username</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.username" placeholder="Username">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Subscribed to weekly newsletter</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <div class="control">
-            <label class="radio">
-              <input type="radio" name="foobar">
-              Yes
-            </label>
-            <label class="radio">
-              <input type="radio" name="foobar" checked>
-              No
-            </label>
-          </div>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label"></label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <a v-on:click="login()" class="button is-link is-medium ">Save</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="separator"></div>
-
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label"></label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <dnw-user-history></dnw-user-history>
-      </div>
-    </div>
-  </div>
-
+  <h2 v-if="username">User: {{username}}</h2>
+  <dnw-user-history v-if="username" :username="username"></dnw-user-history>
 </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import dnwUserCard from "../components/dnwHistory/dnwUserHistory";
-
-const fetchInitialData = (store, route) => {
-  return store.dispatch(`userModule/getProfile`);
-};
+import dnwUserHistory from "../components/dnwHistory/dnwUserHistory";
 
 export default {
   components: {
-    "dnw-user-history": dnwUserCard
+    "dnw-user-history": dnwUserHistory
   },
-  computed: {
-    ...mapGetters("userModule", ["profile"])
-  },
-  methods: {
-    loadData() {
-      fetchInitialData(this.$store, this.$route);
+  data() {
+    return {
+      username: null
     }
   },
-  watch: {
-    $route(to, from) {
-      this.loadData();
-    }
-  },
-  created() {
-    this.loadData();
+  mounted() {
+    this.username = this.$route.params.username;
   }
 };
 </script>

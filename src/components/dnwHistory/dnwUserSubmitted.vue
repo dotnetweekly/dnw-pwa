@@ -29,6 +29,7 @@
     components: {
       'dnw-paging': dnwPaging
     },
+    props: ["username"],
     data() {
       return {
         links: [],
@@ -43,7 +44,8 @@
     },
     methods: {
       getLinks(page) {
-        userService.getHistory({ type:"submitted",page }).then(data => {
+        const username = this.username;
+        userService.getHistory({ type:"submitted", page, username }).then(data => {
           this.pages = data.pages;
           this.links = data.links;
           this.page = data.page;

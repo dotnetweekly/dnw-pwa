@@ -1,8 +1,8 @@
 <template>
   <div class="vwp-paging">
     <div class="paging-wrapper">
-      <div class="columns paging-wrapper-inner">
-        <div v-for="(item, index) in pages" class="column paging-link" v-bind:key="index">
+      <div class="paging-wrapper-inner">
+        <div v-for="(item, index) in pages" class="paging-link" v-bind:key="index">
           <a v-if="(item != '...')"
             v-bind:class="{ 'is-active': ((page == null && item === 1) || (item == page)) }"
             v-on:click="selectPage(item)">
@@ -11,6 +11,7 @@
           <div v-if="(item == '...')">{{item}}</div>
         </div>
       </div>
+      <div class="is-clearfix"></div>
     </div>
   </div>
 </template>
@@ -66,10 +67,13 @@ export default {
   margin-right: 0;
   margin-left: 0;
   background-color: $white;
-  width: 100%;
+  width: auto;
+  font-size: 90%;
   .paging-link {
     text-align: center;
     padding: 0;
+    margin: 0.2rem;
+    float: left;
     a {
       border: 1px solid $primary;
       color: $primary;
@@ -84,14 +88,14 @@ export default {
     margin: 0 auto;
     padding-left: 0.75rem;
     display: block;
-    width: 100%;
-    max-width: $weight-light*1px;
+    text-align: center;
+    min-width: $mobile;
   }
   .is-active {
     font-weight: bold;
   }
   .paging-wrapper-inner {
-    display: flex;
+    display: inline-block;
   }
 }
 </style>

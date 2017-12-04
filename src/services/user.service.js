@@ -16,9 +16,9 @@ const userService = {
 				});
 		});
 	},
-	getHistory({ type, page }) {
+	getHistory({ type, page, username }) {
 		return new Promise((resolve, reject) => {
-			const path = `/user/${type}?page=${page}`;
+			const path = `/user/${username}/${type}?page=${page}`;
 			appCache
 				.get(path, 0)
 				.then((response) => {

@@ -7,6 +7,7 @@ import NotFound from './page/NotFound.vue';
 import Login from './page/Login.vue';
 import Register from './page/Register.vue';
 import AddLink from './page/AddLink.vue';
+import Profile from './page/Profile.vue';
 import User from './page/User.vue';
 import SingleLink from './page/SingleLink.vue';
 
@@ -20,11 +21,12 @@ const router = new VueRouter({
 	routes: [
 		{ path: '/:category/week/:week/year/:year', component: Category },
 		{ path: '/week/:week/year/:year', component: Category, params: { category: '' } },
+		{ path: '/users/:username', component: User },
 		{ path: '/:category/:id', component: SingleLink },
 		{ path: '/login', components: { modal: Login } },
 		{ path: '/register', component: Register },
 		{ path: '/add', component: AddLink },
-		{ path: '/profile', component: User },
+		{ path: '/profile', component: Profile },
 		{ path: '/offline-redirect', component: OfflineRedirect },
 		{ path: '/', component: Category },
 		{ path: '*', component: NotFound }

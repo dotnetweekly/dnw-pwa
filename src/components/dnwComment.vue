@@ -3,11 +3,13 @@
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>{{ comment.user.username }}</strong>
+        <router-link :to="`/users/${comment.user.username}`">
+          <strong>{{ comment.user.username }}</strong>
+        </router-link>
         <br>
         {{ comment.content }}
         <br>
-        <small>{{ comment.createdOn }}</small>
+        <small>{{ comment.createdOn | formatDate }}</small>
       </p>
     </div>
   </div>
