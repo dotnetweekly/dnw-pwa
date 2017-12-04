@@ -1,19 +1,24 @@
 <template>
-  <div>
+  <div v-if="link">
+    <div class="link-back-button"><a v-on:click="goBack()"><i class="icon-left-open" aria-hidden="true"></i> Back</a></div>
     <div class="columns link-title-wrapper">
-      <div class="column link-back-button"><a v-on:click="goBack()"><i class="icon-left-open" aria-hidden="true"></i></a></div>
-      <h1 class="column link-title">
-        <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>{{link.title}}
-      </h1>
+      <div class="column upvote-column">
+        <dnw-upvote v-if="link.upvotes" class="column">{{link.upvotes.length}}</dnw-upvote>
+      </div>
+      <div class="column">
+        <h1 class="link-title">
+          <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>{{link.title}}
+        </h1>
+        <p class="link-subline">
+          <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
+          <span>{{ link.createdOn | formatDate }}</span>
+        </p>
+        <p class="link-tags">
+          <span v-for="tag in link.tags" v-bind:key="tag._id"
+            class="tag is-light">{{ tag.name }}</span>
+        </p>
+      </div>
     </div>
-    <p class="link-subline">
-      <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
-      <span>{{ link.createdOn | formatDate }}</span>
-    </p>
-    <p class="link-tags">
-      <span v-for="tag in link.tags" v-bind:key="tag._id"
-        class="tag is-light">{{ tag.name }}</span>
-    </p>
     <p class="link-content">{{link.content}}</p>
     <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
     <dnw-comments v-bind:comments="link.comments"></dnw-comments>
@@ -23,6 +28,7 @@
 import { mapGetters } from "vuex";
 import DNWComments from "../components/dnwComments.vue";
 import dnwCategoryIcon from "../components/dnwCategoryIcon";
+import dnwUpvote from "../components/dnwUpvote";
 
 const fetchInitialData = (store, route) => {
   return store.dispatch(`linkModule/getLink`, route.params.id);
@@ -32,6 +38,7 @@ export default {
   components: {
     "dnw-category-icon": dnwCategoryIcon,
     "dnw-comments": DNWComments,
+    "dnw-upvote": dnwUpvote
   },
   computed: {
     ...mapGetters("linkModule", ["link"]),
@@ -73,6 +80,15 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import "../styles/_singleLink";
+  .upvote-column{
+    width: 80px;
+    flex: none;
+    padding-right: 0;
+  }
+  .upvote{
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
   .link-category-icon {
     font-size: 70%;
     width: 45px;
@@ -84,7 +100,11 @@ export default {
     padding-left: 0px;
     padding-right: 0px;
   }
+  .link-subline{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem !important;
+  }
   .link-subline, .link-tags {
-    margin-left: 2.5rem;
+    margin-left: 0.5rem;
   }
 </style>

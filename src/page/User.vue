@@ -1,6 +1,7 @@
 <template>
 <div>
   <h2 v-if="username">User: {{username}}</h2>
+
   <dnw-user-history v-if="username" :username="username"></dnw-user-history>
 </div>
 </template>

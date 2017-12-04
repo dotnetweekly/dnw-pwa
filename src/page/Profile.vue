@@ -41,6 +41,38 @@
   </div>
   <div class="field is-horizontal">
     <div class="field-label is-normal">
+      <label class="label">Twitter</label>
+    </div>
+    <div class="field-body">
+      <div class="field has-addons">
+          <p class="control is-marginless">
+            <a class="button is-static">
+              @
+            </a>
+          </p>
+          <p class="control is-expanded">
+            <input class="input" type="text" v-bind:value="profile.twitter" placeholder="Twitter Username">
+          </p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Github</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded has-icons-left">
+          <input class="input" type="text" v-bind:value="profile.github" placeholder="Github Username">
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
       <label class="label">Subscribed to weekly newsletter</label>
     </div>
     <div class="field-body">
