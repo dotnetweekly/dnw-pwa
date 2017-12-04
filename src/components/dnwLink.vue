@@ -35,7 +35,10 @@ export default {
 <style lang="scss" scoped>
 @import "../_variables";
 .link-category-icon{
-  padding-right: 0.5rem;
+  margin-right: 0.2rem;
+  width: 25px;
+  display: block;
+  float: left;
 }
 .card-padding {
   padding: 1rem 1rem 0.5rem 1rem;

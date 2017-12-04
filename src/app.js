@@ -29,6 +29,9 @@ axios.interceptors.response.use(undefined, (err) => {
 });
 
 router.afterEach((to, from) => {
+	if (from.path == '/login') {
+		return;
+	}
 	store.dispatch(`authModule/setLatestPath`, from.path);
 });
 

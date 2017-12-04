@@ -5,6 +5,7 @@
     <i v-if="category == 'events-training'" class="icon-graduation-cap" aria-hidden="true"></i>
     <i v-if="category == 'libraries-tools'" class="icon-wrench" aria-hidden="true"></i>
     <i v-if="category == 'videos'" class="icon-youtube-play" aria-hidden="true"></i>
+    <span class="is-clearfix"></span>
   </span>
 </template>
 <script>

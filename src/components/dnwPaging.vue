@@ -2,10 +2,12 @@
   <div class="vwp-paging">
     <div class="paging-wrapper">
       <div class="columns paging-wrapper-inner">
-        <div v-for="(item, index) in pages" class="column paging-link" v-bind:key="item">
-          <router-link v-if="(item != '...')"
-            v-bind:class="{ 'is-active': ((page == null && item === 1) || (item === page)) }"
-            :to="path + '/page/' + item + '/'">{{item}}</router-link>
+        <div v-for="(item, index) in pages" class="column paging-link" v-bind:key="index">
+          <a v-if="(item != '...')"
+            v-bind:class="{ 'is-active': ((page == null && item === 1) || (item == page)) }"
+            v-on:click="selectPage(item)">
+            {{item}}
+            </a>
           <div v-if="(item == '...')">{{item}}</div>
         </div>
       </div>
@@ -15,21 +17,22 @@
 
 <script>
 export default {
-  props: ["totalPages", "path"],
+  props: ["totalPages", "page"],
   data: () => {
     return {
       pages: [],
-      neighboors: 2,
-      page: 1
+      neighboors: 2
     };
   },
   watch: {
-    $route(to, from) {
-      this.page = to.params.page;
+    page() {
       this.refreshPages(this.page);
     }
   },
   methods: {
+    selectPage(page) {
+      this.$emit('update:page', page);
+    },
     refreshPages: function(page) {
       if (!page) {
         page = 1;
@@ -52,13 +55,6 @@ export default {
         }
       }
     }
-  },
-  created() {
-    this.page = 1;
-    if (this.$route.params && this.$route.params.page) {
-      this.page = this.$route.params.page;
-    }
-    this.refreshPages(this.page);
   }
 };
 </script>
@@ -66,7 +62,7 @@ export default {
 <style lang="scss">
 @import "../_variables";
 .vwp-paging {
-  padding: $size-3;
+  padding: $is-size-3;
   margin-right: 0;
   margin-left: 0;
   background-color: $white;

@@ -11,7 +11,8 @@
           </div>
           <div class="field">
             <p class="control">
-              <button class="button">Post comment</button>
+              <button class="button" v-if="isAuthenticated">Post comment</button>
+              <router-link v-if="!isAuthenticated" to="/login" class="button">Login to comment</router-link>
             </p>
           </div>
         </div>
@@ -23,6 +24,7 @@
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import DNWComment from "../components/dnwComment.vue";
 export default {
   components: {
@@ -30,7 +32,10 @@ export default {
   },
   props: [
     'comments'
-  ]
+  ],
+  computed: {
+    ...mapGetters("authModule", ["isAuthenticated"])
+  }
 }
 </script>
 <style lang="scss" scoped>

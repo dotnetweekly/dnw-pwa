@@ -1,20 +1,34 @@
-import Config from "../app.config.js";
-import appCache from "../app.service.cache.js";
-import axios from "axios";
+import Config from '../app.config.js';
+import appCache from '../app.service.cache.js';
+import axios from 'axios';
 
 const userService = {
-  getProfile() {
-    return new Promise((resolve, reject) => {
-      const path = `/user/profile`;
-      appCache.get(path, 0)
-        .then(response => {
-          resolve(response.data.data);
-        })
-        .catch(error => {
-          reject(error)
-        });
-    });
-  }
+	getProfile() {
+		return new Promise((resolve, reject) => {
+			const path = `/user/profile`;
+			appCache
+				.get(path, 0)
+				.then((response) => {
+					resolve(response.data.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	},
+	getHistory({ type, page }) {
+		return new Promise((resolve, reject) => {
+			const path = `/user/${type}?page=${page}`;
+			appCache
+				.get(path, 0)
+				.then((response) => {
+					resolve(response.data.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
 };
 
 export default userService;

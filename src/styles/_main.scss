@@ -6,8 +6,19 @@ body {
   width: 100%;
 }
 
+.is-borderless{
+  border: 0 !important;
+}
+
 .is-margin-center{
   margin:0 auto;
+}
+
+.overflow-dotted {
+  display:inline-block;
+  white-space: nowrap;
+  overflow:hidden !important;
+  text-overflow: ellipsis;
 }
 
 .constant-flex {

@@ -8,8 +8,7 @@ const actions = {
 			linksService
 				.getLink(slug)
 				.then((response) => {
-					Object.assign(state, {}, defaultState);
-					state.link = response;
+					Object.assign(state, {}, { link: response });
 					resolve();
 				})
 				.catch((error) => reject(error));

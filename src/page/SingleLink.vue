@@ -3,13 +3,12 @@
     <div class="columns link-title-wrapper">
       <div class="column link-back-button"><a v-on:click="goBack()"><i class="icon-left-open" aria-hidden="true"></i></a></div>
       <h1 class="column link-title">
-        <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>
-        <span>{{link.title}}</span>
+        <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>{{link.title}}
       </h1>
     </div>
     <p class="link-subline">
-      <span v-if="link.user">by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, </span>
-      <time :datetime="link.createdOn">{{ link.createdOn | formatDate }}</time>
+      <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
+      <span>{{ link.createdOn | formatDate }}</span>
     </p>
     <p class="link-tags">
       <router-link v-for="tag in link.tags" v-bind:key="tag._id"
@@ -68,7 +67,7 @@ export default {
     }
   },
   prefetch: fetchInitialData,
-  created() {
+  mounted() {
     this.loadLink();
   }
 };
@@ -76,12 +75,17 @@ export default {
 <style lang="scss" scoped>
   @import "../styles/_singleLink";
   .link-category-icon {
-    padding-right: 0.5rem;
     font-size: 70%;
-    bottom: 0.2rem;
-    position: relative;
+    width: 45px;
+    padding-top: 0.5rem;
+    display: block;
+    float: left;
+  }
+  .link-title{
+    padding-left: 0px;
+    padding-right: 0px;
   }
   .link-subline, .link-tags {
-    margin-left: 3rem;
+    margin-left: 2.5rem;
   }
 </style>

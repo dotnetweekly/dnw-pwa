@@ -1,5 +1,12 @@
 const defaultState = {
-  link: {}
+	link: {
+		user: {
+			username: ''
+		},
+		category: {
+			slug: ''
+		}
+	}
 };
 
 export default defaultState;

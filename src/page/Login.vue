@@ -51,6 +51,8 @@ export default {
         .then(() => {
           this.email = "";
           this.password = "";
+
+          this.$router.push("/profile");
         });
     }
   }
