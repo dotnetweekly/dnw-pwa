@@ -1,0 +1,84 @@
+.multiselect__tags {
+  @extend .input;
+  height: auto;
+}
+.multiselect__input {
+  outline: none;
+  border: none;
+  width: 100px !important;
+  position: relative !important;
+  font-size: 100%;
+}
+
+.multiselect--active {
+  .multiselect__input {
+    outline: none;
+    border: none;
+    width: 0px !important;
+  }
+}
+
+
+.multiselect__content{
+  margin: 0 !important;
+}
+
+.multiselect__tag {
+  @extend .tag;
+  background-color: $secondary !important;
+  color: $white !important;
+  margin-right: 0.5rem;
+}
+
+.multiselect__tag-icon:after{
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  content: '\e803';
+  margin-left: 0.5rem;
+}
+
+.multiselect__content-wrapper{
+  background-color: $white;
+  box-shadow: $body-border;
+  font-size: 80%;
+}
+
+.multiselect__content, .multiselect__element, .multiselect__option {
+  width: 100%;
+  display: block;
+}
+
+.multiselect__content {
+  list-style: none !important;
+
+  .multiselect__option--highlight, .multiselect__option--highlight:after {
+    background-color: $background;
+  }
+  .multiselect__option--highlight:after {
+    content: attr(data-select);
+    position: absolute;
+    right: 0.5rem;
+  }
+
+  .multiselect__option{
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+
+  .multiselect__option--selected:after {
+    content: attr(data-selected);
+    position: absolute;
+    right: 0.5rem;
+  }
+  .multiselect__option--selected.multiselect__option--highlight:after {
+    content: attr(data-deselect);
+    position: absolute;
+    right: 0.5rem;
+  }
+
+  .multiselect__option--selected {
+    font-weight: 700
+  }
+}

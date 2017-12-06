@@ -10,6 +10,7 @@ import AddLink from './page/AddLink.vue';
 import Profile from './page/Profile.vue';
 import User from './page/User.vue';
 import SingleLink from './page/SingleLink.vue';
+import Newsletters from './page/Newsletters.vue';
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,7 @@ const router = new VueRouter({
 		{ path: '/week/:week/year/:year', component: Category, params: { category: '' } },
 		{ path: '/users/:username', component: User },
 		{ path: '/:category/:id', component: SingleLink },
+		{ path: '/newsletters', component: Newsletters },
 		{ path: '/login', components: { modal: Login } },
 		{ path: '/register', component: Register },
 		{ path: '/add', component: AddLink },

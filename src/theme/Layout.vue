@@ -26,6 +26,7 @@ export default {
 <style lang="scss">
 @import "../_variables";
 @import "~bulma";
+@import "../styles/_multiselect";
 @import "../assets/fontello/css/fontello.css";
 
 @import "../styles/_main";
