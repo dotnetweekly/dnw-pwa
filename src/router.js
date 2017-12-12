@@ -6,6 +6,7 @@ import NotFound from './page/NotFound.vue';
 
 import Login from './page/Login.vue';
 import Register from './page/Register.vue';
+import Activate from './page/Activate.vue';
 import AddLink from './page/AddLink.vue';
 import Profile from './page/Profile.vue';
 import User from './page/User.vue';
@@ -20,15 +21,16 @@ const router = new VueRouter({
 	base: __dirname,
 	scrollBehavior: () => ({ y: 0 }),
 	routes: [
-		{ path: '/:category/week/:week/year/:year', component: Category },
-		{ path: '/week/:week/year/:year', component: Category, params: { category: '' } },
-		{ path: '/users/:username', component: User },
-		{ path: '/:category/:id', component: SingleLink },
 		{ path: '/newsletters', component: Newsletters },
 		{ path: '/login', components: { modal: Login } },
 		{ path: '/register', component: Register },
+		{ path: '/activate/:key?', component: Activate },
 		{ path: '/add', component: AddLink },
 		{ path: '/profile', component: Profile },
+		{ path: '/:category/:id', component: SingleLink },
+		{ path: '/:category/week/:week/year/:year', component: Category },
+		{ path: '/week/:week/year/:year', component: Category, params: { category: '' } },
+		{ path: '/users/:username', component: User },
 		{ path: '/offline-redirect', component: OfflineRedirect },
 		{ path: '/', component: Category },
 		{ path: '*', component: NotFound }

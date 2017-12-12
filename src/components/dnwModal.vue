@@ -2,7 +2,7 @@
   <div class="dnw-modal">
     <div class="section main-header">
       <div class="container content">
-        <div class="columns content-header">
+        <div class="columns content-header  constant-flex">
           <div class="column">
             <h2>Login</h2>
           </div>

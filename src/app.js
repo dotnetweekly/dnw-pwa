@@ -24,7 +24,7 @@ axios.interceptors.request.use(function(config) {
 axios.interceptors.response.use(undefined, (err) => {
 	let res = err.response;
 	if ((res && res.status && res.status === 401) || (res && res.body && !res.body.success)) {
-		return Promise.reject(error);
+		return Promise.reject(res);
 	}
 });
 

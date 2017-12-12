@@ -46,3 +46,20 @@ footer.footer {
 .columns {
   flex-wrap: wrap;
 }
+
+.dnwIconLarge {
+  background-color: $primary;
+  color: $white;
+  border-radius: 80px;
+  font-size: 200%;
+  padding: 3rem;
+  i:before{
+    line-height: 4rem;
+  }
+}
+
+.is-unstyled{
+  list-style: none !important;
+  margin: 0;
+  padding: 0;
+}

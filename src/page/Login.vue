@@ -1,5 +1,6 @@
 <template>
   <dnw-modal>
+    <p>If you don't have an account <router-link to="/register">register here</router-link></p>
     <div class="field">
       <p class="control has-icons-left has-icons-right">
         <input class="input is-medium" v-model="email" type="email" placeholder="Email" autofocus>
@@ -16,6 +17,7 @@
         </span>
       </p>
     </div>
+    <p class="is-pulled-right"><router-link to="/forgot-password">Forgot Password</router-link></p>
     <div class="is-text-right">
       <a v-on:click="login()" class="button is-link is-medium ">Submit</a>
     </div>
@@ -36,11 +38,12 @@ export default {
     "dnw-modal": Modal
   },
   computed: {
-    ...mapGetters("authModule", ["isAuthenticated"])
+    ...mapGetters("authModule", ["isAuthenticated", "latestPath"])
   },
   methods: {
     ...mapActions("authModule", {
-      logout: "logout"
+      logout: "logout",
+      goBack: "goBack"
     }),
     login() {
       this.$store
@@ -51,8 +54,7 @@ export default {
         .then(() => {
           this.email = "";
           this.password = "";
-
-          this.$router.push("/profile");
+          this.goBack({ router: this.$router, route: this.$route });
         });
     }
   }

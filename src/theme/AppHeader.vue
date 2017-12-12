@@ -11,8 +11,14 @@
           <router-link v-if="!isAuthenticated" to="/login" class="is-text">+ Add a link</router-link>
         </div>
         <div class="header-profile">
-          <router-link v-if="isAuthenticated" to="/profile"><i class="icon-user" aria-hidden="true"></i></router-link>
-          <router-link v-if="!isAuthenticated" to="/login"><i class="icon-user" aria-hidden="true"></i></router-link>
+          <div class="header-profile-inner">
+            <router-link v-if="isAuthenticated" to="/profile"><i class="icon-user" aria-hidden="true"></i></router-link>
+            <router-link v-if="!isAuthenticated" to="/login"><i class="icon-user" aria-hidden="true"></i></router-link>
+            <a v-if="isAuthenticated" v-on:click="logout()" class="header-auth-link">Logout</a>
+            <router-link v-if="!isAuthenticated" class="header-auth-link" to="/login">Login</router-link>
+            <span v-if="!isAuthenticated" class="header-auth-link auth-link-separator">|</span>
+            <router-link v-if="!isAuthenticated" class="header-auth-link" to="/register">Register</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -23,11 +29,27 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters("authModule", ["isAuthenticated"])
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("authModule/logout");
+      this.$router.push("/");
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "../_variables";
+
+.auth-link-separator{
+  padding: 0 0.3rem;
+}
+
+.header-auth-link{
+  font-size: 50%;
+  vertical-align: middle;
+  line-height: 2.7rem;
+}
 
 .header-menu{
   display: flex;
@@ -58,19 +80,36 @@ a.navbar-item.main-logo {
   padding: 0.5rem 1rem;
 }
 
+.header-profile{
+  span, a {
+    float: left;
+  }
+}
+
 @media screen and (min-width: $desktop) {
   .container {
     min-width: $desktop;
   }
 }
 
-@media screen and (min-width: $mobile) {
+@media screen and (max-width: $tablet) {
+  .header-profile, .header-cta, .header-menu{
+    width: 100%;
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: "421px") {
   .navbar > .container, .main-logo {
     display: flex !important;
   }
 }
 
 @media screen and (max-width: $mobile) {
+  .header-profile-inner{
+    margin: 0 auto;
+    display: inline-block;
+  }
   .header-menu, .main-logo,
   .header-cta, .header-profile{
     display: inline-block;
