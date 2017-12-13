@@ -21,17 +21,17 @@ const router = new VueRouter({
 	base: __dirname,
 	scrollBehavior: () => ({ y: 0 }),
 	routes: [
+		{ path: '/offline-redirect', component: OfflineRedirect },
 		{ path: '/newsletters', component: Newsletters },
 		{ path: '/login', components: { modal: Login } },
 		{ path: '/register', component: Register },
 		{ path: '/activate/:key?', component: Activate },
 		{ path: '/add', component: AddLink },
 		{ path: '/profile', component: Profile },
-		{ path: '/:category/:id', component: SingleLink },
-		{ path: '/:category/week/:week/year/:year', component: Category },
-		{ path: '/week/:week/year/:year', component: Category, params: { category: '' } },
 		{ path: '/users/:username', component: User },
-		{ path: '/offline-redirect', component: OfflineRedirect },
+		{ path: '/:category/:id', component: SingleLink },
+		{ path: '/week/:week/year/:year', component: Category, params: { category: '' } },
+		{ path: '/:category/week/:week/year/:year', component: Category },
 		{ path: '/', component: Category },
 		{ path: '*', component: NotFound }
 	]

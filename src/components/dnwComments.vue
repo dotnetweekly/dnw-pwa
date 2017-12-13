@@ -2,16 +2,30 @@
   <div class="dnw-comments">
     <div class="dnw-comments-wrapper">
       <dnw-comment v-for="comment in comments" v-bind:comment="comment" v-bind:key="comment._id"></dnw-comment>
-      <article class="media">
+      <p></p>
+      <div v-show="success" class="column has-text-centered">
+        <p>
+          <span class="dnwIconLarge icon">
+            <i class="icon-ok" aria-hidden="true"></i>
+          </span>
+        </p>
+        <div class="separator"></div>
+        <p class="content">
+          Comment submitted! Once approved it will appear in this area.
+        </p>
+      </div>
+      <article v-show="!success" class="media">
         <div class="media-content">
           <div class="field">
-            <p class="control">
-              <textarea class="textarea" placeholder="Add a comment..."></textarea>
+            <p class="control id-marginless">
+              <textarea :class="{'textarea': true, 'is-danger': hasError('comment')}"
+              v-model="comment" placeholder="Add a comment..."></textarea>
             </p>
+            <p v-show="hasError('comment')" class="help is-danger">{{getError("comment")}}</p>
           </div>
           <div class="field">
             <p class="control">
-              <button class="button" v-if="isAuthenticated">Post comment</button>
+              <button class="button" :disabled="sending" v-if="isAuthenticated" v-on:click="sendComment()">Post comment</button>
               <router-link v-if="!isAuthenticated" to="/login" class="button">Login to comment</router-link>
             </p>
           </div>
@@ -24,17 +38,79 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
 import DNWComment from "../components/dnwComment.vue";
 export default {
+  data() {
+    return {
+      sending: false,
+      success: false,
+      comment: "",
+      errors: []
+    }
+  },
   components: {
     "dnw-comment": DNWComment,
   },
   props: [
-    'comments'
+    'comments',
+    "linkId"
   ],
   computed: {
     ...mapGetters("authModule", ["isAuthenticated"])
+  },
+  methods: {
+    ...mapActions("linkModule", ["sendComment"]),
+    hasError(field) {
+      const errors = this.errors;
+      for(var i = 0; i < errors.length; i++){
+        const error = errors[i];
+        if(error.field === field){
+          return true;
+        }
+      }
+
+      return false;
+    },
+    getError(field) {
+      const errors = this.errors;
+      for(var i = 0; i < errors.length; i++){
+        const error = errors[i];
+        if(error.field === field){
+          return error.error;
+        }
+      }
+
+      return "";
+    },
+    sendComment() {
+      axios.post(`links/comment/${this.linkId}`, {
+        comment: this.comment
+      }).then(response => {
+        console.log(response);
+        let errors = [];
+        if(response.data && response.data.data){
+          errors = response.data.data.errors;
+        }
+
+        if(errors && errors.length > 0){
+          this.errors = errors;
+
+          return;
+        }
+
+        this.errors = [];
+        this.comment = "";
+        this.success = true;
+        setTimeout(() => {
+          this.success = false;
+        }, 5000);
+        // Notification
+      }).catch(err => {
+        // Notification
+      })
+    }
   }
 }
 </script>

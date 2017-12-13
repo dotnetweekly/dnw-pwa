@@ -3,8 +3,8 @@
   <div class="media-content">
     <div class="content">
       <p>
-        <router-link :to="`/users/${comment.user.username}`">
-          <strong>{{ comment.user.username }}</strong>
+        <router-link :to="`/users/${comment.user ? comment.user.username : ''}`">
+          <strong>{{ comment.user ? comment.user.username : "" }}</strong>
         </router-link>
         <br>
         {{ comment.content }}

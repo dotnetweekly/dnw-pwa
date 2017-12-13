@@ -3,7 +3,11 @@
     <div class="link-back-button"><a v-on:click="goBack()"><i class="icon-left-open" aria-hidden="true"></i> Back</a></div>
     <div class="columns link-title-wrapper">
       <div class="column upvote-column">
-        <dnw-upvote v-if="link.upvotes" class="column">{{link.upvotes.length}}</dnw-upvote>
+        <dnw-upvote class="column"
+        :linkId="link._id"
+        :hasUpvoted.sync="link.hasUpvoted"
+        :upvoteCount.sync="link.upvoteCount">
+        </dnw-upvote>
       </div>
       <div class="column">
         <h1 class="link-title">
@@ -21,7 +25,7 @@
     </div>
     <p class="link-content">{{link.content}}</p>
     <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
-    <dnw-comments v-bind:comments="link.comments"></dnw-comments>
+    <dnw-comments v-bind:linkId="link._id" v-bind:comments="link.comments"></dnw-comments>
   </div>
 </template>
 <script>

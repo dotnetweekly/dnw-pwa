@@ -13,7 +13,10 @@ const actions = {
 				})
 				.catch((error) => reject(error));
 		});
-	}
+  },
+  sendComment({ commit, state }, comment) {
+
+  }
 };
 
 export default actions;

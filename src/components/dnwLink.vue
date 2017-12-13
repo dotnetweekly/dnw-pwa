@@ -1,7 +1,11 @@
 <template>
   <div class="card card-padding content">
     <div class="columns card-padding constant-flex">
-      <dnw-upvote class="column upvote-column">{{link.upvotes.length}}</dnw-upvote>
+      <dnw-upvote class="column upvote-column"
+      :linkId="link._id"
+      :hasUpvoted.sync="link.hasUpvoted"
+      :upvoteCount.sync="link.upvoteCount">
+      </dnw-upvote>
       <div class="column link-content">
         <router-link :to="`/${link.category.slug}/${link.slug}`">
           <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>
@@ -22,7 +26,6 @@
 <script>
 import dnwUpvote from "../components/dnwUpvote";
 import dnwCategoryIcon from "./dnwCategoryIcon";
-
 export default {
   components: {
     "dnw-category-icon": dnwCategoryIcon,

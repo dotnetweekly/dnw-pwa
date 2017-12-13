@@ -4,6 +4,10 @@ import * as calendarHelper from '../../helpers/calendar';
 
 const actions = {
 	getLinks({ commit, state }, params) {
+    if(state.filter.category === params.category && state.filter.date === params.date){
+      return;
+    }
+
 		return new Promise((resolve, reject) => {
 			linksService
 				.getLinks(params)
