@@ -17,7 +17,7 @@
       <article v-show="!success" class="media">
         <div class="media-content">
           <div class="field">
-            <p class="control id-marginless">
+            <p class="control is-marginless">
               <textarea :class="{'textarea': true, 'is-danger': hasError('comment')}"
               v-model="comment" placeholder="Add a comment..."></textarea>
             </p>
@@ -25,7 +25,8 @@
           </div>
           <div class="field">
             <p class="control">
-              <button class="button" :disabled="sending" v-if="isAuthenticated" v-on:click="sendComment()">Post comment</button>
+              <button class="button" disabled v-show="sending && isAuthenticated">Post comment</button>
+              <button class="button" v-show="!sending" v-if="isAuthenticated" v-on:click="sendComment()">Post comment</button>
               <router-link v-if="!isAuthenticated" to="/login" class="button">Login to comment</router-link>
             </p>
           </div>
@@ -41,6 +42,7 @@
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 import DNWComment from "../components/dnwComment.vue";
+import errorHelper from "../helpers/errors";
 export default {
   data() {
     return {
@@ -62,28 +64,7 @@ export default {
   },
   methods: {
     ...mapActions("linkModule", ["sendComment"]),
-    hasError(field) {
-      const errors = this.errors;
-      for(var i = 0; i < errors.length; i++){
-        const error = errors[i];
-        if(error.field === field){
-          return true;
-        }
-      }
-
-      return false;
-    },
-    getError(field) {
-      const errors = this.errors;
-      for(var i = 0; i < errors.length; i++){
-        const error = errors[i];
-        if(error.field === field){
-          return error.error;
-        }
-      }
-
-      return "";
-    },
+    ...errorHelper,
     sendComment() {
       axios.post(`links/comment/${this.linkId}`, {
         comment: this.comment

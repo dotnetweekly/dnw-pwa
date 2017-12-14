@@ -47,6 +47,17 @@ footer.footer {
   flex-wrap: wrap;
 }
 
+.dnwIconSmall {
+  background-color: $primary;
+  color: $white;
+  border-radius: 90px;
+  font-size: 100%;
+  padding: 0.5rem 0.6rem;
+  i:before{
+    line-height: 1.5rem;
+  }
+}
+
 .dnwIconLarge {
   background-color: $primary;
   color: $white;

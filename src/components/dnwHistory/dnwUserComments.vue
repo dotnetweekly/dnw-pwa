@@ -14,7 +14,7 @@
             </router-link>
           </span>
           </td>
-        <td>{{link.createdOn | formatDate}}</td>
+        <td class="history-date">{{link.createdOn | formatDate}}</td>
       </tr>
     </tbody>
   </table>
@@ -60,5 +60,11 @@
 <style scoped>
 .history-title{
   width: 70%;
+  max-width: 600px;
+}
+
+.history-date{
+  min-width: 200px;
+  width: 200px;
 }
 </style>

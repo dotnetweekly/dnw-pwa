@@ -114,6 +114,7 @@
 </template>
 <script>
   import axios from "axios";
+  import errorHelper from "../helpers/errors";
   export default {
     data() {
       return {
@@ -133,28 +134,7 @@
       this.success = false;
     },
     methods: {
-      hasError(field) {
-        const errors = this.errors;
-        for(var i = 0; i < errors.length; i++){
-          const error = errors[i];
-          if(error.field === field){
-            return true;
-          }
-        }
-
-        return false;
-      },
-      getError(field) {
-        const errors = this.errors;
-        for(var i = 0; i < errors.length; i++){
-          const error = errors[i];
-          if(error.field === field){
-            return error.error;
-          }
-        }
-
-        return "";
-      },
+      ...errorHelper,
       register() {
         this.isLoading = true;
         axios.post("/auth/register", { user: this.profile})

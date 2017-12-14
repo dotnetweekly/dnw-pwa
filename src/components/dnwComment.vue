@@ -25,3 +25,10 @@
     ]
   }
 </script>
+<style scoped>
+.content{
+  max-width: 600px;
+  display: inline-block;
+  word-break: break-all;
+}
+</style>

@@ -8,19 +8,17 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.firstName" placeholder="First Name">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
+        <p class="control is-expanded has-icons-left is-marginless">
+          <input :class="{'input': true, 'is-danger': hasError('firstName')}" type="text"
+          v-model="updatedUser.firstName" placeholder="First Name">
+          <span v-show="hasError('firstName')" class="help is-danger">{{getError("firstName")}}</span>
         </p>
       </div>
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.lastName" placeholder="Last Name">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
+        <p class="control is-expanded has-icons-left is-marginless">
+          <input :class="{'input': true, 'is-danger': hasError('lastName')}" type="text"
+          v-model="updatedUser.lastName" placeholder="Last Name">
+          <span v-show="hasError('lastName')" class="help is-danger">{{getError("lastName")}}</span>
         </p>
       </div>
     </div>
@@ -31,12 +29,11 @@
       <label class="label">Username</label>
     </div>
     <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.username" placeholder="Username">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
+      <div class="field is-marginless">
+        <p class="control is-expanded has-icons-left is-marginless">
+          <input :class="{'input': true, 'is-danger': hasError('username')}"
+          type="text" v-model="updatedUser.username" placeholder="Username">
+          <span v-show="hasError('username')" class="help is-danger">{{getError("username")}}</span>
         </p>
       </div>
     </div>
@@ -53,8 +50,10 @@
               @
             </a>
           </p>
-          <p class="control is-expanded">
-            <input class="input" type="text" v-bind:value="profile.twitter" placeholder="Twitter Username">
+          <p class="control is-expanded is-marginless">
+            <input :class="{'input': true, 'is-danger': hasError('twitter')}"
+            type="text" v-model="updatedUser.twitter" placeholder="Twitter Username">
+            <span v-show="hasError('twitter')" class="help is-danger">{{getError("twitter")}}</span>
           </p>
       </div>
     </div>
@@ -66,11 +65,25 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" v-bind:value="profile.github" placeholder="Github Username">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
+        <p class="control is-expanded has-icons-left is-marginless">
+          <input :class="{'input': true, 'is-danger': hasError('github')}"
+          type="text" v-model="updatedUser.github" placeholder="Github Username">
+          <span v-show="hasError('github')" class="help is-danger">{{getError("github")}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">New Password</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded has-icons-left is-marginless">
+          <input  :class="{'input': true, 'is-danger': hasError('comment')}" type="text"
+          v-model="updatedUser.password" placeholder="New Password">
+          <span v-show="hasError('password')" class="help is-danger">{{getError("password")}}</span>
         </p>
       </div>
     </div>
@@ -82,14 +95,14 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
+        <p class="control is-expanded has-icons-left is-marginless">
           <div class="control">
             <label class="radio">
-              <input type="radio" name="foobar">
+              <input v-model="updatedUser.subscribed" value="true" type="radio" name="foobar">
               Yes
             </label>
             <label class="radio">
-              <input type="radio" name="foobar" checked>
+              <input v-model="updatedUser.subscribed" value="false" type="radio" name="foobar" checked>
               No
             </label>
           </div>
@@ -105,7 +118,15 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left">
-          <a v-on:click="login()" class="button is-link is-medium ">Save</a>
+          <div v-show="success" class="dnwIconSmall is-pulled-left">
+            <p>
+              <span class="icon">
+                <i class="icon-ok" aria-hidden="true"></i>
+              </span>
+            </p>
+          </div>
+          <a v-if="!sending && !success" v-on:click="saveProfile()" class="button is-link is-medium is-pulled-left">Save</a>
+          <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
         </p>
       </div>
     </div>
@@ -121,9 +142,6 @@
       <div class="field">
         <p class="control is-expanded has-icons-left">
           <input class="input" type="text" placeholder="Change Email">
-          <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
-          </span>
         </p>
       </div>
     </div>
@@ -150,7 +168,7 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <dnw-user-history v-if="profile.username" :username="profile.username"></dnw-user-history>
+        <dnw-user-history v-if="updatedUser.username" :username="updatedUser.username"></dnw-user-history>
       </div>
     </div>
   </div>
@@ -158,14 +176,32 @@
 </div>
 </template>
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
 import dnwUserCard from "../components/dnwHistory/dnwUserHistory";
+import errorHelper from "../helpers/errors";
 
 const fetchInitialData = (store, route) => {
   return store.dispatch(`userModule/getProfile`);
 };
 
 export default {
+  data() {
+    return {
+      success: false,
+      sending: false,
+      errors: [],
+      updatedUser: {
+        firstName: "",
+        lastName: "",
+        username: "",
+        password: "",
+        subscribed: true,
+        twitter: "",
+        github: ""
+      }
+    }
+  },
   components: {
     "dnw-user-history": dnwUserCard
   },
@@ -173,11 +209,45 @@ export default {
     ...mapGetters("userModule", ["profile"])
   },
   methods: {
+    ...errorHelper,
     loadData() {
       fetchInitialData(this.$store, this.$route);
+    },
+    saveProfile() {
+      this.sending = true;
+      axios.post(`user/profile`, this.updatedUser).then(response => {
+        this.sending = false;
+        let errors = [];
+        if(response.data && response.data.data){
+          errors = response.data.data.errors;
+        }else {
+          this.success = false;
+
+          return;
+        }
+
+        if(errors && errors.length > 0){
+          this.errors = errors;
+
+          return;
+        }
+
+        this.errors = [];
+        this.updatedUser.password = "";
+        this.success = true;
+        setTimeout(() => {
+          this.success = false;
+        }, 1000);
+        // Notification
+      }).catch(err => {
+        // Notification
+      })
     }
   },
   watch: {
+    profile(to, from) {
+      this.updatedUser = to;
+    },
     $route(to, from) {
       this.loadData();
     }
