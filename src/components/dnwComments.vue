@@ -69,7 +69,6 @@ export default {
       axios.post(`links/comment/${this.linkId}`, {
         comment: this.comment
       }).then(response => {
-        console.log(response);
         let errors = [];
         if(response.data && response.data.data){
           errors = response.data.data.errors;

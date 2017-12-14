@@ -81,9 +81,24 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input  :class="{'input': true, 'is-danger': hasError('comment')}" type="text"
-          v-model="updatedUser.password" placeholder="New Password">
-          <span v-show="hasError('password')" class="help is-danger">{{getError("password")}}</span>
+          <input  :class="{'input': true, 'is-danger': hasError('newPassword')}" type="text"
+          v-model="updatedUser.newPassword" placeholder="New Password">
+          <span v-show="hasError('newPassword')" class="help is-danger">{{getError("newPassword")}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Email</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded has-icons-left is-marginless">
+          <input  :class="{'input': true, 'is-danger': hasError('email')}" type="text"
+          v-model="updatedUser.email" placeholder="Email">
+          <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
         </p>
       </div>
     </div>
@@ -136,34 +151,6 @@
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Change Email</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" placeholder="Change Email">
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label"></label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <a v-on:click="login()" class="button is-link is-medium ">Change Email</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="separator"></div>
-
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
       <label class="label"></label>
     </div>
     <div class="field-body">
@@ -195,10 +182,11 @@ export default {
         firstName: "",
         lastName: "",
         username: "",
-        password: "",
+        newPassword: "",
         subscribed: true,
         twitter: "",
-        github: ""
+        github: "",
+        email: ""
       }
     }
   },
@@ -233,7 +221,7 @@ export default {
         }
 
         this.errors = [];
-        this.updatedUser.password = "";
+        this.updatedUser.newPassword = "";
         this.success = true;
         setTimeout(() => {
           this.success = false;

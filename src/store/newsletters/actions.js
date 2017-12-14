@@ -13,7 +13,6 @@ const actions = {
 					if (state) {
 						Object.assign(state, {}, defaultState);
 					}
-					console.log(response);
 					state.newsletters = response;
 					resolve();
 				})
