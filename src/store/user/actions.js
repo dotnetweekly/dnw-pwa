@@ -1,5 +1,6 @@
 import userService from "../../services/user.service";
 import defaultState from "./defaultState";
+import router from "../../router"
 
 const actions = {
   getProfile({ commit, state }, params) {
@@ -10,7 +11,9 @@ const actions = {
           state.profile = response;
           resolve();
         })
-        .catch(error => reject(error));
+        .catch(error => {
+          router.push("/");
+        });
     });
   }
 };

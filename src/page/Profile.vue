@@ -228,7 +228,7 @@ export default {
         }, 1000);
         // Notification
       }).catch(err => {
-        // Notification
+        this.$router.push("/");
       })
     }
   },

@@ -12,6 +12,8 @@ import Profile from './page/Profile.vue';
 import User from './page/User.vue';
 import SingleLink from './page/SingleLink.vue';
 import Newsletters from './page/Newsletters.vue';
+import UpdateEmail from './page/UpdateEmail.vue';
+import ForgotPassword from './page/ForgotPassword.vue';
 
 Vue.use(VueRouter);
 
@@ -25,7 +27,9 @@ const router = new VueRouter({
 		{ path: '/newsletters', component: Newsletters },
 		{ path: '/login', components: { modal: Login } },
 		{ path: '/register', component: Register },
+		{ path: '/forgot-password', component: ForgotPassword },
 		{ path: '/activate/:key?', component: Activate },
+		{ path: '/updateEmail/:key?', component: UpdateEmail },
 		{ path: '/add', component: AddLink },
 		{ path: '/profile', component: Profile },
 		{ path: '/users/:username', component: User },

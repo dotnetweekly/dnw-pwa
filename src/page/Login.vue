@@ -54,7 +54,7 @@ export default {
         .then(() => {
           this.email = "";
           this.password = "";
-          this.goBack({ router: this.$router, route: this.$route });
+          this.$router.push("/profile");
         });
     }
   }

@@ -25,13 +25,14 @@
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters("authModule", ["latestPath"])
+    ...mapGetters("authModule", ["latestPath", "isAuthenticated"])
   },
   methods: {
     closeModal() {
       if (typeof window === "undefined") {
         return;
       }
+
       if (this.$route.query && this.$route.query.redirect) {
         this.$router.push(this.$route.query.redirect);
 

@@ -1,6 +1,6 @@
 <template>
   <div v-if="link">
-    <div class="link-back-button"><a v-on:click="goBack()"><i class="icon-left-open" aria-hidden="true"></i> Back</a></div>
+    <div class="link-back-button"><a v-on:click="goBackLink()"><i class="icon-left-open" aria-hidden="true"></i> Back</a></div>
     <div class="columns link-title-wrapper">
       <div class="column upvote-column">
         <dnw-upvote class="column"
@@ -52,7 +52,7 @@ export default {
     loadLink() {
       fetchInitialData(this.$store, this.$route);
     },
-    goBack(link) {
+    goBackLink(link) {
 
       if (typeof window === "undefined") {
         return;
