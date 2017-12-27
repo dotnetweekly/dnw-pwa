@@ -9,9 +9,11 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" placeholder="Link's Title">
-        </p>
+        <div class="control is-expanded has-icons-left">
+          <input :class="{'input': true, 'is-danger': hasError('title')}" v-model="link.title"
+          type="text" placeholder="Breaking Down Dependency Injection and Inversion of Control in C# with SimpleInjector">
+        </div>
+        <p v-show="hasError('title')" class="help is-danger">{{getError("title")}}</p>
       </div>
     </div>
   </div>
@@ -22,9 +24,10 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <input class="input" type="text" placeholder="Resource Url">
-        </p>
+        <div class="control is-expanded has-icons-left">
+          <input :class="{'input': true, 'is-danger': hasError('url')}" type="text" v-model="link.url" placeholder="http://chris.bohatka.com/breaking-down-dependency-injection-and-inversion-of-control-in-csharp-with-simpleinjector/">
+        </div>
+        <p v-show="hasError('url')" class="help is-danger">{{getError("url")}}</p>
       </div>
     </div>
   </div>
@@ -36,15 +39,17 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left">
-          <div class="select is-full-width">
-            <select class="is-full-width">
-              <option>Articles</option>
-              <option>Books</option>
-              <option>Events/ Training</option>
-              <option>Libraries/ Tools</option>
-              <option>Videos</option>
-            </select>
+          <div :class="{'select': true, 'is-full-width': true, 'is-danger': hasError('category')}">
+            <multiselect
+              v-model="link.category"
+              :options="categoryOptions"
+              :multiple="false"
+              track-by="_id"
+              :custom-label="customLabel"
+              >
+            </multiselect>
           </div>
+          <p v-show="hasError('category')" class="help is-danger">{{getError("category")}}</p>
         </div>
       </div>
     </div>
@@ -58,14 +63,15 @@
       <div class="field">
         <div class="control is-expanded has-icons-left">
           <multiselect
-            v-model="value"
-            :options="options"
+            v-model="link.tags"
+            :options="tagOptions"
             :multiple="true"
-            track-by="library"
+            track-by="_id"
             :custom-label="customLabel"
             >
           </multiselect>
         </div>
+        <p v-show="hasError('tags')" class="help is-danger">{{getError("tags")}}</p>
       </div>
     </div>
   </div>
@@ -77,8 +83,10 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left">
-          <textarea class="textarea" placeholder="e.g. No HTML Supported"></textarea>
+          <textarea :class="{'textarea': true, 'is-danger': hasError('content')}" v-model="link.content"
+          rows="13" ref="editorText" placeholder=""></textarea>
         </div>
+        <p v-show="hasError('content')" class="help is-danger">{{getError("content")}}</p>
       </div>
     </div>
   </div>
@@ -89,9 +97,16 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <a v-on:click="login()" class="button is-link is-medium ">Save</a>
-        </p>
+        <div v-show="success" class="dnwIconSmall is-pulled-left">
+          <p>
+            <span class="icon">
+              <i class="icon-ok" aria-hidden="true"></i>
+            </span>
+          </p>
+        </div>
+        <a v-if="!sending && !success" v-on:click="addLink()" class="button is-link is-medium is-pulled-left">Save</a>
+        <p class="dnwIconSuccessMessage" v-if="success">Link submitted, once approved it will appear in the front page!</p>
+        <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
       </div>
     </div>
   </div>
@@ -99,25 +114,94 @@
   </div>
 </template>
 <script>
-  import Multiselect from 'vue-multiselect'
+import Multiselect from "vue-multiselect";
+import tagService from "../services/tags.service";
+import categoryService from "../services/categories.service";
+import errorHelper from "../helpers/errors";
+import axios from "axios";
 
-  export default {
-    components: {
-      Multiselect
-    },
-    data() {
+export default {
+  components: {
+    Multiselect
+  },
+  data() {
     return {
-      value: {},
-      options: [
-        {	language: 'JavaScript', library: 'Vue.js' },
-        { language: 'JavaScript', library: 'Vue-Multiselect' },
-        { language: 'JavaScript', library: 'Vuelidate' }
-      ]
-    }},
-    methods: {
-      customLabel (option) {
-        return `${option.library} - ${option.language}`
+      success: false,
+      sending: false,
+      errors: [],
+      successMessage: "",
+      tagOptions: [],
+      categoryOptions: [],
+      link: {
+        title: "",
+        url: "",
+        category: {},
+        content: "",
+        tags: []
       }
+    };
+  },
+  methods: {
+    ...errorHelper,
+    customLabel(option) {
+      return `${option.name}`;
+    },
+    addLink() {
+      axios
+        .post(`links`, this.link)
+        .then(response => {
+          let errors = [];
+          if (response.data && response.data.data) {
+            errors = response.data.data.errors;
+          }
+
+          if (errors && errors.length > 0) {
+            this.errors = errors;
+
+            return;
+          }
+
+          this.errors = [];
+          this.comment = "";
+          this.success = true;
+          this.link.title = "";
+          this.link.url = "";
+          this.link.content = "";
+          setTimeout(() => {
+            this.success = false;
+          }, 5000);
+        })
+        .catch(err => {});
+    }
+  },
+  mounted() {
+    tagService.getTags().then(response => {
+      if (response) {
+        this.tagOptions = response;
+        this.link.tags = this.tagOptions.filter(tag => {
+          return [".net", "c#", "visual studio"].indexOf(tag.name) > -1;
+        });
+      }
+    });
+    categoryService.getCategories().then(response => {
+      if (response) {
+        const options = response;
+        this.categoryOptions = response.filter(tag => {
+          return (
+            [
+              "articles",
+              "books",
+              "events-training",
+              "libraries-tools",
+              "videos"
+            ].indexOf(tag.slug) > -1
+          );
+        });
+        this.link.category = this.categoryOptions[0];
+      }
+    });
+    this.$refs.editorText.placeholder =
+      "For years Dependency Injection and Inversion of Control seemed like buzz words to me. I would constantly hear about them at conferences and meetups when discussing testing and maintainability, though they always seemed to evade me. Part of it may have been imposter syndrome convincing me I wasn't quite there yet. \n\nIf you try to search these terms, you'll find the equivalent of technical texts and various framework pages explaining how to implement them in their specific flavor. For years, I lacked a clear definition of what these two patterns were; even after I had been using them for some time. I understand the how, but not necessarily the what or the why. In this post, we are going to take a look at what Dependency Injection and Inversion of Control are at their core; which is that they are design patterns. If you're new to development, hopefully these explanations can help you make sense of these patterns and how you can benefit from them.";
   }
-}
+};
 </script>

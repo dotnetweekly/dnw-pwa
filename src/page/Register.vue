@@ -14,12 +14,13 @@
     </div>
     <div v-show="!success" class="columns">
       <div class="column is-one-third">
-        Register today!<br/>With your account you can:
+        Register today!
         <ul>
           <li>Add community links</li>
           <li>Upvote</li>
           <li>Comment</li>
           <li>Advertise</li>
+          <li>Receive weekly newsletter</li>
         </ul>
       </div>
       <div class="column">
@@ -113,34 +114,38 @@
   </div>
 </template>
 <script>
-  import axios from "axios";
-  import errorHelper from "../helpers/errors";
-  export default {
-    data() {
-      return {
-        isLoading: false,
-        errors: [],
-        success: false,
-        profile: {
-          firstName: "",
-          lastName: "",
-          username: "",
-          email: "",
-          password: ""
-        }
+import axios from "axios";
+import errorHelper from "../helpers/errors";
+export default {
+  data() {
+    return {
+      isLoading: false,
+      errors: [],
+      success: false,
+      profile: {
+        firstName: "",
+        lastName: "",
+        username: "",
+        email: "",
+        password: ""
       }
-    },
-    mounted() {
-      this.success = false;
-    },
-    methods: {
-      ...errorHelper,
-      register() {
-        this.isLoading = true;
-        axios.post("/auth/register", { user: this.profile})
+    };
+  },
+  mounted() {
+    this.success = false;
+  },
+  methods: {
+    ...errorHelper,
+    register() {
+      this.isLoading = true;
+      axios
+        .post("/auth/register", { user: this.profile })
         .then(response => {
           this.isLoading = false;
-          if(response.data.data.errors && response.data.data.errors.length > 0){
+          if (
+            response.data.data.errors &&
+            response.data.data.errors.length > 0
+          ) {
             this.errors = response.data.data.errors;
             return;
           }
@@ -151,8 +156,8 @@
         })
         .catch(response => {
           // this.errors = response.errors;
-        })
-      }
+        });
     }
   }
+};
 </script>

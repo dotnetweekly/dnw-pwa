@@ -1,17 +1,17 @@
 <template>
 <div>
-  <h2>Forgot Password</h2>
+  <h2>Enter your new password</h2>
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Email</label>
+      <label class="label">New Password</label>
     </div>
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input  :class="{'input': true, 'is-danger': hasError('email')}" type="text"
-          v-model="email" placeholder="Email">
-          <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
+          <input  :class="{'input': true, 'is-danger': hasError('password')}" type="password"
+          v-model="password" placeholder="Password">
+          <span v-show="hasError('password')" class="help is-danger" v-html="getError('password')"></span>
         </p>
       </div>
     </div>
@@ -23,16 +23,17 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <div v-show="success" class="dnwIconSmall is-pulled-left">
-          <p>
-            <span class="icon">
-              <i class="icon-ok" aria-hidden="true"></i>
-            </span>
-          </p>
-        </div>
-        <a v-if="!sending && !success" v-on:click="forgotPassword()" class="button is-link is-medium is-pulled-left">Submit</a>
-        <p class="dnwIconSuccessMessage" v-if="success">Please visit your email address {{email}} to update your password.</p>
-        <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>
+        <p class="control is-expanded has-icons-left">
+          <div v-show="success" class="dnwIconSmall is-pulled-left">
+            <p>
+              <span class="icon">
+                <i class="icon-ok" aria-hidden="true"></i>
+              </span>
+            </p>
+          </div>
+          <a v-if="!sending && !success" v-on:click="forgotPassword()" class="button is-link is-medium is-pulled-left">Submit</a>
+          <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>
+        </p>
       </div>
     </div>
   </div>
@@ -46,20 +47,21 @@ import errorHelper from "../helpers/errors";
 export default {
   data() {
     return {
-      email: "",
       password: "",
       errors: [],
       sending: false,
-      success: true
+      success: false
     };
   },
   methods: {
     ...errorHelper,
     forgotPassword() {
+      const verifyKey = this.$route.params.key;
       this.sending = true;
+
       axios
-        .post(`user/forgotPassword`, {
-          email: this.email
+        .post(`auth/forgotPassword/${verifyKey}`, {
+          password: this.password
         })
         .then(response => {
           this.sending = false;
@@ -71,21 +73,16 @@ export default {
 
             return;
           }
+
+          this.password = "";
           this.success = true;
           this.errors = [];
 
           setTimeout(() => {
             this.success = false;
-            this.email = "";
-          }, 3000);
+          }, 1000);
         });
     }
   }
 };
 </script>
-<style scoped>
-.success-message {
-  padding-top: 0.5rem;
-  padding-left: 4rem;
-}
-</style>

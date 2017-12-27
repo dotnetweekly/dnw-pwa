@@ -28,44 +28,44 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import { mapActions } from "vuex";
-  export default {
-    data() {
-      return {
-        success: false,
-        noKey: false,
-        error: "",
-        running: false
-      }
-    },
-    methods: {
-      ...mapActions("authModule", {
-        setAuthToken: "setAuthToken",
-        goBack: "goBack"
-      }),
-    },
-    mounted() {
-      const verifyKey = this.$route.params.key;
-      if(!verifyKey){
-        this.noKey = true;
-      }
-      this.running = true;
-      axios.post("/auth/activate", { key: verifyKey })
+import axios from "axios";
+import { mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      success: false,
+      noKey: false,
+      error: "",
+      running: false
+    };
+  },
+  methods: {
+    ...mapActions("authModule", {
+      setAuthToken: "setAuthToken",
+      goBack: "goBack"
+    })
+  },
+  mounted() {
+    const verifyKey = this.$route.params.key;
+    if (!verifyKey) {
+      this.noKey = true;
+    }
+    this.running = true;
+    axios
+      .post("/auth/activate", { key: verifyKey })
       .then(response => {
         this.running = false;
-        if(response.data.data.error){
+        if (response.data.data.error) {
           this.noKey = true;
           this.error = response.data.data.error;
           return;
         }
         this.setAuthToken(response.data.data);
         this.success = true;
-        // this.goBack({ router: this.$router, route: this.$route });
       })
       .catch(response => {
         // this.errors = response.errors;
-      })
-    }
+      });
   }
+};
 </script>

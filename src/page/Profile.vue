@@ -110,18 +110,16 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left is-marginless">
-          <div class="control">
-            <label class="radio">
-              <input v-model="updatedUser.subscribed" value="true" type="radio" name="foobar">
-              Yes
-            </label>
-            <label class="radio">
-              <input v-model="updatedUser.subscribed" value="false" type="radio" name="foobar" checked>
-              No
-            </label>
-          </div>
-        </p>
+        <div class="control">
+          <label class="radio">
+            <input v-model="updatedUser.subscribed" value="true" type="radio" name="foobar">
+            Yes
+          </label>
+          <label class="radio">
+            <input v-model="updatedUser.subscribed" value="false" type="radio" name="foobar" checked>
+            No
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -132,17 +130,16 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
-          <div v-show="success" class="dnwIconSmall is-pulled-left">
-            <p>
-              <span class="icon">
-                <i class="icon-ok" aria-hidden="true"></i>
-              </span>
-            </p>
-          </div>
-          <a v-if="!sending && !success" v-on:click="saveProfile()" class="button is-link is-medium is-pulled-left">Save</a>
-          <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
-        </p>
+        <div v-show="success" class="dnwIconSmall is-pulled-left">
+          <p>
+            <span class="icon">
+              <i class="icon-ok" aria-hidden="true"></i>
+            </span>
+          </p>
+        </div>
+        <a v-if="!sending && !success" v-on:click="saveProfile()" class="button is-link is-medium is-pulled-left">Save</a>
+        <p class="dnwIconSuccessMessage" v-if="success">{{successMessage}}</p>
+        <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
       </div>
     </div>
   </div>
@@ -178,6 +175,7 @@ export default {
       success: false,
       sending: false,
       errors: [],
+      successMessage: "",
       updatedUser: {
         firstName: "",
         lastName: "",
@@ -188,7 +186,7 @@ export default {
         github: "",
         email: ""
       }
-    }
+    };
   },
   components: {
     "dnw-user-history": dnwUserCard
@@ -203,33 +201,38 @@ export default {
     },
     saveProfile() {
       this.sending = true;
-      axios.post(`user/profile`, this.updatedUser).then(response => {
-        this.sending = false;
-        let errors = [];
-        if(response.data && response.data.data){
-          errors = response.data.data.errors;
-        }else {
-          this.success = false;
+      axios
+        .post(`user/profile`, this.updatedUser)
+        .then(response => {
+          this.sending = false;
+          let errors = [];
+          if (response.data && response.data.data) {
+            errors = response.data.data.errors;
+          } else {
+            this.success = false;
 
-          return;
-        }
+            return;
+          }
 
-        if(errors && errors.length > 0){
-          this.errors = errors;
+          if (errors && errors.length > 0) {
+            this.errors = errors;
 
-          return;
-        }
+            return;
+          }
 
-        this.errors = [];
-        this.updatedUser.newPassword = "";
-        this.success = true;
-        setTimeout(() => {
-          this.success = false;
-        }, 1000);
-        // Notification
-      }).catch(err => {
-        this.$router.push("/");
-      })
+          this.errors = [];
+          this.updatedUser.newPassword = "";
+          this.success = true;
+          this.successMessage = response.data.data.successMessage;
+          setTimeout(() => {
+            this.success = false;
+            this.successMessage = "";
+          }, 3000);
+          // Notification
+        })
+        .catch(err => {
+          this.$router.push("/");
+        });
     }
   },
   watch: {
@@ -245,11 +248,3 @@ export default {
   }
 };
 </script>
-<style>
-.separator{
-  border-top: 1px solid rgba(219, 219, 219, 0.5);
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  font-size: 90%;
-}
-</style>

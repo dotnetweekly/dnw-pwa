@@ -3,6 +3,17 @@
   <dnw-menu></dnw-menu>
   <div class="column">
     <dnw-link v-for="link in links" v-bind:key="link._id" :link="link"></dnw-link>
+
+    <div v-if="links && links.length == 0 && olderLinks && olderLinks.length > 0">
+      <h2 class="has-text-centered">Oops, no links found for this week. Below you can see some older links</h2>
+      <p class="has-text-centered">
+        <span>Don't see the cool .NET link you found this week?</span>
+        <router-link to="/add">Add your favorite dotNET link</router-link>
+      </p>
+      <div class="separator"></div>
+      <dnw-link v-for="link in olderLinks" v-bind:key="link._id" :link="link"></dnw-link>
+    </div>
+
   </div>
 </div>
 </template>
@@ -18,8 +29,11 @@ const fetchInitialData = (store, route) => {
   route.params.category = route.params.category || "";
   route.params.date = Date.now();
 
-  if(route.params.week && route.params.year){
-    route.params.date = calendarHelper.getDateRangeOfWeek(route.params.week, route.params.year).from;
+  if (route.params.week && route.params.year) {
+    route.params.date = calendarHelper.getDateRangeOfWeek(
+      route.params.week,
+      route.params.year
+    ).from;
   }
   return store.dispatch(`linksModule/getLinks`, {
     week: route.params.week,
@@ -35,7 +49,7 @@ export default {
     "dnw-menu": dnwMenu
   },
   computed: {
-    ...mapGetters("linksModule", ["links"])
+    ...mapGetters("linksModule", ["links", "olderLinks"])
   },
   methods: {
     loadLinks() {

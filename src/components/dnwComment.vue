@@ -14,19 +14,14 @@
     </div>
   </div>
 </article>
-</article>
-
-    </div>
 </template>
 <script>
-  export default {
-    props: [
-      'comment'
-    ]
-  }
+export default {
+  props: ["comment"]
+};
 </script>
 <style scoped>
-.content{
+.content {
   max-width: 600px;
   display: inline-block;
   word-break: break-all;

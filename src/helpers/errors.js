@@ -1,9 +1,9 @@
 const errorHelper = {
   hasError(field) {
     const errors = this.errors;
-    for(var i = 0; i < errors.length; i++){
+    for (var i = 0; i < errors.length; i++) {
       const error = errors[i];
-      if(error.field === field){
+      if (error.field === field) {
         return true;
       }
     }
@@ -12,10 +12,10 @@ const errorHelper = {
   },
   getError(field) {
     const errors = this.errors;
-    for(var i = 0; i < errors.length; i++){
+    for (var i = 0; i < errors.length; i++) {
       const error = errors[i];
-      if(error.field === field){
-        return error.error.replace("{VALUE}", field);
+      if (error.field === field) {
+        return error.error.replace("{VALUE}", field).replace("{PATH}", field);
       }
     }
 
