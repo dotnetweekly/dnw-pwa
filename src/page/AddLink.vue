@@ -185,18 +185,7 @@ export default {
     });
     categoryService.getCategories().then(response => {
       if (response) {
-        const options = response;
-        this.categoryOptions = response.filter(tag => {
-          return (
-            [
-              "articles",
-              "books",
-              "events-training",
-              "libraries-tools",
-              "videos"
-            ].indexOf(tag.slug) > -1
-          );
-        });
+        this.categoryOptions = response;
         this.link.category = this.categoryOptions[0];
       }
     });

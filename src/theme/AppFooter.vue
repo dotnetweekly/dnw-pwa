@@ -5,10 +5,6 @@
         <div class="footer-menu has-text-left is-pulled-left">
           <router-link to="/newsletters">Newsletters</router-link>
           <router-link to="/about">About</router-link>
-          <router-link to="/advertise">Advertise</router-link>
-          <router-link to="/code-of-conduct">Code of Conduct</router-link>
-          <router-link to="/privacy-policy">Privacy Policy</router-link>
-          <router-link to="/terms-of-use">Terms of Use</router-link>
         </div>
         <div class="has-text-right is-pulled-right">
           <a href="https://twitter.com/dotnetweekly" target="_blank">

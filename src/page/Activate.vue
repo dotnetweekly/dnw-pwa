@@ -15,7 +15,6 @@
           <li><router-link to="/add">Add community links</router-link></li>
           <li><router-link to="/">Upvote</router-link></li>
           <li>Comment</li>
-          <li><router-link to="/add">Advertise</router-link></li>
         </ul>
       </div>
     </div>

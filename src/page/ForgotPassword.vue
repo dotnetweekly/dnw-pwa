@@ -50,7 +50,7 @@ export default {
       password: "",
       errors: [],
       sending: false,
-      success: true
+      success: false
     };
   },
   methods: {

@@ -19,7 +19,6 @@
           <li>Add community links</li>
           <li>Upvote</li>
           <li>Comment</li>
-          <li>Advertise</li>
           <li>Receive weekly newsletter</li>
         </ul>
       </div>
