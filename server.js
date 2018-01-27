@@ -1,7 +1,6 @@
 "use strict";
 
 process.env.VUE_ENV = "server";
-process.env.NODE_ENV = "development";
 const isProd = !(process.env.NODE_ENV === "development");
 const fs = require("fs");
 const path = require("path");
