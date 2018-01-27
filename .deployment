@@ -5,4 +5,4 @@ cp server.js ../wwwroot/server.js
 cp package.json ../wwwroot/package.json
 
 cd ../wwwroot
-npm install --only=production
+npm install
