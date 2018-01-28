@@ -5,10 +5,10 @@ rm -rf dist
 
 npm run build
 
-cp -i ./dist/ ../wwwroot/dist/
-cp -i ./index.html ../wwwroot/index.html
-cp -i ./server.js ../wwwroot/server.js
-cp -i ./package.json ../wwwroot/package.json
+cp -TR ./dist/ ../wwwroot/dist/
+cp -R ./index.html ../wwwroot/index.html
+cp -R ./server.js ../wwwroot/server.js
+cp -R ./package.json ../wwwroot/package.json
 
 cd ../wwwroot
 npm install --only=production
