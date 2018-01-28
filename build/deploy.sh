@@ -1,11 +1,15 @@
 npm install
 npm install --only=dev
+
+rm -rf build
+rm -rf dist
+
 npm run build
 
-cp ./dist/* ../wwwroot/dist/*
-cp ./index.html ../wwwroot/index.html
-cp ./server.js ../wwwroot/server.js
-cp ./package.json ../wwwroot/package.json
+cp -i ./dist ../wwwroot/dist
+cp -i ./index.html ../wwwroot/index.html
+cp -i ./server.js ../wwwroot/server.js
+cp -i ./package.json ../wwwroot/package.json
 
 cd ../wwwroot
 npm install --only=production
