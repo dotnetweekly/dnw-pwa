@@ -53,6 +53,10 @@ const indexHTML = (() => {
       ""
     );
     template = template.replace(
+      '<link href="/assets/styles.css" rel="stylesheet">',
+      ""
+    );
+    template = template.replace(
       '<script defer src="/assets/js/vendor.js"></script><script defer src="/assets/js/app.js"></script>',
       ""
     );
