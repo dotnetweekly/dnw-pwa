@@ -3,7 +3,6 @@
     <router-view name="modal"></router-view>
     <app-header></app-header>
     <section class="main-section section">
-      <div>{{process.env.DOMAIN_API}}</div>
       <div class="container content">
         <router-view></router-view>
       </div>
