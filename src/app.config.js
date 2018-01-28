@@ -1,5 +1,5 @@
 
-const apiDomain = process.env.API_DOMAIN || "http://localhost:3000/api/v1/";
+const apiDomain = process.env.DOMAIN_API || "http://localhost:3000/api/v1/";
 const client = process.env.CLIENT_DOMAIN || "http://localhost:5000/";
 
 const Config = {
