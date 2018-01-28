@@ -1,4 +1,5 @@
 npm install
+npm install --only=dev
 npm run build
 
 cp ./dist/* ../wwwroot/dist/*
