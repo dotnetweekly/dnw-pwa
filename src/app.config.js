@@ -8,8 +8,8 @@ const Config = {
   appThemeColor: "#287ab1",
   appBgColor: "#ffffff",
   appIcon: "assets/app-icon.png",
-  apiDomain: isProd ? "https://dnw-api.azurewebsites.net/api/v1/" : "http://localhost:3000/api/v1/",
-  client: isProd ? "https://dnw-pwa.azurewebsites.net/" : "http://localhost:5000/",
+  apiDomain: process.env.API_DOMAIN || "http://localhost:3000/api/v1/",
+  client: process.env.CLIENT_DOMAIN || "http://localhost:5000/",
   loadDbName: "dnwLocal",
   analyticsPath: "//www.google-analytics.com/analytics.js"
 };
