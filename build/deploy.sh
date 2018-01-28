@@ -9,6 +9,10 @@ cp -TR ./dist/ ../wwwroot/dist/
 cp -R ./index.html ../wwwroot/index.html
 cp -R ./server.js ../wwwroot/server.js
 cp -R ./package.json ../wwwroot/package.json
+cp -R ./src/assets/app-icon.png ../wwwroot/dist/assets/app-icon.png
+cp -R ./src/assets/favicon.ico ../wwwroot/dist/favicon.ico
+cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
+cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
 
 cd ../wwwroot
 npm install --only=production
