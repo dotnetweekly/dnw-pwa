@@ -7,7 +7,7 @@ const linksService = {
 		return new Promise((resolve, reject) => {
 			const path = `/newsletters`;
 			appCache
-				.get(path, 24 * 60 * 60 * 1000)
+				.get(path, 60 * 1000)
 				.then((response) => {
 					if (!response || !response.data) {
 						reject();

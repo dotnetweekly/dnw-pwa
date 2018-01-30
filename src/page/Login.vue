@@ -3,7 +3,14 @@
     <p>If you don't have an account <router-link to="/register">register here</router-link></p>
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input is-medium" v-model="email" type="email" placeholder="Email" autofocus>
+        <input
+        v-on:keyup.enter="login"
+        class="input is-medium"
+        v-model="email"
+        type="email"
+        placeholder="Email"
+        v-focus
+        >
         <span class="icon is-small is-left">
           <i class="icon-mail" aria-hidden="true"></i>
         </span>
@@ -11,7 +18,13 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" v-model="password" type="password" placeholder="Password">
+        <input
+        v-on:keyup.enter="login"
+        class="input is-medium"
+        v-model="password"
+        type="password"
+        placeholder="Password"
+        >
         <span class="icon is-small is-left">
           <i class="icon-lock" aria-hidden="true"></i>
         </span>

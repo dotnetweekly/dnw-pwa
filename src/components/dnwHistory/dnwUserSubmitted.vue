@@ -6,6 +6,12 @@
         <td class="history-title">Title</td>
         <td>Date</td>
       </tr>
+      <tr v-if="loading">
+        <td colspan="2">Loading...</td>
+      </tr>
+      <tr v-if="(!loading && links.length == 0)">
+        <td colspan="2">No Links Submitted</td>
+      </tr>
       <tr v-for="link in links" v-bind:key="link._id">
         <td class="history-title">
           <span class="is-full-width overflow-dotted">
@@ -18,7 +24,7 @@
       </tr>
     </tbody>
   </table>
-  <dnw-paging :totalPages="pages" :page.sync="page"></dnw-paging>
+  <dnw-paging :loading="loading" :totalPages="pages" :page.sync="page"></dnw-paging>
 </div>
 </template>
 <script>
@@ -34,7 +40,8 @@
       return {
         links: [],
         pages: 1,
-        page: 1
+        page: 1,
+        loading: false
       }
     },
     watch: {
@@ -45,14 +52,16 @@
     methods: {
       getLinks(page) {
         const username = this.username;
+        this.loading = true;
         userService.getHistory({ type:"submitted", page, username }).then(data => {
           this.pages = data.pages;
           this.links = data.links;
-          this.page = data.page;
+          // this.page = data.page;
+          this.loading = false;
         })
       }
     },
-    created() {
+    mounted() {
       this.getLinks(1);
     }
   }

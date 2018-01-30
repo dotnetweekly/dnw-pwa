@@ -10,6 +10,7 @@
 </template>
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   props: {
     hasUpvoted: Boolean,
@@ -18,6 +19,9 @@ export default {
       type: String,
       require: true
     }
+  },
+  computed: {
+    ...mapGetters("authModule", ["isAuthenticated"])
   },
   methods: {
     setUpvoted(status) {
@@ -52,6 +56,11 @@ export default {
       });
     },
     vote() {
+      if (!this.isAuthenticated) {
+        this.$router.push("/login");
+
+        return;
+      }
       if (this.hasUpvoted) {
         this.downvote();
       } else {

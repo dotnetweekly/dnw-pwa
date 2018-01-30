@@ -9,15 +9,26 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input :class="{'input': true, 'is-danger': hasError('firstName')}" type="text"
-          v-model="updatedUser.firstName" placeholder="First Name">
+          <input
+          v-on:keyup.enter="saveProfile"
+          :class="{'input': true, 'is-danger': hasError('firstName')}"
+          type="text"
+          v-model="updatedUser.firstName"
+          placeholder="First Name"
+          v-focus
+          >
           <span v-show="hasError('firstName')" class="help is-danger">{{getError("firstName")}}</span>
         </p>
       </div>
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input :class="{'input': true, 'is-danger': hasError('lastName')}" type="text"
-          v-model="updatedUser.lastName" placeholder="Last Name">
+          <input
+          v-on:keyup.enter="saveProfile"
+          :class="{'input': true, 'is-danger': hasError('lastName')}"
+          type="text"
+          v-model="updatedUser.lastName"
+          placeholder="Last Name"
+          >
           <span v-show="hasError('lastName')" class="help is-danger">{{getError("lastName")}}</span>
         </p>
       </div>
@@ -31,8 +42,13 @@
     <div class="field-body">
       <div class="field is-marginless">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input :class="{'input': true, 'is-danger': hasError('username')}"
-          type="text" v-model="updatedUser.username" placeholder="Username">
+          <input
+          v-on:keyup.enter="saveProfile"
+          :class="{'input': true, 'is-danger': hasError('username')}"
+          type="text"
+          v-model="updatedUser.username"
+          placeholder="Username"
+          >
           <span v-show="hasError('username')" class="help is-danger">{{getError("username")}}</span>
         </p>
       </div>
@@ -51,8 +67,13 @@
             </a>
           </p>
           <p class="control is-expanded is-marginless">
-            <input :class="{'input': true, 'is-danger': hasError('twitter')}"
-            type="text" v-model="updatedUser.twitter" placeholder="Twitter Username">
+            <input
+            v-on:keyup.enter="saveProfile"
+            :class="{'input': true, 'is-danger': hasError('twitter')}"
+            type="text"
+            v-model="updatedUser.twitter"
+            placeholder="Twitter Username"
+            >
             <span v-show="hasError('twitter')" class="help is-danger">{{getError("twitter")}}</span>
           </p>
       </div>
@@ -66,8 +87,13 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input :class="{'input': true, 'is-danger': hasError('github')}"
-          type="text" v-model="updatedUser.github" placeholder="Github Username">
+          <input
+          v-on:keyup.enter="saveProfile"
+          :class="{'input': true, 'is-danger': hasError('github')}"
+          type="text"
+          v-model="updatedUser.github"
+          placeholder="Github Username"
+          >
           <span v-show="hasError('github')" class="help is-danger">{{getError("github")}}</span>
         </p>
       </div>
@@ -81,8 +107,13 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input  :class="{'input': true, 'is-danger': hasError('newPassword')}" type="text"
-          v-model="updatedUser.newPassword" placeholder="New Password">
+          <input
+          v-on:keyup.enter="saveProfile"
+          :class="{'input': true, 'is-danger': hasError('newPassword')}"
+          type="text"
+          v-model="updatedUser.newPassword"
+          placeholder="New Password"
+          >
           <span v-show="hasError('newPassword')" class="help is-danger">{{getError("newPassword")}}</span>
         </p>
       </div>
@@ -96,8 +127,13 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input  :class="{'input': true, 'is-danger': hasError('email')}" type="text"
-          v-model="updatedUser.email" placeholder="Email">
+          <input
+          v-on:keyup.enter="saveProfile"
+          :class="{'input': true, 'is-danger': hasError('email')}"
+          type="text"
+          v-model="updatedUser.email"
+          placeholder="Email"
+          >
           <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
         </p>
       </div>
@@ -112,11 +148,24 @@
       <div class="field">
         <div class="control">
           <label class="radio">
-            <input v-model="updatedUser.subscribed" value="true" type="radio" name="foobar">
+            <input
+            v-on:keyup.enter="saveProfile"
+            v-model="updatedUser.subscribed"
+            value="true"
+            type="radio"
+            name="foobar"
+            >
             Yes
           </label>
           <label class="radio">
-            <input v-model="updatedUser.subscribed" value="false" type="radio" name="foobar" checked>
+            <input
+            v-on:keyup.enter="saveProfile"
+            v-model="updatedUser.subscribed"
+            value="false"
+            type="radio"
+            name="foobar"
+            checked
+            >
             No
           </label>
         </div>

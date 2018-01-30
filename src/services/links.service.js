@@ -12,7 +12,7 @@ const linksService = {
         filter.week
       }&year=${filter.year}`;
       appCache
-        .get(path, 0)
+        .get(path, 60 * 1000)
         .then(response => {
           if (!response || !response.data) {
             reject();
@@ -32,7 +32,7 @@ const linksService = {
     return new Promise((resolve, reject) => {
       const path = `/links/${slug}`;
       appCache
-        .get(path, 0)
+        .get(path, 60 * 1000)
         .then(response => {
           if (!response || !response.data) {
             reject();

@@ -9,4 +9,13 @@ Vue.filter('formatDate', function(value) {
 	}
 });
 
+Vue.directive('focus', {
+  inserted: function (el) {
+    setTimeout(() => {
+      el.focus()
+    }
+    ,0);
+  }
+})
+
 export default {};

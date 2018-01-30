@@ -9,8 +9,13 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input  :class="{'input': true, 'is-danger': hasError('email')}" type="text"
-          v-model="email" placeholder="Email">
+          <input v-on:keyup.enter="forgotPassword"
+          :class="{'input': true, 'is-danger': hasError('email')}"
+          type="text"
+          v-model="email"
+          placeholder="Email"
+          v-focus
+          >
           <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
         </p>
       </div>

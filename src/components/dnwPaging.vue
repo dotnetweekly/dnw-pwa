@@ -1,6 +1,6 @@
 <template>
   <div class="vwp-paging">
-    <div class="paging-wrapper">
+    <div class="paging-wrapper" v-if="!loading">
       <div class="paging-wrapper-inner">
         <div v-for="(item, index) in pages" class="paging-link" v-bind:key="index">
           <a v-if="(item != '...')"
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ["totalPages", "page"],
+  props: ["loading", "totalPages", "page"],
   data: () => {
     return {
       pages: [],
@@ -27,6 +27,9 @@ export default {
   },
   watch: {
     page() {
+      this.refreshPages(this.page);
+    },
+    totalPages() {
       this.refreshPages(this.page);
     }
   },

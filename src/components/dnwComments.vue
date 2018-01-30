@@ -94,7 +94,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   @import "../_variables";
   .dnw-comments {
     border-top: $line;
@@ -103,8 +103,12 @@ export default {
     font-size: 90%;
   }
 
-  .dnw-comments-wrapper{
+  .dnw-comments-wrapper {
     max-width: $tablet;
     margin: 0 auto;
+  }
+
+  .dnw-comments-wrapper .content p small {
+    font-size: 70%;
   }
 </style>

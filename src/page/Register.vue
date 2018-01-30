@@ -30,7 +30,13 @@
           <div class="field-body">
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
-                <input autofocus  :class="{ 'input': true, 'is-danger': hasError('firstName')}"  type="text" v-model="profile.firstName" placeholder="First Name">
+                <input
+                :class="{ 'input': true, 'is-danger': hasError('firstName')}"
+                type="text"
+                v-model="profile.firstName"
+                placeholder="First Name"
+                v-focus
+                >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
                 </span>
@@ -39,7 +45,12 @@
             </div>
             <div class="field">
               <p class="control is-expanded has-icons-left">
-                <input class="input" type="text" v-model="profile.lastName" placeholder="Last Name">
+                <input
+                class="input"
+                type="text"
+                v-model="profile.lastName"
+                placeholder="Last Name"
+                >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
                 </span>
@@ -54,7 +65,12 @@
           <div class="field-body">
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
-                <input :class="{ 'input': true, 'is-danger': hasError('username')}" type="text" v-model="profile.username" placeholder="Username">
+                <input
+                :class="{ 'input': true, 'is-danger': hasError('username')}"
+                type="text"
+                v-model="profile.username"
+                placeholder="Username"
+                >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
                 </span>
@@ -70,7 +86,12 @@
           <div class="field-body">
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
-                <input :class="{ 'input': true, 'is-danger': hasError('email')}" type="text" v-model="profile.email" placeholder="Email">
+                <input
+                :class="{ 'input': true, 'is-danger': hasError('email')}"
+                type="text"
+                v-model="profile.email"
+                placeholder="Email"
+                >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
                 </span>
@@ -86,7 +107,12 @@
           <div class="field-body">
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
-                <input :class="{ 'input': true, 'is-danger': hasError('password')}" type="password" v-model="profile.password" placeholder="Password">
+                <input
+                :class="{ 'input': true, 'is-danger': hasError('password')}"
+                type="password"
+                v-model="profile.password"
+                placeholder="Password"
+                >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
                 </span>

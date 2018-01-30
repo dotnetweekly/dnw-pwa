@@ -10,8 +10,13 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left">
-          <input :class="{'input': true, 'is-danger': hasError('title')}" v-model="link.title"
-          type="text" placeholder="Breaking Down Dependency Injection and Inversion of Control in C# with SimpleInjector">
+          <input v-on:keyup.enter="addLink"
+          :class="{'input': true, 'is-danger': hasError('title')}"
+          v-model="link.title"
+          type="text"
+          placeholder="Breaking Down Dependency Injection and Inversion of Control in C# with SimpleInjector"
+          v-focus
+          >
         </div>
         <p v-show="hasError('title')" class="help is-danger">{{getError("title")}}</p>
       </div>
@@ -25,7 +30,13 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left">
-          <input :class="{'input': true, 'is-danger': hasError('url')}" type="text" v-model="link.url" placeholder="http://chris.bohatka.com/breaking-down-dependency-injection-and-inversion-of-control-in-csharp-with-simpleinjector/">
+          <input
+          v-on:keyup.enter="addLink"
+          :class="{'input': true, 'is-danger': hasError('url')}"
+          type="text"
+          v-model="link.url"
+          placeholder="http://chris.bohatka.com/breaking-down-dependency-injection-and-inversion-of-control-in-csharp-with-simpleinjector/"
+          >
         </div>
         <p v-show="hasError('url')" class="help is-danger">{{getError("url")}}</p>
       </div>
