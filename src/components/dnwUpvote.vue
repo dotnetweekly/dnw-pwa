@@ -26,6 +26,7 @@ export default {
   methods: {
     setUpvoted(status) {
       const addVotes = (status ? 1 : -1);
+      this.$store.dispatch("linksModule/refreshLinks");
       this.$emit('update:hasUpvoted', status);
       this.$emit('update:upvoteCount', this.upvoteCount + addVotes);
     },

@@ -20,7 +20,7 @@ const userService = {
 		return new Promise((resolve, reject) => {
 			const path = `/user/${username}/${type}?page=${page}`;
 			appCache
-				.get(path, 60 * 1000)
+				.get(path, 0)
 				.then((response) => {
 					resolve(response.data.data);
 				})

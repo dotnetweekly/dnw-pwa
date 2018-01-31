@@ -23,7 +23,7 @@ const run = (task) => {
 const clear = () => exec('rimraf ./dist')
 const webpackClient = () => exec('cross-env NODE_ENV=production webpack --config ./build/webpack.client.config.js --progress --hide-modules')
 const webpackServer = () => exec('cross-env NODE_ENV=production webpack --config ./build/webpack.server.config.js --progress --hide-modules')
-const copyStaticAssets = () => { 
+const copyStaticAssets = () => {
   return new Promise((resolve, reject) => {
     for(var prop in staticAssets){
       fs.copySync(path.resolve(__dirname, prop), path.resolve(__dirname, staticAssets[prop]));

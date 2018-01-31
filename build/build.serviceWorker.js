@@ -99,6 +99,26 @@ const manifest = () => {
   console.log("Manifest Done")
 }
 
+const cleanIndex = () => {
+  fs.readFile((dirPath + "/index.html"), "utf-8", function(err, data){
+    data = data.replace(
+      '<link rel="stylesheet" href="/assets/styles.css">',
+      ""
+    );
+    data = data.replace(
+      '<link href="/assets/styles.css" rel="stylesheet">',
+      ""
+    );
+    data = data.replace(
+      '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
+      ""
+    );
+    data = data.replace(/type="text\/javascript"/, 'defer type="text/javascript"');
+    data = data.replace(/rel="stylesheet"/, 'media="all" rel="stylesheet"');
+    fs.writeFile((dirPath + "/index.html"), data, 'utf8');
+  });
+}
+
 const exec = () => {
   generateAssetHash()
   .then(() => copyServiceWorker())
@@ -106,6 +126,7 @@ const exec = () => {
     serviceWorker();
     appCache();
     manifest();
+    cleanIndex();
   })
 }
 
