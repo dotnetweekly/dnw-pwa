@@ -38,7 +38,7 @@ tasks.set('webpackClient', webpackClient);
 tasks.set('webpackServer', webpackServer);
 tasks.set('copyStaticAssets', copyStaticAssets);
 tasks.set('serviceWorker', sw.execSW);
-tasks.set('purifyCSS', purifyCSS);
+// tasks.set('purifyCSS', purifyCSS);
 
 tasks.set('build', () =>
   // run('serviceWorker')
@@ -47,7 +47,7 @@ tasks.set('build', () =>
   .then(() => Promise.all([run('webpackServer')]))
   .then(() => Promise.all([run('copyStaticAssets')]))
   .then(() => Promise.all([run('serviceWorker')]))
-  .then(() => Promise.all([run('purifyCSS')]))
+  // .then(() => Promise.all([run('purifyCSS')]))
 )
 
 run('build')

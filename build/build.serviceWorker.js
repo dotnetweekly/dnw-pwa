@@ -114,17 +114,17 @@ const cleanIndex = () => {
       '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
       ""
     );
-    data = data.replace(/type="text\/javascript"/, 'defer type="text/javascript"');
-    data = data.replace(/rel="stylesheet"/, 'media="all" rel="stylesheet"');
+    data = data.replace(/type="text\/javascript"/gim, 'defer type="text/javascript"');
+    data = data.replace(/rel="stylesheet"/gim, 'media="all" rel="stylesheet"');
     fs.writeFile((dirPath + "/index.html"), data, 'utf8');
-    return new Promise((resolve, reject) => {
+    /* return new Promise((resolve, reject) => {
       self.assetFiles.forEach(file => {
         if (file.match(/styles\..*?\.css$/)) {
           _exec(`purifycss ${dirPath}${file} ${dirPath}/assets/js/app.js --min --info --out ${dirPath}${file}`);
         }
         resolve();
       })
-    })
+    }) */
   });
 }
 
