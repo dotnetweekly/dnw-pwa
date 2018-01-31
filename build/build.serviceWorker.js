@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const md5 = require('md5')
 const recursive = require('recursive-readdir');
+const _exec = require('child_process').exec
 const config = require(path.resolve(__dirname, '../src/app.config.js'));
 const distFolder = 'dist/';
 const dirPath = path.resolve(__dirname,'../' + distFolder);
@@ -116,18 +117,26 @@ const cleanIndex = () => {
     data = data.replace(/type="text\/javascript"/, 'defer type="text/javascript"');
     data = data.replace(/rel="stylesheet"/, 'media="all" rel="stylesheet"');
     fs.writeFile((dirPath + "/index.html"), data, 'utf8');
+    return new Promise((resolve, reject) => {
+      self.assetFiles.forEach(file => {
+        if (file.match(/styles\..*?\.css$/)) {
+          _exec(`purifycss ${dirPath}${file} ${dirPath}/assets/js/app.js --min --info --out ${dirPath}${file}`);
+        }
+        resolve();
+      })
+    })
   });
 }
 
-const exec = () => {
+const execSW = () => {
   generateAssetHash()
   .then(() => copyServiceWorker())
   .then(() => {
     serviceWorker();
     appCache();
     manifest();
-    cleanIndex();
+    return cleanIndex();
   })
 }
 
-exports.exec = exec;
+exports.execSW = execSW;

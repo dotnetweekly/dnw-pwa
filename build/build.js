@@ -37,7 +37,7 @@ tasks.set('clear', clear);
 tasks.set('webpackClient', webpackClient);
 tasks.set('webpackServer', webpackServer);
 tasks.set('copyStaticAssets', copyStaticAssets);
-tasks.set('serviceWorker', sw.exec);
+tasks.set('serviceWorker', sw.execSW);
 tasks.set('purifyCSS', purifyCSS);
 
 tasks.set('build', () =>
