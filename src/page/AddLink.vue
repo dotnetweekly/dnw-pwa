@@ -115,9 +115,10 @@
             </span>
           </p>
         </div>
-        <a v-if="!sending && !success" v-on:click="addLink()" class="button is-link is-medium is-pulled-left">Save</a>
+        <a v-if="!sending && !success" v-on:click="executeRecaptcha" class="button is-link is-medium is-pulled-left">Save</a>
         <p class="dnwIconSuccessMessage" v-if="success">Link submitted, once approved it will appear in the front page!</p>
         <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
+        <recaptcha ref="recaptcha" @verify="addLink"></recaptcha>
       </div>
     </div>
   </div>
@@ -130,10 +131,16 @@ import tagService from "../services/tags.service";
 import categoryService from "../services/categories.service";
 import errorHelper from "../helpers/errors";
 import axios from "axios";
+import Recaptcha from '../components/recaptcha'
+
+function YourOnSubmitFn(){
+  alert("hi");
+}
 
 export default {
   components: {
-    Multiselect
+    Multiselect,
+    Recaptcha
   },
   data() {
     return {
@@ -157,9 +164,12 @@ export default {
     customLabel(option) {
       return `${option.name}`;
     },
-    addLink() {
+    executeRecaptcha () {
+      this.$refs.recaptcha.execute()
+    },
+    addLink(recaptchaKey) {
       axios
-        .post(`links`, this.link)
+        .post(`links?g-recaptcha-response=${recaptchaKey}`, this.link)
         .then(response => {
           let errors = [];
           if (response.data && response.data.data) {

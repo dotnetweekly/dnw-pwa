@@ -7,7 +7,7 @@
           <router-link to="/about">About</router-link>
         </div>
         <div class="has-text-right is-pulled-right">
-          <a href="https://twitter.com/dotnetweekly" target="_blank">
+          <a href="https://twitter.com/dotnetweekly" rel="noopener" target="_blank">
             <i class="icon-twitter" aria-hidden="true"></i> Follow Us
           </a>
         </div>

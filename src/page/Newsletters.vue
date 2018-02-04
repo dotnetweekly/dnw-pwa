@@ -5,19 +5,25 @@
   <div class="separator newsletter-separator"></div>
   <div class="columns" v-for="(row, weeksIndex) in rows" v-bind:key="weeksIndex">
     <div class="column card" v-for="(item, weekIndex) in row" v-bind:key="weekIndex">
-      <div class="">Week: {{item.week}} Year: {{item.year}}</div>
+      <a :href="newsletterDomain + 'issues/' + item.year + '/' + item.week">Week: {{item.week}} Year: {{item.year}}</a>
     </div>
   </div>
 </div>
 </template>
 <script>
   import { mapGetters } from "vuex";
+  import config from "../app.config"
 
   const fetchInitialData = (store, route) => {
     return store.dispatch(`newslettersModule/getNewsletters`, {});
   };
 
   export default {
+    data() {
+      return {
+        newsletterDomain: config.newsletterDomain
+      }
+    },
     computed: {
       ...mapGetters("newslettersModule", ["newsletters"]),
       rows() {

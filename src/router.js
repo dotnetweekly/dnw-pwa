@@ -4,6 +4,7 @@ import OfflineRedirect from "./theme/OfflineRedirect.vue";
 import Category from "./page/Category.vue";
 import NotFound from "./page/NotFound.vue";
 
+import About from "./page/About.vue";
 import Login from "./page/Login.vue";
 import Register from "./page/Register.vue";
 import Activate from "./page/Activate.vue";
@@ -25,6 +26,7 @@ const router = new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     { path: "/offline-redirect", component: OfflineRedirect },
+    { path: "/about", component: About },
     { path: "/newsletters", component: Newsletters },
     { path: "/login", components: { modal: Login } },
     { path: "/register", component: Register },

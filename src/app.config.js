@@ -6,10 +6,12 @@ const Config = {
   appThemeColor: "#287ab1",
   appBgColor: "#ffffff",
   appIcon: "assets/app-icon.png",
+  newsletterDomain: "http://localhost:6100/",
   apiDomain: "http://localhost:3000/api/v1/",
   client: "http://localhost:5000/",
   loadDbName: "dnwLocal",
-  analyticsPath: "//www.google-analytics.com/analytics.js"
+  analyticsPath: "//www.google-analytics.com/analytics.js",
+  recaptchaKey: "6LfWPkQUAAAAAJnias1Ez8xG21LEGGcn8UyZ2cUL"
 };
 
 module.exports = Config;
