@@ -130,7 +130,7 @@
               <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
               <p class="control is-expanded has-icons-left">
                 <a v-show="isLoading" disabled class="button is-loading is-link is-medium ">Loading</a>
-                <a v-show="!isLoading" v-on:click="register()" class="button is-link is-medium ">Register</a>
+                <a v-show="!isLoading" v-on:click="executeRecaptcha()" class="button is-link is-medium ">Register</a>
               </p>
             </div>
           </div>

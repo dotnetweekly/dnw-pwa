@@ -25,7 +25,9 @@
     methods: {
     ...errorHelper,
       executeRecaptcha () {
-        window.recaptchaComponent.execute(this.sendUpdateRequest);
+        setTimeout(() => {
+          window.recaptchaComponent.execute(this.sendUpdateRequest);
+        }, 100);
       },
       sendUpdateRequest(recaptchaKey) {
         const verifyKey = this.$route.params.key;

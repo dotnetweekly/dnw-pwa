@@ -34,6 +34,7 @@ import errorHelper from "../helpers/errors";
 export default {
   data() {
     return {
+      errors: [],
       success: false,
       noKey: false,
       error: "",
@@ -47,7 +48,9 @@ export default {
       goBack: "goBack"
     }),
     executeRecaptcha () {
-      window.recaptchaComponent.execute(this.activateAction);
+      setTimeout(() => {
+        window.recaptchaComponent.execute(this.activateAction);
+      }, 100);
     },
     activateAction(recaptchaKey) {
       const verifyKey = this.$route.params.key;
