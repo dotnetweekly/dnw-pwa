@@ -127,6 +127,7 @@
           </div>
           <div class="field-body">
             <div class="field">
+              <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
               <p class="control is-expanded has-icons-left">
                 <a v-show="isLoading" disabled class="button is-loading is-link is-medium ">Loading</a>
                 <a v-show="!isLoading" v-on:click="register()" class="button is-link is-medium ">Register</a>
@@ -161,10 +162,13 @@ export default {
   },
   methods: {
     ...errorHelper,
-    register() {
+    executeRecaptcha () {
+      window.recaptchaComponent.execute(this.register);
+    },
+    register(recaptchaKey) {
       this.isLoading = true;
       axios
-        .post("/auth/register", { user: this.profile })
+        .post(`/auth/register?g-recaptcha-response=${recaptchaKey}`, { user: this.profile })
         .then(response => {
           this.isLoading = false;
           if (

@@ -1,6 +1,6 @@
 <template>
   <div :class="{ 'upvote': true, 'has-text-centered': true, 'upvote-block': true, 'hasUpvoted': hasUpvoted }">
-    <a v-on:click="vote()" :class="{ 'upvote-block': true, 'has-text-centered': true } ">
+    <a v-on:click="executeRecaptcha" :class="{ 'upvote-block': true, 'has-text-centered': true } ">
       <i class="icon-up-open" aria-hidden="true"></i>
       <p>
         {{ upvoteCount }}
@@ -11,6 +11,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import errorHelper from "../helpers/errors";
 export default {
   props: {
     hasUpvoted: Boolean,
@@ -24,16 +25,20 @@ export default {
     ...mapGetters("authModule", ["isAuthenticated"])
   },
   methods: {
+    ...errorHelper,
+    executeRecaptcha () {
+      window.recaptchaComponent.execute(this.vote);
+    },
     setUpvoted(status) {
       const addVotes = (status ? 1 : -1);
       this.$store.dispatch("linksModule/refreshLinks");
       this.$emit('update:hasUpvoted', status);
       this.$emit('update:upvoteCount', this.upvoteCount + addVotes);
     },
-    upvote() {
+    upvote(recaptchaKey) {
       const self = this;
       this.$emit('update:hasUpvoted', true);
-      axios.post(`links/upvote/${this.linkId}`)
+      axios.post(`links/upvote/${this.linkId}?g-recaptcha-response=${recaptchaKey}`)
       .then(response => {
         if (response.data.success) {
           self.setUpvoted(true);
@@ -43,10 +48,10 @@ export default {
 
       });
     },
-    downvote() {
+    downvote(recaptchaKey) {
       const self = this;
       this.$emit('update:hasUpvoted', false);
-      axios.post(`links/downvote/${this.linkId}`)
+      axios.post(`links/downvote/${this.linkId}?g-recaptcha-response=${recaptchaKey}`)
       .then(response => {
         if (response.data.success) {
           self.setUpvoted(false);
@@ -56,16 +61,16 @@ export default {
 
       });
     },
-    vote() {
+    vote(recaptchaKey) {
       if (!this.isAuthenticated) {
         this.$router.push("/login");
 
         return;
       }
       if (this.hasUpvoted) {
-        this.downvote();
+        this.downvote(recaptchaKey);
       } else {
-        this.upvote();
+        this.upvote(recaptchaKey);
       }
     }
   }

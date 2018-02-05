@@ -37,7 +37,8 @@
               </span>
             </p>
           </div>
-          <a v-if="!sending && !success" v-on:click="forgotPassword()" class="button is-link is-medium is-pulled-left">Submit</a>
+          <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+          <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Submit</a>
           <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>
         </p>
       </div>
@@ -61,12 +62,15 @@ export default {
   },
   methods: {
     ...errorHelper,
-    forgotPassword() {
+    executeRecaptcha () {
+      window.recaptchaComponent.execute(this.forgotPassword);
+    },
+    forgotPassword(recaptchaKey) {
       const verifyKey = this.$route.params.key;
       this.sending = true;
 
       axios
-        .post(`auth/forgotPassword/${verifyKey}`, {
+        .post(`auth/forgotPassword/${verifyKey}?g-recaptcha-response=${recaptchaKey}`, {
           password: this.password
         })
         .then(response => {

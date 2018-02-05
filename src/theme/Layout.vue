@@ -9,17 +9,23 @@
     </section>
     <app-footer></app-footer>
     <ga-analytics ua="UA-31484897-2"></ga-analytics>
+    <recaptcha ref="recaptcha"></recaptcha>
   </div>
 </template>
 <script>
 import AppHeader from "./AppHeader.vue";
 import AppFooter from "./AppFooter.vue";
+import Recaptcha from '../components/recaptcha'
 import gaAnalytics from "../components/gaAnalytics.vue";
 export default {
   components: {
     "app-header": AppHeader,
     "app-footer": AppFooter,
-    "ga-analytics": gaAnalytics
+    "ga-analytics": gaAnalytics,
+    Recaptcha
+  },
+  mounted() {
+    window.recaptchaComponent = this.$refs.recaptcha;
   }
 };
 </script>

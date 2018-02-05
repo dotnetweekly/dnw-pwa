@@ -24,9 +24,10 @@
             <p v-show="hasError('comment')" class="help is-danger">{{getError("comment")}}</p>
           </div>
           <div class="field">
+            <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
             <p class="control">
               <button class="button" disabled v-show="sending && isAuthenticated">Post comment</button>
-              <button class="button" v-show="!sending" v-if="isAuthenticated" v-on:click="sendComment()">Post comment</button>
+              <button class="button" v-show="!sending" v-if="isAuthenticated" v-on:click="executeRecaptcha()">Post comment</button>
               <router-link v-if="!isAuthenticated" to="/login" class="button">Login to comment</router-link>
             </p>
           </div>
@@ -65,8 +66,11 @@ export default {
   methods: {
     ...mapActions("linkModule", ["sendComment"]),
     ...errorHelper,
-    sendComment() {
-      axios.post(`links/comment/${this.linkId}`, {
+    executeRecaptcha () {
+      window.recaptchaComponent.execute(this.sendComment);
+    },
+    sendComment(recaptchaKey) {
+      axios.post(`links/comment/${this.linkId}?g-recaptcha-response=${recaptchaKey}`, {
         comment: this.comment
       }).then(response => {
         let errors = [];

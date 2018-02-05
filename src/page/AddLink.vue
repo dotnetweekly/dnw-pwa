@@ -115,10 +115,10 @@
             </span>
           </p>
         </div>
+        <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
         <a v-if="!sending && !success" v-on:click="executeRecaptcha" class="button is-link is-medium is-pulled-left">Save</a>
         <p class="dnwIconSuccessMessage" v-if="success">Link submitted, once approved it will appear in the front page!</p>
         <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
-        <recaptcha ref="recaptcha" @verify="addLink"></recaptcha>
       </div>
     </div>
   </div>
@@ -131,16 +131,10 @@ import tagService from "../services/tags.service";
 import categoryService from "../services/categories.service";
 import errorHelper from "../helpers/errors";
 import axios from "axios";
-import Recaptcha from '../components/recaptcha'
-
-function YourOnSubmitFn(){
-  alert("hi");
-}
 
 export default {
   components: {
-    Multiselect,
-    Recaptcha
+    Multiselect
   },
   data() {
     return {
@@ -165,7 +159,7 @@ export default {
       return `${option.name}`;
     },
     executeRecaptcha () {
-      this.$refs.recaptcha.execute()
+      window.recaptchaComponent.execute(this.addLink);
     },
     addLink(recaptchaKey) {
       axios

@@ -1,6 +1,6 @@
 <template>
   <div
-  id="g-recaptcha"
+  :id="'recaptcha-' + widgetId"
   class="g-recaptcha"
   :data-sitekey="sitekey">
   </div>
@@ -13,11 +13,13 @@ export default {
   data () {
     return {
       sitekey: config.recaptchaKey,
-      widgetId: 0
+      widgetId: 0,
+      callback: () => {}
     }
   },
   methods: {
-    execute () {
+    execute (callback) {
+      this.callback = callback;
       window.grecaptcha.execute(this.widgetId)
     },
     reset () {
@@ -25,13 +27,14 @@ export default {
     },
     render () {
       if (window.grecaptcha) {
-        this.widgetId = window.grecaptcha.render('g-recaptcha', {
+        this.widgetId = window.grecaptcha.render(`recaptcha-${this.widgetId}`, {
           sitekey: this.sitekey,
           size: 'invisible',
           // the callback executed when the user solve the recaptcha
           callback: (response) => {
             // emit an event called verify with the response as payload
-            this.$emit('verify', response)
+            // this.$emit('verify', response)
+            this.callback(response);
             // reset the recaptcha widget so you can execute it again
             this.reset()
           }
@@ -40,6 +43,7 @@ export default {
     }
   },
   mounted () {
+    this.widgetId = this._uid;
     setTimeout(() => {
       this.render()
     }, 100)

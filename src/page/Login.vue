@@ -30,19 +30,22 @@
         </span>
       </p>
     </div>
+    <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
     <p class="is-pulled-right"><router-link to="/forgot-password">Forgot Password</router-link></p>
     <div class="is-text-right">
-      <a v-on:click="login()" class="button is-link is-medium ">Submit</a>
+      <a v-on:click="executeRecaptcha()" class="button is-link is-medium ">Submit</a>
     </div>
   </dnw-modal>
 </template>
 <script>
 import Modal from "../components/dnwModal.vue";
 import { mapGetters, mapActions } from "vuex";
+import errorHelper from "../helpers/errors";
 
 export default {
   data() {
     return {
+      errors: [],
       email: "",
       password: ""
     };
@@ -54,13 +57,18 @@ export default {
     ...mapGetters("authModule", ["isAuthenticated", "latestPath"])
   },
   methods: {
+    ...errorHelper,
     ...mapActions("authModule", {
       logout: "logout",
       goBack: "goBack"
     }),
-    login() {
+    executeRecaptcha () {
+      window.recaptchaComponent.execute(this.login);
+    },
+    login(recaptchaKey) {
       this.$store
         .dispatch("authModule/login", {
+          recaptchaKey,
           email: this.email,
           password: this.password
         })

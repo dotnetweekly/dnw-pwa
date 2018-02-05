@@ -186,8 +186,9 @@
             </span>
           </p>
         </div>
-        <a v-if="!sending && !success" v-on:click="saveProfile()" class="button is-link is-medium is-pulled-left">Save</a>
+        <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Save</a>
         <p class="dnwIconSuccessMessage" v-if="success">{{successMessage}}</p>
+        <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
         <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
       </div>
     </div>
@@ -248,10 +249,13 @@ export default {
     loadData() {
       fetchInitialData(this.$store, this.$route);
     },
-    saveProfile() {
+    executeRecaptcha () {
+      window.recaptchaComponent.execute(this.saveProfile);
+    },
+    saveProfile(recaptchaKey) {
       this.sending = true;
       axios
-        .post(`user/profile`, this.updatedUser)
+        .post(`user/profile?g-recaptcha-response=${recaptchaKey}`, this.updatedUser)
         .then(response => {
           this.sending = false;
           let errors = [];
