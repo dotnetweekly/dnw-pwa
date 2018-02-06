@@ -22,7 +22,7 @@
 	"homepage": "https://github.com/dotnetweekly/dnw-pwa#readme",
 	"scripts": {
 		"start": "cross-env NODE_ENV=production node server",
-		"dev": "rimraf ./dist && cross-env NODE_ENV=development && node server",
+		"dev": "rimraf ./dist && cross-env NODE_ENV=development && nodemon server",
 		"build": "node build/build.js",
 		"build:server": "cross-env NODE_ENV=production webpack --config ./build/webpack.server.config.js --progress --hide-modules"
 	},
@@ -68,9 +68,11 @@
 		"eslint-plugin-vue": "^2.1.0",
 		"extract-text-webpack-plugin": "^3.0.2",
 		"file-loader": "^1.1.5",
+		"fs-extra": "^4.0.2",
 		"html-webpack-plugin": "^2.30.1",
+		"md5": "^2.2.1",
 		"node-sass": "^4.7.2",
-		"nodemon": "^1.12.1",
+		"nodemon": "^1.14.12",
 		"purify-css": "^1.2.6",
 		"purifycss": "^1.2.6",
 		"purifycss-webpack": "^0.7.0",
@@ -82,8 +84,6 @@
 		"vue-template-compiler": "^2.5.8",
 		"webpack": "^3.8.1",
 		"webpack-dev-middleware": "^1.12.1",
-		"webpack-hot-middleware": "^2.20.0",
-		"fs-extra": "^4.0.2",
-		"md5": "^2.2.1"
+		"webpack-hot-middleware": "^2.20.0"
 	}
 }

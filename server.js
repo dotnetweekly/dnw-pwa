@@ -11,6 +11,7 @@ const favicon = require("serve-favicon");
 const serialize = require("serialize-javascript");
 const createBundleRenderer = require("vue-server-renderer")
   .createBundleRenderer;
+const seoOptimize = require("./seo");
 
 const allowCrossDomain = function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
@@ -88,13 +89,13 @@ app.get("*", (req, res) => {
   if (!renderer) {
     return res.end("waiting for compilation... refresh in a moment.");
   }
-
   const context = { url: req.url };
   renderer.renderToString(context, (err, html) => {
     if (err) {
       return res.sendStatus(500);
     }
     html = indexHTML.replace('<div id="app"></div>', html);
+    html = seoOptimize(html, req, res);
     html = html.replace(
       '<meta name="vue-state" />',
       `<script>window.__INITIAL_STATE__=${serialize(context.initialState, {
