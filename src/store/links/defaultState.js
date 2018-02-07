@@ -1,3 +1,6 @@
+import * as calendarHelper from "../../helpers/calendar";
+const date = Date.now();
+
 const defaultState = {
   links: [],
   olderLinks: [],
@@ -11,9 +14,9 @@ const defaultState = {
       { label: "Videos", value: "videos" }
     ],
     category: "",
-    date: Date.now(),
-    dateYear: "",
-    dateWeek: "",
+    date: date,
+    dateYear: calendarHelper.getWeek(new Date(date)),
+    dateWeek: (new Date(date)).getFullYear(),
     calendar: {}
   }
 };

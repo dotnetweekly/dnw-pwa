@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import config from "../app.config"
+  import config from "../../app.config"
 
 export default {
   data () {

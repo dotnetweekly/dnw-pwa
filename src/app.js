@@ -5,7 +5,9 @@ import store from './store';
 import router from './router';
 
 import axios from 'axios';
-import config from './app.config';
+import config from '../app.config';
+
+import setMetadata from "./helpers/metadata";
 
 axios.defaults.baseURL = config.apiDomain;
 
@@ -29,6 +31,7 @@ axios.interceptors.response.use(undefined, (err) => {
 });
 
 router.afterEach((to, from) => {
+  setMetadata(to.path);
 	if (from.path == '/login') {
 		return;
 	}

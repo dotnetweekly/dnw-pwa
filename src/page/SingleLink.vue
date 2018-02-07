@@ -33,6 +33,7 @@ import { mapGetters } from "vuex";
 import DNWComments from "../components/dnwComments.vue";
 import dnwCategoryIcon from "../components/dnwCategoryIcon";
 import dnwUpvote from "../components/dnwUpvote";
+import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
   return store.dispatch(`linkModule/getLink`, route.params.id);
@@ -46,7 +47,10 @@ export default {
   },
   computed: {
     ...mapGetters("linkModule", ["link"]),
-    ...mapGetters("authModule", ["latestPath"])
+    ...mapGetters("authModule", ["latestPath"]),
+    routeStateChange () {
+      return this.link
+    }
   },
   methods: {
     loadLink() {
@@ -74,6 +78,9 @@ export default {
   watch: {
     $route(to, from) {
       this.loadLink();
+    },
+    routeStateChange() {
+      setMetadata(this.$route.path, this.$store.state);
     }
   },
   prefetch: fetchInitialData,

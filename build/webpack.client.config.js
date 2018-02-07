@@ -2,7 +2,7 @@ const path = require('path')
 const base = require('./webpack.base.config')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const appConfig = require('../src/app.config.js')
+const appConfig = require('../app.config.js')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const config = Object.assign({}, base, {

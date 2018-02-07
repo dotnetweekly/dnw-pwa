@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 const md5 = require('md5')
 const recursive = require('recursive-readdir');
 const _exec = require('child_process').exec
-const config = require(path.resolve(__dirname, '../src/app.config.js'));
+const config = require(path.resolve(__dirname, '../app.config.js'));
 const distFolder = 'dist/';
 const dirPath = path.resolve(__dirname,'../' + distFolder);
 

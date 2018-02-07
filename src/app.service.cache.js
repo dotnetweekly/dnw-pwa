@@ -1,4 +1,4 @@
-import Config from "./app.config.js";
+import Config from "../app.config.js";
 import request from "axios";
 import localforage from "localforage";
 

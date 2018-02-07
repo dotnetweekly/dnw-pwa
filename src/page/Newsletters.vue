@@ -12,7 +12,7 @@
 </template>
 <script>
   import { mapGetters } from "vuex";
-  import config from "../app.config"
+  import config from "../../app.config"
 
   const fetchInitialData = (store, route) => {
     return store.dispatch(`newslettersModule/getNewsletters`, {});

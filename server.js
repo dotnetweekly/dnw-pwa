@@ -92,10 +92,13 @@ app.get("*", (req, res) => {
   const context = { url: req.url };
   renderer.renderToString(context, (err, html) => {
     if (err) {
+      if (!isProd) {
+        console.log(err);
+      }
       return res.sendStatus(500);
     }
     html = indexHTML.replace('<div id="app"></div>', html);
-    html = seoOptimize(html, req, res);
+    html = seoOptimize(html, req, context.initialState);
     html = html.replace(
       '<meta name="vue-state" />',
       `<script>window.__INITIAL_STATE__=${serialize(context.initialState, {

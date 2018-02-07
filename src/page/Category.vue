@@ -24,6 +24,7 @@ import { mapGetters } from "vuex";
 import dnwLink from "../components/dnwLink";
 import dnwMenu from "../components/dnwMenu";
 import * as calendarHelper from "../helpers/calendar";
+import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
   route.params.week = route.params.week || "";
@@ -51,7 +52,10 @@ export default {
     "dnw-menu": dnwMenu
   },
   computed: {
-    ...mapGetters("linksModule", ["links", "olderLinks"])
+    ...mapGetters("linksModule", ["links", "olderLinks", "filter"]),
+    filterDateChange () {
+      return this.filter.date
+    }
   },
   methods: {
     loadLinks() {
@@ -61,6 +65,9 @@ export default {
   watch: {
     $route(to, from) {
       this.loadLinks();
+    },
+    filterDateChange () {
+      setMetadata(this.$route.path, this.$store.state);
     }
   },
   prefetch: fetchInitialData,
