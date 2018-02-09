@@ -89,7 +89,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   @import "../styles/_singleLink";
   .upvote-column{
     width: 80px;

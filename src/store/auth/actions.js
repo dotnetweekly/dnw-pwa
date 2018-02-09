@@ -10,7 +10,7 @@ const actions = {
 		context.commit('logout');
 	},
 	login(context, credentials) {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			authService
 				.login(credentials)
 				.then((response) => {
@@ -18,10 +18,8 @@ const actions = {
 
 					resolve();
 				})
-				.catch(() => {
-					if (typeof window !== 'undefined') {
-						window.alert('Could not login!');
-					}
+				.catch((response) => {
+					reject(response);
 				});
 		});
 	},

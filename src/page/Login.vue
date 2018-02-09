@@ -5,7 +5,7 @@
       <p class="control has-icons-left has-icons-right">
         <input
         v-on:keyup.enter="login"
-        class="input is-medium"
+        :class="{'input is-medium': true, 'is-danger': hasError('email')}"
         v-model="email"
         type="email"
         placeholder="Email"
@@ -15,12 +15,13 @@
           <i class="icon-mail" aria-hidden="true"></i>
         </span>
       </p>
+      <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
     </div>
     <div class="field">
       <p class="control has-icons-left">
         <input
         v-on:keyup.enter="login"
-        class="input is-medium"
+        :class="{'input is-medium': true, 'is-danger': hasError('password')}"
         v-model="password"
         type="password"
         placeholder="Password"
@@ -29,8 +30,10 @@
           <i class="icon-lock" aria-hidden="true"></i>
         </span>
       </p>
+      <span v-show="hasError('password')" class="help is-danger">{{getError("password")}}</span>
     </div>
     <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+    <p v-show="error" class="help is-danger">{{ error }}</p>
     <p class="is-pulled-right"><router-link to="/forgot-password">Forgot Password</router-link></p>
     <div class="is-text-right">
       <a v-on:click="executeRecaptcha()" class="button is-link is-medium ">Submit</a>
@@ -46,6 +49,7 @@ export default {
   data() {
     return {
       errors: [],
+      error: "",
       email: "",
       password: ""
     };
@@ -72,10 +76,22 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(() => {
+        .then((response) => {
+          if (response && !response.success) {
+            this.errors = response.errors;
+
+            return;
+          }
           this.email = "";
           this.password = "";
           this.$router.push("/profile");
+        }).catch((response) => {
+          const data = response.data;
+          if (!data.success) {
+            this.errors = data.errors;
+
+            return;
+          }
         });
     }
   }

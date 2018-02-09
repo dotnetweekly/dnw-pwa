@@ -42,7 +42,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.render()
-    }, 100)
+    }, 1000)
   }
 }
 </script>
