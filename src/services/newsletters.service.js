@@ -5,7 +5,7 @@ import axios from 'axios';
 const linksService = {
 	getNewsletters(filter) {
 		return new Promise((resolve, reject) => {
-			const path = `/newsletters`;
+			const path = `${Config.newsletterDomain}api/v1/newsletters`;
 			appCache
 				.get(path, 0)
 				.then((response) => {

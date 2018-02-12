@@ -2,14 +2,20 @@
   <div>
     <div class="columns constant-flex dnwCalendarHeader">
       <div class="column date-arrow is-one-quarter has-text-right is-pointer"
-        v-on:click="getPreviousMonth">
-        <i class="icon-left-open" aria-hidden="true"></i>
+        v-on:click="getPreviousMonth(true)">
+        <router-link
+          :to="'/week/' + getPreviousMonth().week + '/year/' + getPreviousMonth().year">
+          <i class="icon-left-open" aria-hidden="true"></i>
+        </router-link>
       </div>
       <div class="column has-text-centered">{{getCurrentMonth()}} {{getCurrentYear()}}</div>
       <div  class="column date-arrow is-one-quarter has-text-left is-pointer"
-        v-on:click="getNextMonth"
+        v-on:click="getNextMonth(true)"
         v-show="isMonthInPast()">
-        <i class="icon-right-open" aria-hidden="true"></i>
+        <router-link
+          :to="'/week/' + getNextMonth().week + '/year/' + getNextMonth().year">
+          <i class="icon-right-open" aria-hidden="true"></i>
+        </router-link>
       </div>
       <div class="column date-arrow is-one-quarter disabled-arrow"
         v-show="!isMonthInPast()">
@@ -29,7 +35,13 @@
               weekInFuture: !isInPast(week.week, week.year)
             }"
             v-for="(week, index) in filterCalendar.weeks" v-bind:key="index">
-          <td v-on:click="setNewDate(week.days[0].date)">{{week.week}}</td>
+          <td v-on:click="setNewDate(week.days[0].date)">
+              <router-link v-if="isInPast(week.week, week.year)"
+              :to="'/week/' + week.week + '/year/' + week.year">
+                {{week.week}}
+              </router-link>
+              <span v-if="!isInPast(week.week, week.year)">{{week.week}}</span>
+          </td>
           <td v-for="(weekDay, dayIndex) in week.days"
               v-bind:class="{
                 dayInFuture: weekDay.inFuture,
@@ -37,7 +49,13 @@
                 disabled: isDayDisabled(weekDay.date)
               }"
               v-on:click="setNewDate(weekDay.date)"
-              v-bind:key="dayIndex">{{weekDay.date.getDate()}}</td>
+              v-bind:key="dayIndex">
+              <router-link v-if="!isDayDisabled(weekDay.date)"
+              :to="'/week/' + getDateWeek(weekDay.date) + '/year/' + getDateYear(weekDay.date)">
+                {{weekDay.date.getDate()}}
+              </router-link>
+              <span v-if="isDayDisabled(weekDay.date)">{{weekDay.date.getDate()}}</span>
+            </td>
         </tr>
       </tbody>
     </table>
@@ -82,7 +100,7 @@
       isDayDisabled(date) {
         return (date - Date.now() > 0)
       },
-      getNextMonth() {
+      getNextMonth(action) {
         const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
         let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
         lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
@@ -94,9 +112,13 @@
         const date = new Date(lastWeekFirstDay);
         const week = calendarHelper.getWeek(date);
         const year = date.getFullYear();
-        this.updatePath(week, year);
+        if (action) {
+          this.updatePath(week, year);
+          return;
+        }
+        return { week, year }
       },
-      getPreviousMonth() {
+      getPreviousMonth(action) {
         const firstWeek = this.filterCalendar.weeks[0];
         let firstWeekFirstDay = new Date(firstWeek.days[0].date);
         firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
@@ -104,7 +126,11 @@
         const date = new Date(firstWeekFirstDay);
         const week = calendarHelper.getWeek(date);
         const year = date.getFullYear();
-        this.updatePath(week, year);
+        if (action) {
+          this.updatePath(week, year);
+          return;
+        }
+        return { week, year }
       },
       isMonthInPast() {
         const date = new Date(this.filterDate);
@@ -126,6 +152,12 @@
         }
 
         return true;
+      },
+      getDateWeek(newDate) {
+        return calendarHelper.getWeek(new Date(newDate));
+      },
+      getDateYear(newDate) {
+        return (new Date(newDate)).getFullYear();
       },
       setNewDate(newDate) {
         if (this.isDayDisabled(newDate)) {
@@ -167,6 +199,10 @@
   }
 }
 
+.main-menu a {
+  color: $black;
+}
+
 .dnwCalendar{
   font-size: 70%;
 }
@@ -190,5 +226,8 @@ tr.current, tr.weekInPast:hover{
   background-color: $primary;
   color: #ffffff;
   cursor: pointer;
+  a {
+    color: $white;
+  }
 }
 </style>
