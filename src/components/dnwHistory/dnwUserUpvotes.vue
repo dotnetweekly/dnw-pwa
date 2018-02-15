@@ -15,7 +15,7 @@
       <tr v-for="link in links" v-bind:key="link._id">
         <td class="history-title">
           <span class="is-full-width overflow-dotted">
-            <router-link :to="`/${link.category.slug}/${link.slug}`">
+            <router-link :to="`/${link.category}/${link.slug}`">
               {{link.title}}
             </router-link>
           </span>

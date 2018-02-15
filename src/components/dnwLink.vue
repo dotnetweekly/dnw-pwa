@@ -7,8 +7,8 @@
       :upvoteCount.sync="link.upvoteCount">
       </dnw-upvote>
       <div class="column link-content">
-        <router-link :to="`/${link.category.slug}/${link.slug}`">
-          <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>
+        <router-link :to="`/${link.category}/${link.slug}`">
+          <dnw-category-icon :category="link.category" class="link-category-icon"></dnw-category-icon>
           <span>{{ link.title }}</span>
         </router-link>
         <p class="link-subline">
@@ -16,8 +16,8 @@
           <time :datetime="link.createdOn">{{ link.createdOn | formatDate }}</time>
         </p>
         <p class="link-tags">
-          <span v-for="tag in link.tags" v-bind:key="tag._id"
-            class="tag is-light">{{ tag.name }}</span>
+          <span v-for="tag in link.tags" v-bind:key="tag"
+            class="tag is-light">{{ tag }}</span>
         </p>
       </div>
     </div>

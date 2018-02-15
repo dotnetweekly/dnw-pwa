@@ -11,7 +11,7 @@
       </div>
       <div class="column">
         <h1 class="link-title">
-          <dnw-category-icon :category="link.category.slug" class="link-category-icon"></dnw-category-icon>{{link.title}}
+          <dnw-category-icon :category="link.category" class="link-category-icon"></dnw-category-icon>{{link.title}}
         </h1>
         <p class="link-subline">
           <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
@@ -72,7 +72,7 @@ export default {
         return;
       }
 
-      this.$router.push(this.link.category.slug);
+      this.$router.push(this.link.category);
     }
   },
   watch: {

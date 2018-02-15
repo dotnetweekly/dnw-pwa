@@ -55,8 +55,8 @@
               v-model="link.category"
               :options="categoryOptions"
               :multiple="false"
-              track-by="_id"
-              :custom-label="customLabel"
+              track-by="slug"
+              :custom-label="customLabelCategory"
               >
             </multiselect>
           </div>
@@ -77,8 +77,7 @@
             v-model="link.tags"
             :options="tagOptions"
             :multiple="true"
-            track-by="_id"
-            :custom-label="customLabel"
+            :custom-label="customLabelTag"
             >
           </multiselect>
         </div>
@@ -117,7 +116,7 @@
         </div>
         <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
         <a v-if="!sending && !success" v-on:click="executeRecaptcha" class="button is-link is-medium is-pulled-left">Save</a>
-        <p class="dnwIconSuccessMessage" v-if="success">Link submitted, once approved it will appear in the front page!</p>
+        <p class="dnwIconSuccessMessage" v-if="success">Link submitted, once approved it will appear on the front page!</p>
         <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
       </div>
     </div>
@@ -155,8 +154,11 @@ export default {
   },
   methods: {
     ...errorHelper,
-    customLabel(option) {
+    customLabelCategory(option) {
       return `${option.name}`;
+    },
+    customLabelTag(option) {
+      return `${option}`;
     },
     executeRecaptcha () {
       window.recaptchaComponent.execute(this.addLink);
@@ -194,7 +196,7 @@ export default {
       if (response) {
         this.tagOptions = response;
         this.link.tags = this.tagOptions.filter(tag => {
-          return [".net", "c#", "visual studio"].indexOf(tag.name) > -1;
+          return [".net", "c#", "visual-studio"].indexOf(tag) > -1;
         });
       }
     });

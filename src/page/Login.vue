@@ -33,7 +33,7 @@
       <span v-show="hasError('password')" class="help is-danger">{{getError("password")}}</span>
     </div>
     <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
-    <p v-show="error" class="help is-danger">{{ error }}</p>
+    <span v-show="error" class="help is-danger">{{ error }}</span>
     <p class="is-pulled-right"><router-link to="/forgot-password">Forgot Password</router-link></p>
     <div class="is-text-right">
       <a v-on:click="executeRecaptcha()" class="button is-link is-medium ">Submit</a>
