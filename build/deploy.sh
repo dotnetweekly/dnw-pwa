@@ -2,6 +2,7 @@ npm install
 npm install --only=dev
 
 rm -rf dist
+rm -rf ../wwwroot/dist
 sed -i 's/http:\/\/localhost:3000/https:\/\/dnw-api.azurewebsites.net/g' ./app.config.js
 sed -i 's/http:\/\/localhost:5000/https:\/\/dnw-admin.azurewebsites.net/g' ./app.config.js
 sed -i 's/http:\/\/localhost:6100/https:\/\/dnw-newsletter.azurewebsites.net/g' ./app.config.js
