@@ -3,6 +3,10 @@
     <div class="container">
       <router-link class="navbar-item main-logo" to="/" title="dotNET Weekly" exact>
         <img alt="dotNET Weekly" src="/assets/logo.jpg" /><span class="dnw-logo-txt">dotNET Weekly</span>
+        <div class="header-user-count tags has-addons">
+          <span class="tag"><i aria-hidden="true" class="icon-user"></i></span>
+          <span class="tag is-info">{{subscribers}}</span>
+        </div>
       </router-link>
       <div class="column tight"></div>
       <div class="header-menu">
@@ -28,7 +32,7 @@
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters("authModule", ["isAuthenticated"])
+    ...mapGetters("authModule", ["isAuthenticated", "subscribers"])
   },
   methods: {
     logout() {
@@ -110,11 +114,18 @@ a.navbar-item.main-logo {
     margin: 0 auto;
     display: inline-block;
   }
+  .header-user-count{
+    margin: 0 auto;
+    display: inline-block;
+  }
   .header-menu, .main-logo,
   .header-cta, .header-profile{
     display: inline-block;
     width: 100%;
     text-align: center;
+  }
+  .main-logo > img, .dnw-logo-txt{
+    vertical-align: middle;
   }
   .column.tight {
     display: none;

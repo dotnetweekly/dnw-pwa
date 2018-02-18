@@ -16,6 +16,7 @@ import Newsletters from "./page/Newsletters.vue";
 import UpdateEmail from "./page/UpdateEmail.vue";
 import ForgotPassword from "./page/ForgotPassword.vue";
 import ForgotPasswordActivate from "./page/ForgotPasswordActivate.vue";
+import Unsubscribe from "./page/Unsubscribe.vue";
 
 Vue.use(VueRouter);
 
@@ -23,7 +24,13 @@ const router = new VueRouter({
   mode: "history",
   linkActiveClass: "is-active",
   base: __dirname,
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
   routes: [
     { path: "/offline-redirect", component: OfflineRedirect },
     { path: "/about", component: About },
@@ -33,6 +40,7 @@ const router = new VueRouter({
     { path: "/forgot-password", component: ForgotPassword },
     { path: "/forgot-password/:key?", component: ForgotPasswordActivate },
     { path: "/activate/:key?", component: Activate },
+    { path: "/unsubscribe/:key?", component: Unsubscribe },
     { path: "/updateEmail/:key?", component: UpdateEmail },
     { path: "/add", component: AddLink },
     { path: "/profile", component: Profile },

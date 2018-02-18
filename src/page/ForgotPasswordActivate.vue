@@ -1,6 +1,9 @@
 <template>
 <div>
   <h2>Enter your new password</h2>
+  <div v-if="running">
+    Loading...
+  </div>
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
@@ -57,13 +60,25 @@ export default {
       password: "",
       errors: [],
       sending: false,
-      success: false
+      success: false,
+      recaptchaCheck: ""
     };
   },
   methods: {
     ...errorHelper,
     executeRecaptcha () {
-      window.recaptchaComponent.execute(this.forgotPassword);
+      this.running = true;
+      if(typeof window === "undefined") {
+        return;
+      }
+      this.recaptchaCheck = setInterval(() => {
+        if (window && window.grecaptcha) {
+          setTimeout(() => {
+            window.recaptchaComponent.execute(this.forgotPassword);
+          }, 0);
+          clearInterval(this.recaptchaCheck);
+        }
+      }, 100);
     },
     forgotPassword(recaptchaKey) {
       const verifyKey = this.$route.params.key;

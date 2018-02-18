@@ -56,23 +56,22 @@ export default {
     loadLink() {
       fetchInitialData(this.$store, this.$route);
     },
-    goBackLink(link) {
-
+    goBackLink() {
       if (typeof window === "undefined") {
         return;
       }
       if (this.$route.query && this.$route.query.redirect) {
-        this.$router.push(this.$route.query.redirect);
+        this.$router.push(`${this.$route.query.redirect}#${this.link._id}`);
 
         return;
       }
       if (this.latestPath) {
-        this.$router.push(this.latestPath);
+        this.$router.push(`${this.latestPath}#${this.link._id}`);
 
         return;
       }
 
-      this.$router.push(this.link.category);
+      this.$router.push(`${this.link.category}#${this.link._id}`);
     }
   },
   watch: {

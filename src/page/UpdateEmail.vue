@@ -19,14 +19,24 @@
       return {
         errors: [],
         noKey: false,
-        error: ""
+        error: "",
+        recaptchaCheck: ""
       }
     },
     methods: {
     ...errorHelper,
       executeRecaptcha () {
-        setTimeout(() => {
-          window.recaptchaComponent.execute(this.sendUpdateRequest);
+        if(typeof window === "undefined") {
+          return;
+        }
+        this.recaptchaCheck = setInterval(() => {
+          if (window && window.grecaptcha) {
+            setTimeout(() => {
+              window.recaptchaComponent.execute(this.sendUpdateRequest);
+            }, 100);
+            clearInterval(this.recaptchaCheck);
+            this.running = false;
+          }
         }, 100);
       },
       sendUpdateRequest(recaptchaKey) {

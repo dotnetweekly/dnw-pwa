@@ -27,7 +27,8 @@ export default {
   methods: {
     ...errorHelper,
     executeRecaptcha () {
-      window.recaptchaComponent.execute(this.vote);
+      // window.recaptchaComponent.execute(this.vote);
+      this.vote();
     },
     setUpvoted(status) {
       const addVotes = (status ? 1 : -1);

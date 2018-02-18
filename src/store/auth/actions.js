@@ -1,3 +1,4 @@
+import axios from "axios";
 import authService from '../../services/auth.service';
 import defaultState from './defaultState';
 import router from "../../router"
@@ -22,7 +23,13 @@ const actions = {
 					reject(response);
 				});
 		});
-	},
+  },
+  getCount(state, token) {
+    axios.get("/user/count")
+    .then(response => {
+      state.subscribers = response.data.data;
+    })
+  },
 	setAuthToken(context, token) {
 		context.commit('login', token);
 	},

@@ -16,6 +16,7 @@ if (typeof window !== "undefined") {
     if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
       state.isAuthenticated = true;
     }
+    actions.getCount(state);
   });
 }
 

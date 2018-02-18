@@ -2,7 +2,7 @@
   <dnw-modal>
     <p>If you don't have an account <router-link to="/register">register here</router-link></p>
     <div class="field">
-      <p class="control has-icons-left has-icons-right">
+      <p class="control has-icons-left has-icons-right is-marginless">
         <input
         v-on:keyup.enter="login"
         :class="{'input is-medium': true, 'is-danger': hasError('email')}"
@@ -18,7 +18,7 @@
       <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
     </div>
     <div class="field">
-      <p class="control has-icons-left">
+      <p class="control has-icons-left is-marginless">
         <input
         v-on:keyup.enter="login"
         :class="{'input is-medium': true, 'is-danger': hasError('password')}"
@@ -36,7 +36,8 @@
     <span v-show="error" class="help is-danger">{{ error }}</span>
     <p class="is-pulled-right"><router-link to="/forgot-password">Forgot Password</router-link></p>
     <div class="is-text-right">
-      <a v-on:click="executeRecaptcha()" class="button is-link is-medium ">Submit</a>
+      <a v-if="!sending" v-on:click="executeRecaptcha()" class="button is-link is-medium ">Submit</a>
+      <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>
     </div>
   </dnw-modal>
 </template>
@@ -51,7 +52,8 @@ export default {
       errors: [],
       error: "",
       email: "",
-      password: ""
+      password: "",
+      running: false
     };
   },
   components: {
@@ -67,6 +69,7 @@ export default {
       goBack: "goBack"
     }),
     executeRecaptcha () {
+      this.running = true;
       window.recaptchaComponent.execute(this.login);
     },
     login(recaptchaKey) {
@@ -84,6 +87,7 @@ export default {
           }
           this.email = "";
           this.password = "";
+          this.running = false;
           this.$router.push("/profile");
         }).catch((response) => {
           const data = response.data;

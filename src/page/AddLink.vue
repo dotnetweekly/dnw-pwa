@@ -1,7 +1,13 @@
 <template>
   <div>
 
-  <h1>Recommend a new link</h1>
+  <h1>Recommend a new community link</h1>
+  <article class="message is-info">
+    <div class="message-body">
+        Please recommend mostly personal blog posts, open source projects and community books, events and videos.<br/>
+        There will be an advertising section in the future, if you would like to promote your product or job listing.
+    </div>
+  </article>
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">

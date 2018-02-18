@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="running">
+      Loading...
+    </div>
     <div v-if="success" class="column has-text-centered">
       <p>
         <span class="dnwIconLarge icon is-large">
@@ -38,7 +41,8 @@ export default {
       success: false,
       noKey: false,
       error: "",
-      running: false
+      running: false,
+      recaptchaCheck: ""
     };
   },
   methods: {
@@ -48,8 +52,15 @@ export default {
       goBack: "goBack"
     }),
     executeRecaptcha () {
-      setTimeout(() => {
-        window.recaptchaComponent.execute(this.activateAction);
+      this.running = true;
+      if(typeof window === "undefined") {
+        return;
+      }
+      this.recaptchaCheck = setInterval(() => {
+        if (window && window.grecaptcha) {
+          window.recaptchaComponent.execute(this.activateAction);
+          clearInterval(this.recaptchaCheck);
+        }
       }, 100);
     },
     activateAction(recaptchaKey) {
@@ -71,11 +82,11 @@ export default {
           this.success = true;
         })
         .catch(response => {
-          // this.errors = response.errors;
+          this.errors = response.errors;
         });
     }
   },
-  mounted() {
+  created() {
     this.executeRecaptcha();
   }
 };

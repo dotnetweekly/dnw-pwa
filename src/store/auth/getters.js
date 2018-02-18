@@ -6,4 +6,8 @@ const latestPath = state => {
   return state.latestPath;
 };
 
-export default { isAuthenticated, latestPath };
+const subscribers = state => {
+  return state.subscribers;
+};
+
+export default { isAuthenticated, latestPath, subscribers };

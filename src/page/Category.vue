@@ -2,7 +2,7 @@
 <div class="columns">
   <dnw-menu></dnw-menu>
   <div class="column">
-    <dnw-link v-for="link in links" v-bind:key="link._id" :link="link"></dnw-link>
+    <dnw-link v-bind:id="link._id" v-for="link in links" v-bind:key="link._id" :link="link"></dnw-link>
 
     <div v-if="links && links.length == 0">
       <h2 class="has-text-centered">Oops, no links found for this week/category.
@@ -12,8 +12,12 @@
         <router-link to="/add">Add your favorite dotNET link</router-link>
       </p>
       <div class="separator"></div>
-      <dnw-link v-if="olderLinks && olderLinks.length > 0"
+      <dnw-link v-bind:id="link._id" v-if="olderLinks && olderLinks.length > 0"
         v-for="link in olderLinks" v-bind:key="link._id" :link="link"></dnw-link>
+      <div class="separator"></div>
+      <p class="has-text-centered">
+        A free weekly newsletter on .NET latest
+      </p>
     </div>
 
   </div>
@@ -55,11 +59,19 @@ export default {
     ...mapGetters("linksModule", ["links", "olderLinks", "filter"]),
     filterDateChange () {
       return this.filter.date
+    },
+    linkCount() {
+      return this.links.length + this.olderLinks.length;
     }
   },
   methods: {
     loadLinks() {
       fetchInitialData(this.$store, this.$route);
+    },
+    refreshScroll() {
+      if(typeof window !== "undefined" && this.$route.hash){
+        location.href = this.$route.hash;
+      }
     }
   },
   watch: {
@@ -71,6 +83,9 @@ export default {
     }
   },
   prefetch: fetchInitialData,
+  mounted() {
+    setTimeout(() => {this.refreshScroll();});
+  },
   created() {
     this.loadLinks();
   }

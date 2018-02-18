@@ -34,7 +34,7 @@
                 :class="{ 'input': true, 'is-danger': hasError('firstName')}"
                 type="text"
                 v-model="profile.firstName"
-                placeholder="First Name"
+                placeholder="First Name (required)"
                 v-focus
                 >
                 <span class="icon is-small is-left">
@@ -69,7 +69,7 @@
                 :class="{ 'input': true, 'is-danger': hasError('username')}"
                 type="text"
                 v-model="profile.username"
-                placeholder="Username"
+                placeholder="Username (required)"
                 >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
@@ -90,7 +90,7 @@
                 :class="{ 'input': true, 'is-danger': hasError('email')}"
                 type="text"
                 v-model="profile.email"
-                placeholder="Email"
+                placeholder="Email (required)"
                 >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
@@ -111,7 +111,7 @@
                 :class="{ 'input': true, 'is-danger': hasError('password')}"
                 type="password"
                 v-model="profile.password"
-                placeholder="Password"
+                placeholder="Password (required)"
                 >
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
