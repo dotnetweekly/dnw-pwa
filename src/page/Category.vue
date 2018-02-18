@@ -1,10 +1,13 @@
 <template>
 <div class="columns">
-  <dnw-menu></dnw-menu>
+  <div class="column is-one-quarter main-menu tight">
+    <dnw-menu></dnw-menu>
+    <div v-if="loading" class="menu-loading"></div>
+  </div>
   <div class="column">
     <dnw-link v-bind:id="link._id" v-for="link in links" v-bind:key="link._id" :link="link"></dnw-link>
 
-    <div v-if="links && links.length == 0">
+    <div v-if="!loading && links && links.length == 0">
       <h2 class="has-text-centered">Oops, no links found for this week/category.
         <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
       <p class="has-text-centered">
@@ -34,7 +37,8 @@ const fetchInitialData = (store, route) => {
   route.params.week = route.params.week || "";
   route.params.year = route.params.year || "";
   route.params.category = route.params.category || "";
-  route.params.date = Date.now();
+  route.params.date = new Date(Date.now());
+  route.params.date.setHours(0,0,0,0);
 
   if (route.params.week && route.params.year) {
     route.params.date = calendarHelper.getDateRangeOfWeek(
@@ -51,6 +55,11 @@ const fetchInitialData = (store, route) => {
 };
 
 export default {
+  data() {
+    return {
+      loading: false
+    }
+  },
   components: {
     "dnw-link": dnwLink,
     "dnw-menu": dnwMenu
@@ -76,10 +85,17 @@ export default {
   },
   watch: {
     $route(to, from) {
+      this.loading = true;
       this.loadLinks();
     },
     filterDateChange () {
+      this.loading = false;
       setMetadata(this.$route.path, this.$store.state);
+    },
+    linkCount (newData, oldData) {
+      if (newData != 0) {
+        this.loading = false;
+      }
     }
   },
   prefetch: fetchInitialData,
@@ -87,7 +103,18 @@ export default {
     setTimeout(() => {this.refreshScroll();});
   },
   created() {
+    this.loading = true;
     this.loadLinks();
   }
 };
 </script>
+<style>
+  .menu-loading {
+    position: absolute;
+    top: 0;
+    left: -1rem;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+</style>

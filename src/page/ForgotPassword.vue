@@ -9,7 +9,7 @@
     <div class="field-body">
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
-          <input v-on:keyup.enter="forgotPassword"
+          <input v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('email')}"
           type="text"
           v-model="email"

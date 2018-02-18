@@ -1,10 +1,6 @@
 <template>
 <div>
   <h2>Enter your new password</h2>
-  <div v-if="running">
-    Loading...
-  </div>
-
   <div class="field is-horizontal">
     <div class="field-label is-normal">
       <label class="label">New Password</label>
@@ -13,7 +9,7 @@
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="forgotPassword"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('password')}"
           type="password"
           v-model="password"
@@ -40,6 +36,9 @@
               </span>
             </p>
           </div>
+          <p class="dnwIconSuccessMessage" v-if="success">
+              Successfully changed your password!
+          </p>
           <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
           <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Submit</a>
           <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>
@@ -61,7 +60,8 @@ export default {
       errors: [],
       sending: false,
       success: false,
-      recaptchaCheck: ""
+      recaptchaCheck: "",
+      running: true
     };
   },
   methods: {
@@ -90,6 +90,7 @@ export default {
         })
         .then(response => {
           this.sending = false;
+          this.running = false;
           const errors = response.data.data.errors;
 
           if (errors && errors.length > 0) {

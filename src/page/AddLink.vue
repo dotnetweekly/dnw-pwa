@@ -16,7 +16,8 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left">
-          <input v-on:keyup.enter="addLink"
+          <input
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('title')}"
           v-model="link.title"
           type="text"
@@ -37,7 +38,7 @@
       <div class="field">
         <div class="control is-expanded has-icons-left">
           <input
-          v-on:keyup.enter="addLink"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('url')}"
           type="text"
           v-model="link.url"
@@ -99,7 +100,10 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left">
-          <textarea :class="{'textarea': true, 'is-danger': hasError('content')}" v-model="link.content"
+          <textarea
+          v-on:keyup.enter="executeRecaptcha"
+          :class="{'textarea': true, 'is-danger': hasError('content')}"
+          v-model="link.content"
           rows="13" ref="editorText" placeholder=""></textarea>
         </div>
         <p v-show="hasError('content')" class="help is-danger">{{getError("content")}}</p>

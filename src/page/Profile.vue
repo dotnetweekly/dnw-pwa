@@ -10,7 +10,7 @@
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="saveProfile"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('firstName')}"
           type="text"
           v-model="updatedUser.firstName"
@@ -23,7 +23,7 @@
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="saveProfile"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('lastName')}"
           type="text"
           v-model="updatedUser.lastName"
@@ -43,7 +43,7 @@
       <div class="field is-marginless">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="saveProfile"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('username')}"
           type="text"
           v-model="updatedUser.username"
@@ -68,7 +68,7 @@
           </p>
           <p class="control is-expanded is-marginless">
             <input
-            v-on:keyup.enter="saveProfile"
+            v-on:keyup.enter="executeRecaptcha"
             :class="{'input': true, 'is-danger': hasError('twitter')}"
             type="text"
             v-model="updatedUser.twitter"
@@ -88,7 +88,7 @@
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="saveProfile"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('github')}"
           type="text"
           v-model="updatedUser.github"
@@ -108,7 +108,7 @@
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="saveProfile"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('newPassword')}"
           type="text"
           v-model="updatedUser.newPassword"
@@ -128,7 +128,7 @@
       <div class="field">
         <p class="control is-expanded has-icons-left is-marginless">
           <input
-          v-on:keyup.enter="saveProfile"
+          v-on:keyup.enter="executeRecaptcha"
           :class="{'input': true, 'is-danger': hasError('email')}"
           type="text"
           v-model="updatedUser.email"
@@ -149,7 +149,7 @@
         <div class="control">
           <label class="radio">
             <input
-            v-on:keyup.enter="saveProfile"
+            v-on:keyup.enter="executeRecaptcha"
             v-model="updatedUser.subscribed"
             value="true"
             type="radio"
@@ -159,7 +159,7 @@
           </label>
           <label class="radio">
             <input
-            v-on:keyup.enter="saveProfile"
+            v-on:keyup.enter="executeRecaptcha"
             v-model="updatedUser.subscribed"
             value="false"
             type="radio"

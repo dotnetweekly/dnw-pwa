@@ -1,5 +1,5 @@
 <template>
-  <div class="column is-one-quarter main-menu tight">
+  <div>
     <p></p>
     <dnw-calendar></dnw-calendar>
     <p></p>

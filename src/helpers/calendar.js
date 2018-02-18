@@ -16,13 +16,6 @@ const monthNames = [
 const dayNames = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ];
 const monthDays = [ '31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31' ];
 
-const isISO = function(dateValue) {
-	const date = new Date(dateValue);
-	let checkDate = date.setDate(date.getDate() - date.getDay());
-	checkDate = new Date(checkDate);
-	return checkDate.getDay();
-};
-
 const getMonthName = function(number) {
 	return monthNames[number];
 };
@@ -47,17 +40,18 @@ const getWeek = function(dateValue) {
 
 const getDateRangeOfWeek = function(week, year) {
 	var date = new Date(year, 0, 1);
-	date.setDate(date.getDate() + week * 7);
-	return {
-		from: new Date(date.setDate(date.getDate() - 4)),
-		to: new Date(date.setDate(date.getDate() + 8))
-	};
+  date.setDate((week * 7));
+	const dateRange = {
+		from: new Date(date.setDate(date.getDate() - 6)),
+		to: new Date(date.setDate(date.getDate() + 6))
+  };
+  return dateRange;
 };
 
 const getFebruaryDays = function(dateValue) {
 	const date = new Date(dateValue);
 	if (date.getMonth() == 1) {
-		if ((date.getYear() % 100 != 0 && date.getYear() % 4 == 0) || date.getYear() % 400 == 0) {
+		if ((date.getFullYear() % 100 != 0 && date.getFullYear() % 4 == 0) || date.getFullYear() % 400 == 0) {
 			return 29;
 		} else {
 			return 28;
@@ -73,22 +67,21 @@ const getCalendar = function(date) {
 
 	let counter = 1;
 	const month = dateNow.getMonth();
-	let nextMonth = month + 1;
-	let day = dateNow.getDate();
-	let year = dateNow.getFullYear();
-	let nextDate = new Date(nextMonth + ' 1 ,' + year);
-	let weekdays = nextDate.getDay() - 1;
-	let weekdays2 = weekdays === -1 ? 0 : weekdays;
-	let numOfDays = dayPerMonth[month];
+  const year = dateNow.getFullYear();
+  let firstDay = new Date(year, month, counter);
+
+	let weekdays = firstDay.getDay() - 1;
+  let weekdays2 = weekdays === -1 ? 0 : weekdays;
+
+	const numOfDays = dayPerMonth[month];
 	let lastDayCounted = dateNow;
 
 	const weeks = [];
 	let week = [];
-	const firstDay = new Date(year, month, counter);
 
 	if (weekdays === -1) {
 		weekdays = 6;
-	}
+  }
 
 	while (weekdays > 0) {
 		firstDay.setDate(firstDay.getDate() - 1);
@@ -97,6 +90,7 @@ const getCalendar = function(date) {
 			week: getWeek(firstDay),
 			inPast: true
 		});
+
 		weekdays--;
 	}
 
@@ -145,7 +139,7 @@ const getCalendar = function(date) {
 		week: getWeek(week[0].date),
 		year: week[0].date.getFullYear(),
 		inFuture: true
-	});
+  });
 
 	return {
 		weeks,

@@ -20,6 +20,11 @@ const actions = {
     ) {
       return;
     }
+		Object.assign(state, {}, {
+      filter: state.filter,
+      olderLinks: [],
+      links: []
+    });
 
     return new Promise((resolve, reject) => {
       linksService

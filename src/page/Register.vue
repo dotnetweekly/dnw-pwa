@@ -31,6 +31,7 @@
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
                 <input
+                v-on:keyup.enter="executeRecaptcha"
                 :class="{ 'input': true, 'is-danger': hasError('firstName')}"
                 type="text"
                 v-model="profile.firstName"
@@ -46,6 +47,7 @@
             <div class="field">
               <p class="control is-expanded has-icons-left">
                 <input
+                v-on:keyup.enter="executeRecaptcha"
                 class="input"
                 type="text"
                 v-model="profile.lastName"
@@ -66,6 +68,7 @@
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
                 <input
+                v-on:keyup.enter="executeRecaptcha"
                 :class="{ 'input': true, 'is-danger': hasError('username')}"
                 type="text"
                 v-model="profile.username"
@@ -87,6 +90,7 @@
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
                 <input
+                v-on:keyup.enter="executeRecaptcha"
                 :class="{ 'input': true, 'is-danger': hasError('email')}"
                 type="text"
                 v-model="profile.email"
@@ -108,6 +112,7 @@
             <div class="field">
               <p class="control is-expanded has-icons-left is-marginless">
                 <input
+                v-on:keyup.enter="executeRecaptcha"
                 :class="{ 'input': true, 'is-danger': hasError('password')}"
                 type="password"
                 v-model="profile.password"
