@@ -13,7 +13,7 @@ const defaultState = {
       { label: "Videos", value: "videos" }
     ],
     category: "",
-    date: "",
+    date: new Date(Date.now()),
     dateYear: "",
     dateWeek: "",
     calendar: {}

@@ -14,17 +14,22 @@ const actions = {
   },
   getLinks({ commit, state }, params) {
     if (
-      state.filter.category === params.category &&
-      state.filter.date === params.date &&
-      !params.hardRefresh
+      state.filter.category == params.category &&
+      state.filter.dateYear == params.year &&
+      state.filter.dateWeek == params.week &&
+      (typeof params.hardRefresh === "undefined" ||
+      !params.hardRefresh)
     ) {
       return;
     }
-		Object.assign(state, {}, {
-      filter: state.filter,
-      olderLinks: [],
-      links: []
-    });
+
+    if (state.links.length !== 0 || state.olderLinks.length !== 0){
+      Object.assign(state, {}, {
+        filter: state.filter,
+        olderLinks: [],
+        links: []
+      });
+    }
 
     return new Promise((resolve, reject) => {
       linksService

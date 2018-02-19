@@ -103,7 +103,6 @@ export default {
     setTimeout(() => {this.refreshScroll();});
   },
   created() {
-    this.loading = true;
     this.loadLinks();
   }
 };
