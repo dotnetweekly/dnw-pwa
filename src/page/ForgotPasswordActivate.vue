@@ -107,6 +107,8 @@ export default {
           setTimeout(() => {
             this.success = false;
           }, 1000);
+        }).catch(error => {
+          this.running = false;
         });
     }
   }

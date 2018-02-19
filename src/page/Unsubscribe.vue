@@ -72,6 +72,7 @@
             this.success = true;
           })
           .catch(response => {
+            this.running = false;
             this.errors = response.errors;
           });
       }

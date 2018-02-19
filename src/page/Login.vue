@@ -90,6 +90,7 @@ export default {
           this.password = "";
           this.$router.push("/profile");
         }).catch((response) => {
+          this.running = false;
           const data = response.data;
           if (!data.success) {
             this.errors = data.errors;
