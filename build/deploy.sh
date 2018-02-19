@@ -1,5 +1,4 @@
 npm install
-npm install --only=dev
 
 rm -rf dist
 rm -rf ../wwwroot/dist
@@ -10,7 +9,7 @@ sed -i 's/http:\/\/localhost:6100/https:\/\/dnw-newsletter.azurewebsites.net/g' 
 npm run build
 
 cp -TR ./dist/ ../wwwroot/dist/
-cp -R ./index.html ../wwwroot/index.html
+cp -R ./index.html ../wwwroot/dist/assets/index.html
 cp -R ./seo.js ../wwwroot/seo.js
 cp -R ./router-meta.js ../wwwroot/router-meta.js
 cp -R ./server.js ../wwwroot/server.js

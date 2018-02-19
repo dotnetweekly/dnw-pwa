@@ -37,7 +37,7 @@
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Username</label>
+      <label class="label">Username (public)</label>
     </div>
     <div class="field-body">
       <div class="field is-marginless">
@@ -57,7 +57,7 @@
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Twitter</label>
+      <label class="label">Twitter (public)</label>
     </div>
     <div class="field-body">
       <div class="field has-addons">
@@ -82,7 +82,7 @@
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Github</label>
+      <label class="label">Github (public)</label>
     </div>
     <div class="field-body">
       <div class="field">

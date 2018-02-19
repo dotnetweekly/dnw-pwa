@@ -48,7 +48,7 @@ const strictTransportSecurity = function (req, res, next) {
 const indexHTML = (() => {
   let template = "";
   if (isProd) {
-    template = fs.readFileSync(resolve("./dist/index.html"), "utf-8");
+    template = fs.readFileSync(resolve("./dist/assets/index.html"), "utf-8");
   } else {
     template = fs.readFileSync(resolve("./index.html"), "utf-8");
   }

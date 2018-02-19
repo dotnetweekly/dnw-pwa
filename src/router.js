@@ -52,7 +52,8 @@ const router = new VueRouter({
       params: { category: "" }
     },
     { path: "/:category/week/:week/year/:year", component: Category },
-    { path: "/", component: Category },
+    { path: "/", component: Category,
+    params: { category: "" } },
     { path: "*", component: NotFound }
   ]
 });

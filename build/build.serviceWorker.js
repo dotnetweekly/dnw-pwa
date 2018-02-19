@@ -116,7 +116,8 @@ const cleanIndex = () => {
     );
     data = data.replace(/type="text\/javascript"/gim, 'defer type="text/javascript"');
     data = data.replace(/rel="stylesheet"/gim, 'media="all" rel="stylesheet"');
-    fs.writeFile((dirPath + "/index.html"), data, 'utf8');
+    fs.writeFile((dirPath + "/assets/index.html"), data, 'utf8');
+    fs.unlink(dirPath + "/index.html");
     /* return new Promise((resolve, reject) => {
       self.assetFiles.forEach(file => {
         if (file.match(/styles\..*?\.css$/)) {

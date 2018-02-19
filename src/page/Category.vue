@@ -37,8 +37,13 @@ const fetchInitialData = (store, route) => {
   route.params.week = route.params.week || "";
   route.params.year = route.params.year || "";
   route.params.category = route.params.category || "";
-  route.params.date = new Date(Date.now());
-  route.params.date.setHours(0,0,0,0);
+
+  if (!route.params.week || !route.params.year) {
+    route.params.date = new Date(Date.now());
+    route.params.date.setHours(0,0,0,0);
+    route.params.year = route.params.date.getFullYear();
+    route.params.week = calendarHelper.getWeek(route.params.date);
+  }
 
   if (route.params.week && route.params.year) {
     route.params.date = calendarHelper.getDateRangeOfWeek(
