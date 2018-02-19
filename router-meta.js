@@ -48,11 +48,11 @@ function parseLinks(routerMetaItem, state) {
   const week = state.linksModule.filter.dateWeek;
   const year = state.linksModule.filter.dateYear;
   const category = state.linksModule.filter.category;
-  const dateRoute = (week && year) ? `week=${week}&year=${year}&` : "";
+  const dateRoute = (week && year) ? `week=${week}&year=${year}` : "";
   const dateTitle = (week && year) ? ` | Week ${week} Year ${year}` : "";
 
   routerMetaItem.rss =
-    `${config.apiDomain}links/?category=${category}${dateRoute}&feed=rss`;
+    `${config.apiDomain}links/?category=${category}&${dateRoute}&feed=rss`;
   routerMetaItem.title = `dotNET Weekly${dateTitle}`;
   routerMetaItem.description = `A free weekly newsletter on .NET latest${dateTitle}`;
 
