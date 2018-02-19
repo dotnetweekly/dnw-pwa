@@ -9,7 +9,6 @@ npm run build
 
 rm -rf ../wwwroot/dist
 cp -TR ./dist/ ../wwwroot/dist/
-cp -R ./index.html ../wwwroot/dist/assets/index.html
 cp -R ./seo.js ../wwwroot/seo.js
 cp -R ./router-meta.js ../wwwroot/router-meta.js
 cp -R ./server.js ../wwwroot/server.js
