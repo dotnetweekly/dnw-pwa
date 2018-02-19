@@ -3,7 +3,7 @@ const Config = {
   appTitle: "dotNET Weekly",
   appTitleShort: "DNW",
   appDescription: "A free weekly newsletter with .NET latest.",
-  appThemeColor: "#287ab1",
+  appThemeColor: "#5c2d91",
   appBgColor: "#ffffff",
   appIcon: "assets/app-icon.png",
   newsletterDomain: "http://localhost:6100/",

@@ -12,6 +12,7 @@ cp -TR ./dist/ ../wwwroot/dist/
 cp -R ./seo.js ../wwwroot/seo.js
 cp -R ./router-meta.js ../wwwroot/router-meta.js
 cp -R ./server.js ../wwwroot/server.js
+cp -R ./legacyRedirects.json ../wwwroot/legacyRedirects.json
 cp -R ./app.config.js ../wwwroot/app.config.js
 cp -R ./package.json ../wwwroot/package.json
 cp -R ./src/assets/app-icon.png ../wwwroot/dist/assets/app-icon.png

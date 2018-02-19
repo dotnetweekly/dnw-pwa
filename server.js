@@ -11,7 +11,10 @@ const favicon = require("serve-favicon");
 const serialize = require("serialize-javascript");
 const createBundleRenderer = require("vue-server-renderer")
   .createBundleRenderer;
+
 const seoOptimize = require("./seo");
+const legacyRedirects = require("./legacyRedirects.json");
+const config = require("./app.config");
 
 const allowCrossDomain = function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
@@ -89,10 +92,20 @@ app.get("*", (req, res) => {
   try {
     // if (req.url.indexOf('well-known/acme-challenge') !== -1) {
     //   res.end(req.url.split('acme-challenge/')[1] + '.UQRLb6O27XsehoDP4ZeZoe88R3H6jjlErH9H1x1YmGg');
+    //   return;
     // }
+
+    const indexOfLegacy = legacyRedirects.oldLinks.indexOf(req.url);
+    console.log(indexOfLegacy, req.url);
+    if (indexOfLegacy !== -1) {
+      res.redirect(301, `${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`);
+      return;
+    }
+
     if (!renderer) {
       return res.end("waiting for compilation... refresh in a moment.");
     }
+
     const context = { url: req.url };
     renderer.renderToString(context, (err, html) => {
       if (err) {

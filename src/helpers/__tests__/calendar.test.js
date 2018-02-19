@@ -18,7 +18,7 @@ describe('calendar.test.js', () => {
   })
   it("returns correct calendar", () => {
     const calendar = calendarHelper.getCalendar("2017-12-15 00:00:00");
-    expect(calendar.weeks[0].days[0]).toEqual({"date": new Date("2017-11-27T08:00:00.000Z"), "inPast": true, "week": 48})
+    expect(calendar.weeks[0].days[0]).toEqual({"date": new Date("2017-11-27T00:00:00.000Z"), "inPast": true, "week": 48})
     expect(calendar.weeks[4].days[6]).toEqual({"date": new Date("2017-12-31T08:00:00.000Z"), "week": 52})
 
     const calendar2 = calendarHelper.getCalendar("2016-10-30 00:00:00");
