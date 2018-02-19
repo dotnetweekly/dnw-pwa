@@ -19,6 +19,7 @@ const actions = {
       state.filter.dateWeek == params.week &&
       (typeof params.hardRefresh === "undefined" ||
       !params.hardRefresh)
+      && (state.links.length !== 0 || state.olderLinks.length !== 0)
     ) {
       return;
     }
