@@ -45,17 +45,17 @@ export default {
 <style lang="scss" scoped>
 @import "../_variables";
 
-.auth-link-separator{
+.auth-link-separator {
   padding: 0 0.3rem;
 }
 
-.header-auth-link{
+.header-auth-link {
   font-size: 50%;
   vertical-align: middle;
   line-height: 2.7rem;
 }
 
-.header-menu{
+.header-menu {
   display: flex;
 }
 
@@ -84,7 +84,7 @@ a.navbar-item.main-logo {
   padding: 0.5rem 1rem;
 }
 
-.header-profile{
+.header-profile {
   span, a {
     float: left;
   }

@@ -49,7 +49,7 @@ const getDateRangeOfWeek = function(week, year) {
 };
 
 const getFebruaryDays = function(dateValue) {
-	const date = new Date(dateValue);
+  const date = new Date(dateValue);
 	if (date.getMonth() == 1) {
 		if ((date.getFullYear() % 100 != 0 && date.getFullYear() % 4 == 0) || date.getFullYear() % 400 == 0) {
 			return 29;

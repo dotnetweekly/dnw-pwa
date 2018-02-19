@@ -1,4 +1,15 @@
 {
   "presets": [["es2015", { "modules": false }], "stage-2"],
-  "ignore": ["node_modules/*"]
+  "ignore": ["node_modules/*"],
+  "env": {
+    "test": {
+      "presets":[
+        ["es2015", { "modules": false }],
+        "stage-2"
+      ],
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  }
 }
