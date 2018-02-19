@@ -1,13 +1,13 @@
 npm install
 
 rm -rf dist
-rm -rf ../wwwroot/dist
 sed -i 's/http:\/\/localhost:3000/https:\/\/dnw-api.azurewebsites.net/g' ./app.config.js
 sed -i 's/http:\/\/localhost:5000/https:\/\/dnw-admin.azurewebsites.net/g' ./app.config.js
 sed -i 's/http:\/\/localhost:6100/https:\/\/dnw-newsletter.azurewebsites.net/g' ./app.config.js
 
 npm run build
 
+rm -rf ../wwwroot/dist
 cp -TR ./dist/ ../wwwroot/dist/
 cp -R ./index.html ../wwwroot/dist/assets/index.html
 cp -R ./seo.js ../wwwroot/seo.js

@@ -86,29 +86,36 @@ if (isProd) {
 }
 
 app.get("*", (req, res) => {
-  if (!renderer) {
-    return res.end("waiting for compilation... refresh in a moment.");
-  }
-  const context = { url: req.url };
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      if (!isProd) {
-        console.log(err);
-      }
-      return res.sendStatus(500);
+  try {
+    // if (req.url.indexOf('well-known/acme-challenge') !== -1) {
+    //   res.end(req.url.split('acme-challenge/')[1] + '.UQRLb6O27XsehoDP4ZeZoe88R3H6jjlErH9H1x1YmGg');
+    // }
+    if (!renderer) {
+      return res.end("waiting for compilation... refresh in a moment.");
     }
-    html = indexHTML.replace('<div id="app"></div>', html);
-    html = seoOptimize(html, req, context.initialState);
-    html = html.replace(
-      '<meta name="vue-state" />',
-      `<script>window.__INITIAL_STATE__=${serialize(context.initialState, {
-        isJSON: true
-      })}</script>`
-    );
-    res.setHeader("Content-Length", Buffer.byteLength(html));
-    res.write(html);
-    res.end();
-  });
+    const context = { url: req.url };
+    renderer.renderToString(context, (err, html) => {
+      if (err) {
+        if (!isProd) {
+          console.log(err);
+        }
+        return res.sendStatus(500);
+      }
+      html = indexHTML.replace('<div id="app"></div>', html);
+      html = seoOptimize(html, req, context.initialState);
+      html = html.replace(
+        '<meta name="vue-state" />',
+        `<script>window.__INITIAL_STATE__=${serialize(context.initialState, {
+          isJSON: true
+        })}</script>`
+      );
+      res.setHeader("Content-Length", Buffer.byteLength(html));
+      res.write(html);
+      res.end();
+    });
+  } catch(error) {
+    console.log(error);
+  }
 });
 
 const port = process.env.PORT || 5000;
