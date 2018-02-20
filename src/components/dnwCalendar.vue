@@ -28,21 +28,23 @@
           <td> Week </td> <td>M</td> <td>T</td> <td>W</td>
           <td>T</td> <td>F</td> <td>S</td> <td>S</td>
         </tr>
-        <tr v-bind:class="{
+        <tr v-if="filterCalendar && filterCalendar.weeks"
+            v-for="(week, index) in filterCalendar.weeks"
+            v-bind:class="{
               dnwWeek: true,
               current: isCurrentWeek(week.week),
               weekInPast: isInPast(week.week, week.year),
               weekInFuture: !isInPast(week.week, week.year)
             }"
-            v-for="(week, index) in filterCalendar.weeks" v-bind:key="index">
-          <td v-on:click="setNewDate(week.days[0].date)">
-              <router-link v-if="isInPast(week.week, week.year)"
-              :to="'/week/' + week.week + '/year/' + week.year">
-                {{week.week}}
-              </router-link>
-              <span v-if="!isInPast(week.week, week.year)">{{week.week}}</span>
-          </td>
-          <td v-for="(weekDay, dayIndex) in week.days"
+             v-bind:key="index">
+            <td v-on:click="setNewDate(week.days[0].date)">
+                <router-link v-if="isInPast(week.week, week.year)"
+                :to="'/week/' + week.week + '/year/' + week.year">
+                  {{week.week}}
+                </router-link>
+                <span v-if="!isInPast(week.week, week.year)">{{week.week}}</span>
+            </td>
+            <td v-for="(weekDay, dayIndex) in week.days"
               v-bind:class="{
                 dayInFuture: weekDay.inFuture,
                 dayInPast: weekDay.inPast,
@@ -102,7 +104,7 @@
       },
       getNextMonth(action) {
         if (!this.filterCalendar || !this.filterCalendar.weeks) {
-          return;
+          return { week: "", year: ""};
         }
         const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
         let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
@@ -117,13 +119,12 @@
         const year = date.getFullYear();
         if (action) {
           this.updatePath(week, year);
-          return;
         }
         return { week, year }
       },
       getPreviousMonth(action) {
         if (!this.filterCalendar || !this.filterCalendar.weeks) {
-          return;
+          return { week: "", year: ""};
         }
         const firstWeek = this.filterCalendar.weeks[0];
         let firstWeekFirstDay = new Date(firstWeek.days[0].date);
@@ -134,12 +135,13 @@
         const year = date.getFullYear();
         if (action) {
           this.updatePath(week, year);
-          return;
         }
         return { week, year }
       },
       isMonthInPast() {
-        const date = new Date(this.filterDate);
+        let date = new Date(this.filterDate);
+        date.setHours(0,0,0,0);
+
         let month = date.getMonth();
         let year = date.getFullYear();
 

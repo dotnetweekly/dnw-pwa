@@ -5,8 +5,7 @@
     <div v-if="loading" class="menu-loading"></div>
   </div>
   <div class="column">
-    <dnw-link v-bind:id="link._id" v-for="link in links" v-bind:key="link._id" :link="link"></dnw-link>
-
+    <dnw-link v-if="links" v-for="link in links" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
     <div v-if="!loading && links && links.length == 0">
       <h2 class="has-text-centered">Oops, no links found for this week/category.
         <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
@@ -15,8 +14,11 @@
         <router-link to="/add">Add your favorite dotNET link</router-link>
       </p>
       <div class="separator"></div>
-      <dnw-link v-bind:id="link._id" v-if="olderLinks && olderLinks.length > 0"
-        v-for="link in olderLinks" v-bind:key="link._id" :link="link"></dnw-link>
+      <dnw-link v-if="olderLinks && olderLinks.length > 0" v-for="link in olderLinks"
+        v-bind:id="link._id"
+        v-bind:key="link._id"
+        :link="link">
+      </dnw-link>
       <div class="separator"></div>
       <p class="has-text-centered">
         A free weekly newsletter on .NET latest
