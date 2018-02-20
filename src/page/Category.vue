@@ -110,7 +110,7 @@ export default {
     }
   },
   created() {
-    this.loadLinks();
+    // this.loadLinks();
   }
 };
 </script>

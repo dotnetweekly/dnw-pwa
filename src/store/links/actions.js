@@ -8,29 +8,10 @@ const actions = {
       category: state.filter.category,
       date: state.filter.date,
       week: state.filter.dateWeek,
-      year: state.filter.dateYear,
-      hardRefresh: true
+      year: state.filter.dateYear
     })
   },
   getLinks({ commit, state }, params) {
-    if (
-      state.filter.category == params.category &&
-      state.filter.dateYear == params.year &&
-      state.filter.dateWeek == params.week &&
-      (typeof params.hardRefresh === "undefined" ||
-      !params.hardRefresh)
-      && (state.links.length !== 0 || state.olderLinks.length !== 0)
-    ) {
-      return;
-    }
-
-    if (state.links.length !== 0 || state.olderLinks.length !== 0){
-      Object.assign(state, {}, {
-        filter: state.filter,
-        olderLinks: [],
-        links: []
-      });
-    }
     return new Promise((resolve, reject) => {
       linksService
         .getLinks(params)

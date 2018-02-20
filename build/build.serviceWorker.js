@@ -19,6 +19,10 @@ const generateAssetHash = () => {
   return new Promise((resolve, reject) => {
     getAllAssets().then((assetFiles) => {
       self.assetFiles = assetFiles;
+      const indexIndex = self.assetFiles.indexOf("/index.html");
+      if (indexIndex > -1) {
+        self.assetFiles[indexIndex] = "/assets/index.html";
+      }
       self.assetCacheHash = md5(self.assetFiles.join(''));
       resolve();
     })
@@ -77,14 +81,14 @@ const serviceWorker = () => {
   })
 }
 
-const appCache = () => {
-  fs.copySync(path.resolve(__dirname, '../index-appCache.html'), (dirPath + "/index-appCache.html"));
-  fs.copySync(path.resolve(__dirname, '../src/assets/local.appcache'), (dirPath + "/assets/local.appcache"));
-  fs.readFile((dirPath + "/assets/local.appcache"), "utf-8", function(err, data){
-    data = data.replace("{{cachedFiles}}", self.assetFiles.join('\n')).replace("{{assetCacheHash}}", self.assetCacheHash);
-    fs.writeFile((dirPath + "/assets/local.appcache"), data, 'utf8');
-  });
-}
+// const appCache = () => {
+//   fs.copySync(path.resolve(__dirname, '../index-appCache.html'), (dirPath + "/index-appCache.html"));
+//   fs.copySync(path.resolve(__dirname, '../src/assets/local.appcache'), (dirPath + "/assets/local.appcache"));
+//   fs.readFile((dirPath + "/assets/local.appcache"), "utf-8", function(err, data){
+//     data = data.replace("{{cachedFiles}}", self.assetFiles.join('\n')).replace("{{assetCacheHash}}", self.assetCacheHash);
+//     fs.writeFile((dirPath + "/assets/local.appcache"), data, 'utf8');
+//   });
+// }
 
 const manifest = () => {
   fs.copySync(path.resolve(__dirname, '../src/assets/manifest.json'), (dirPath + "/assets/manifest.json"));
@@ -134,7 +138,7 @@ const execSW = () => {
   .then(() => copyServiceWorker())
   .then(() => {
     serviceWorker();
-    appCache();
+    // appCache();
     manifest();
     return cleanIndex();
   })
