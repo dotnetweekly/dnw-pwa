@@ -106,6 +106,7 @@
         if (!this.filterCalendar || !this.filterCalendar.weeks) {
           return { week: "", year: ""};
         }
+
         const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
         let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
         lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
