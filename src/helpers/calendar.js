@@ -25,7 +25,8 @@ const getDayName = function(number) {
 };
 
 const getWeek = function(dateValue) {
-	const target = new Date(dateValue);
+  let target = new Date(dateValue);
+  target.setHours(0,0,0,0);
 	const dayNr = (target.getDay() + 6) % 7;
 	target.setDate(target.getDate() - dayNr + 3);
 	const firstThursday = target.valueOf();
@@ -39,17 +40,26 @@ const getWeek = function(dateValue) {
 };
 
 const getDateRangeOfWeek = function(week, year) {
-	var date = new Date(year, 0, 1);
+	let date = new Date(year, 0, 1);
+  date.setHours(0,0,0,0);
   date.setDate((week * 7));
+
+  let fromDate = new Date(date.setDate(date.getDate() - 6));
+  fromDate.setHours(0,0,0,0);
+
+  let toDate = new Date(date.setDate(date.getDate() + 6));
+  toDate.setHours(0,0,0,0);
+
 	const dateRange = {
-		from: new Date(date.setDate(date.getDate() - 6)),
-		to: new Date(date.setDate(date.getDate() + 6))
+		from: fromDate,
+		to: toDate
   };
   return dateRange;
 };
 
 const getFebruaryDays = function(dateValue) {
-  const date = new Date(dateValue);
+  let date = new Date(dateValue);
+  date.setHours(0,0,0,0);
 	if (date.getMonth() == 1) {
 		if ((date.getFullYear() % 100 != 0 && date.getFullYear() % 4 == 0) || date.getFullYear() % 400 == 0) {
 			return 29;
@@ -61,7 +71,8 @@ const getFebruaryDays = function(dateValue) {
 
 const getCalendar = function(date) {
 	const today = Date.now();
-	const dateNow = new Date(date);
+	let dateNow = new Date(date);
+  dateNow.setHours(0,0,0,0);
 	const dayPerMonth = monthDays;
 	dayPerMonth[1] = getFebruaryDays(dateNow);
 
@@ -69,6 +80,7 @@ const getCalendar = function(date) {
 	const month = dateNow.getMonth();
   const year = dateNow.getFullYear();
   let firstDay = new Date(year, month, counter);
+  firstDay.setHours(0,0,0,0);
 
 	let weekdays = firstDay.getDay() - 1;
   let weekdays2 = weekdays === -1 ? 0 : weekdays;
@@ -84,9 +96,11 @@ const getCalendar = function(date) {
   }
 
 	while (weekdays > 0) {
-		firstDay.setDate(firstDay.getDate() - 1);
+    firstDay.setDate(firstDay.getDate() - 1);
+    let currentFirstDay = new Date(firstDay);
+    currentFirstDay.setHours(0,0,0,0);
 		week.push({
-			date: new Date(firstDay),
+			date: currentFirstDay,
 			week: getWeek(firstDay),
 			inPast: true
 		});
@@ -109,13 +123,15 @@ const getCalendar = function(date) {
 			week = [];
 		}
 
-		const newDay = new Date(year, month, counter);
+		let newDay = new Date(year, month, counter);
+    newDay.setHours(0,0,0,0);
 		week.push({
 			date: newDay,
 			week: getWeek(newDay)
 		});
 
 		lastDayCounted = new Date(newDay);
+    lastDayCounted.setHours(0,0,0,0);
 
 		weekdays2++;
 		counter++;

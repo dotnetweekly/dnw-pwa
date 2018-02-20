@@ -27,7 +27,9 @@ const actions = {
   getCount(state, token) {
     axios.get("/user/count")
     .then(response => {
-      state.subscribers = response.data.data;
+      if(response && response.data && response.data.data){
+        state.subscribers = response.data.data;
+      }
     })
   },
 	setAuthToken(context, token) {
