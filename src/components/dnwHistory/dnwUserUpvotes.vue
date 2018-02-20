@@ -57,7 +57,9 @@
           this.links = data.links;
           // this.page = data.page;
           this.loading = false;
-        })
+        }).catch(error => {
+          this.loading = false;
+        });
       }
     },
     created() {

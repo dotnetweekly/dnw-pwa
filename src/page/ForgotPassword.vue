@@ -87,6 +87,9 @@ export default {
             this.success = false;
             this.email = "";
           }, 3000);
+        }).catch(error => {
+          this.sending = false;
+          this.success = false;
         });
     }
   }

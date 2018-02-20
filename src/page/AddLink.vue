@@ -197,8 +197,10 @@ export default {
           setTimeout(() => {
             this.success = false;
           }, 5000);
-        })
-        .catch(err => {});
+        }).catch(error => {
+          this.sending = false;
+          this.success = false;
+        });
     }
   },
   mounted() {
@@ -209,12 +211,18 @@ export default {
           return [".net", "c#", "visual-studio"].indexOf(tag) > -1;
         });
       }
+    }).catch(error => {
+      this.sending = false;
+      this.success = false;
     });
     categoryService.getCategories().then(response => {
       if (response) {
         this.categoryOptions = response;
         this.link.category = this.categoryOptions[0];
       }
+    }).catch(error => {
+      this.sending = false;
+      this.success = false;
     });
     this.$refs.editorText.placeholder =
       "For years Dependency Injection and Inversion of Control seemed like buzz words to me. I would constantly hear about them at conferences and meetups when discussing testing and maintainability, though they always seemed to evade me. Part of it may have been imposter syndrome convincing me I wasn't quite there yet. \n\nIf you try to search these terms, you'll find the equivalent of technical texts and various framework pages explaining how to implement them in their specific flavor. For years, I lacked a clear definition of what these two patterns were; even after I had been using them for some time. I understand the how, but not necessarily the what or the why. In this post, we are going to take a look at what Dependency Injection and Inversion of Control are at their core; which is that they are design patterns. If you're new to development, hopefully these explanations can help you make sense of these patterns and how you can benefit from them.";

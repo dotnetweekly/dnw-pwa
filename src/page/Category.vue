@@ -72,10 +72,10 @@ export default {
   computed: {
     ...mapGetters("linksModule", ["links", "olderLinks", "filter"]),
     filterDateChange () {
-      return this.filter.date
+      return this.filter ? this.filter.date : ""
     },
     linkCount() {
-      return this.links.length + this.olderLinks.length;
+      return (this.links && this.olderLinks) ? this.links.length + this.olderLinks.length : 0;
     }
   },
   methods: {
@@ -105,7 +105,9 @@ export default {
   },
   prefetch: fetchInitialData,
   mounted() {
-    setTimeout(() => {this.refreshScroll();});
+    if(typeof window !== "undefined"){
+      setTimeout(() => {this.refreshScroll()});
+    }
   },
   created() {
     this.loadLinks();

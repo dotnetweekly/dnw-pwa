@@ -189,7 +189,7 @@ export default {
           return;
         })
         .catch(response => {
-          // this.errors = response.errors;
+          this.errors = response.errors || [];
         });
     }
   }

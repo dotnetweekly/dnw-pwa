@@ -2,7 +2,7 @@ var config = {
   "assets": [
     "/favicon.ico",
     "/robots.txt",
-    "/index.html",
+    "/assets/index.html",
     "/assets/app-icon.png",
     "/assets/fontello.svg",
     "/assets/styles.css",
@@ -13,12 +13,10 @@ var config = {
     "/offline-redirect/"
   ],
   "paths": {
-    "api": "https://fullstackweekly.azureedge.net/wp-json",
-    "remote": "https://fullstackweekly.azureedge.net/",
-    "client": "http://localhost:3000/"
+    "api": "https://dnw-api.azurewebsites.com/",
+    "client": "https://www.dotnetweekly.com/"
   },
   "cacheNames": {
-    "assetCache": "vwpCacheAsset",
-    "remoteCache": "vwpCacheRemote"
+    "assetCache": "vwpCacheAsset"
   }
 }
