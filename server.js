@@ -96,7 +96,6 @@ app.get("*", (req, res) => {
     // }
 
     const indexOfLegacy = legacyRedirects.oldLinks.indexOf(req.url);
-    console.log(indexOfLegacy, req.url);
     if (indexOfLegacy !== -1) {
       res.redirect(301, `${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`);
       return;
