@@ -19,12 +19,11 @@
         v-bind:key="link._id"
         :link="link">
       </dnw-link>
-      <div class="separator"></div>
-      <p class="has-text-centered">
-        A free weekly newsletter on .NET latest
-      </p>
     </div>
-
+    <div class="separator"></div>
+    <div class="has-text-centered">
+      <p>A free weekly newsletter on .NET latest</p>
+    </div>
   </div>
 </div>
 </template>
