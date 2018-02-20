@@ -101,6 +101,9 @@
         return (date - Date.now() > 0)
       },
       getNextMonth(action) {
+        if (!this.filterCalendar || !this.filterCalendar.weeks) {
+          return;
+        }
         const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
         let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
         lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
@@ -119,6 +122,9 @@
         return { week, year }
       },
       getPreviousMonth(action) {
+        if (!this.filterCalendar || !this.filterCalendar.weeks) {
+          return;
+        }
         const firstWeek = this.filterCalendar.weeks[0];
         let firstWeekFirstDay = new Date(firstWeek.days[0].date);
         firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);

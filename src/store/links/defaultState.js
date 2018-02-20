@@ -1,4 +1,6 @@
 import * as calendarHelper from "../../helpers/calendar";
+let now = new Date(Date.now());
+now.setHours(0,0,0,0);
 
 const defaultState = {
   links: [],
@@ -13,7 +15,7 @@ const defaultState = {
       { label: "Videos", value: "videos" }
     ],
     category: "",
-    date: "",
+    date: now,
     dateYear: "",
     dateWeek: "",
     calendar: {}
