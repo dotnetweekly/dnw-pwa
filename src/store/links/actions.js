@@ -17,9 +17,6 @@ const actions = {
       linksService
         .getLinks(params)
         .then(response => {
-          if (state) {
-            Object.assign(state, {}, defaultState);
-          }
           state.links = response.links;
           state.olderLinks = response.olderLinks;
           state.filter.category = params.category ? params.category : "";
