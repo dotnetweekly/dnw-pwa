@@ -38,14 +38,6 @@ router.afterEach((to, from) => {
 	store.dispatch(`authModule/setLatestPath`, from.path);
 });
 
-if (typeof window !== 'undefined') {
-	window.IntersectionObserver = require('intersection-observer-polyfill/dist/IntersectionObserver.global');
-}
-
-const VueClazyLoad = require('vue-clazy-load');
-
-Vue.use(VueClazyLoad);
-
 const app = new Vue({
 	router,
 	store,
