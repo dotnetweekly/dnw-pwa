@@ -11,7 +11,8 @@
       </div>
       <div class="column">
         <h1 class="link-title">
-          <dnw-category-icon :category="link.category" class="link-category-icon"></dnw-category-icon>{{link.title}}
+          <dnw-category-icon :category="link.category" class="link-category-icon"></dnw-category-icon>
+          <a :href="link.url" target="_blank">{{link.title}}</a>
         </h1>
         <p class="link-subline">
           <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
@@ -19,7 +20,7 @@
         </p>
         <p class="link-tags">
           <span v-for="tag in link.tags" v-bind:key="tag._id"
-            class="tag is-light">{{ tag.name }}</span>
+            class="tag is-light">{{ tag }}</span>
         </p>
       </div>
     </div>
