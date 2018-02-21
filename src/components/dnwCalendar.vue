@@ -76,118 +76,166 @@
     },
     methods: {
       getCurrentMonth() {
-        const date = new Date(this.filterDate);
-        let month = date.getMonth();
-        return calendarHelper.getMonthName(month);
+        try{
+          const date = new Date(this.filterDate);
+          let month = date.getMonth();
+          return calendarHelper.getMonthName(month);
+        }catch(error){
+          return "";
+        }
       },
       getCurrentYear() {
-        const date = new Date(this.filterDate);
-        return date.getFullYear();
+        try{
+          const date = new Date(this.filterDate);
+          return date.getFullYear();
+        }catch(error){
+          return "";
+        }
       },
       isCurrentWeek(week) {
-        const weekNow = calendarHelper.getWeek(this.filterDate);
-        if (week === weekNow) {
-          return true;
-        }
-        return false;
-      },
-      isInPast(week, year) {
-        const yearNow = new Date(Date.now()).getFullYear();
-        const weekNow = calendarHelper.getWeek(Date.now());
-        if ((week <= weekNow && year == yearNow) || year < yearNow) {
-          return true;
-        }
-        return false;
-      },
-      isDayDisabled(date) {
-        return (date - Date.now() > 0)
-      },
-      getNextMonth(action) {
-        if (!this.filterCalendar || !this.filterCalendar.weeks) {
-          return { week: "", year: ""};
-        }
-
-        const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
-        let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
-        lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
-
-        if (lastWeekFirstDay > Date.now()) {
-          lastWeekFirstDay = Date.now();
-        }
-
-        const date = new Date(lastWeekFirstDay);
-        const week = calendarHelper.getWeek(date);
-        const year = date.getFullYear();
-        if (action) {
-          this.updatePath(week, year);
-        }
-        return { week, year }
-      },
-      getPreviousMonth(action) {
-        if (!this.filterCalendar || !this.filterCalendar.weeks) {
-          return { week: "", year: ""};
-        }
-        const firstWeek = this.filterCalendar.weeks[0];
-        let firstWeekFirstDay = new Date(firstWeek.days[0].date);
-        firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
-
-        const date = new Date(firstWeekFirstDay);
-        const week = calendarHelper.getWeek(date);
-        const year = date.getFullYear();
-        if (action) {
-          this.updatePath(week, year);
-        }
-        return { week, year }
-      },
-      isMonthInPast() {
-        let date = new Date(this.filterDate);
-        date.setHours(0,0,0,0);
-
-        let month = date.getMonth();
-        let year = date.getFullYear();
-
-        const yearNow = new Date(Date.now()).getFullYear();
-        const monthNow = new Date(Date.now()).getMonth();
-
-        if (month === 11) {
-          year = year + 1;
-          month = 0;
-        } else {
-          month += 1;
-        }
-
-        if (year > yearNow || (yearNow <= year && month > monthNow)) {
+        try{
+          const weekNow = calendarHelper.getWeek(this.filterDate);
+          if (week === weekNow) {
+            return true;
+          }
+          return false;
+        } catch(error) {
           return false;
         }
+      },
+      isInPast(week, year) {
+        try{
+          const yearNow = new Date(Date.now()).getFullYear();
+          const weekNow = calendarHelper.getWeek(Date.now());
+          if ((week <= weekNow && year == yearNow) || year < yearNow) {
+            return true;
+          }
+          return false;
+        } catch(error) {
+          return false;
+        }
+      },
+      isDayDisabled(date) {
+        try{
+          return (date - Date.now() > 0)
+        }catch(error) {
+          return false;
+        }
+      },
+      getNextMonth(action) {
+        try{
+          if (!this.filterCalendar || !this.filterCalendar.weeks) {
+            return { week: "", year: ""};
+          }
 
-        return true;
+          const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
+          let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
+          lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
+
+          if (lastWeekFirstDay > Date.now()) {
+            lastWeekFirstDay = Date.now();
+          }
+
+          const date = new Date(lastWeekFirstDay);
+          const week = calendarHelper.getWeek(date);
+          const year = date.getFullYear();
+          if (action) {
+            this.updatePath(week, year);
+          }
+          return { week, year }
+        }catch(error){
+          return { week: "", year: ""};
+        }
+      },
+      getPreviousMonth(action) {
+        try{
+          if (!this.filterCalendar || !this.filterCalendar.weeks) {
+            return { week: "", year: ""};
+          }
+          const firstWeek = this.filterCalendar.weeks[0];
+          let firstWeekFirstDay = new Date(firstWeek.days[0].date);
+          firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
+
+          const date = new Date(firstWeekFirstDay);
+          const week = calendarHelper.getWeek(date);
+          const year = date.getFullYear();
+          if (action) {
+            this.updatePath(week, year);
+          }
+          return { week, year }
+        }catch(error){
+            return { week: "", year: ""};
+        }
+      },
+      isMonthInPast() {
+        try{
+          let date = new Date(this.filterDate);
+          date.setHours(0,0,0,0);
+
+          let month = date.getMonth();
+          let year = date.getFullYear();
+
+          const yearNow = new Date(Date.now()).getFullYear();
+          const monthNow = new Date(Date.now()).getMonth();
+
+          if (month === 11) {
+            year = year + 1;
+            month = 0;
+          } else {
+            month += 1;
+          }
+
+          if (year > yearNow || (yearNow <= year && month > monthNow)) {
+            return false;
+          }
+
+          return true;
+        }catch(error){
+          return true;
+        }
       },
       getDateWeek(newDate) {
-        return calendarHelper.getWeek(new Date(newDate));
+        try{
+          return calendarHelper.getWeek(new Date(newDate));
+        }catch(error){
+          return "";
+        }
       },
       getDateYear(newDate) {
-        return (new Date(newDate)).getFullYear();
+        try{
+          return (new Date(newDate)).getFullYear();
+        }catch(error){
+          return "";
+        }
       },
       setNewDate(newDate) {
-        if (this.isDayDisabled(newDate)) {
-          return;
+        try{
+          if (this.isDayDisabled(newDate)) {
+            return "";
+          }
+          const date = new Date(newDate);
+          const week = calendarHelper.getWeek(date);
+          const year = date.getFullYear();
+          this.updatePath(week, year);
+        }catch(error){
+          return "";
         }
-        const date = new Date(newDate);
-        const week = calendarHelper.getWeek(date);
-        const year = date.getFullYear();
-        this.updatePath(week, year);
       },
       updatePath(week, year) {
-        if(week == this.$route.params.week && year == this.$route.params.year){
-          return;
-        }
+        try{
+          if(week == this.$route.params.week && year == this.$route.params.year){
+            return;
+          }
 
-        if (this.filterCategory) {
-          this.$router.push(`/${this.filterCategory}/week/${week}/year/${year}`);
+          if (this.filterCategory) {
+            this.$router.push(`/${this.filterCategory}/week/${week}/year/${year}`);
 
-          return;
+            return;
+          }
+          this.$router.push(`/week/${week}/year/${year}`);
+        }catch(error){
+          return "";
         }
-        this.$router.push(`/week/${week}/year/${year}`);
       }
     }
   }
