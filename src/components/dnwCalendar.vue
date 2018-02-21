@@ -44,6 +44,21 @@
                 </router-link>
                 <span v-if="!isInPast(week.week, week.year)">{{week.week}}</span>
             </td>
+            <td v-if="week && week.days"
+              v-for="(weekDay, dayIndex) in week.days"
+              v-bind:class="{
+                dayInFuture: weekDay.inFuture || false,
+                dayInPast: weekDay.inPast || false,
+                disabled: isDayDisabled(weekDay.date) || false
+              }"
+              v-on:click="setNewDate(weekDay.date)"
+              v-bind:key="dayIndex">
+              <router-link v-if="!isDayDisabled(weekDay.date)"
+              :to="'/week/' + week.week + '/year/' + week.year">
+                {{weekDay.date ? weekDay.date.getDate() : ""}}
+              </router-link>
+              <span v-if="isDayDisabled(weekDay.date)">{{weekDay.date ? weekDay.date.getDate() : ""}}</span>
+            </td>
         </tr>
       </tbody>
     </table>
