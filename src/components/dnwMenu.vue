@@ -1,7 +1,6 @@
 <template>
   <div>
     <p></p>
-    <dnw-calendar></dnw-calendar>
     <p></p>
     <div class="calendar-select control has-icons-left">
       <div class="select is-full-width">
