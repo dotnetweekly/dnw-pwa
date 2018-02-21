@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="columns constant-flex dnwCalendarHeader">
+    <div class="columns constant-flex dnwCalendarHeader" v-if="filterCalendar && filterCalendar.weeks">
       <div class="column date-arrow is-one-quarter has-text-right is-pointer"
         v-on:click="getPreviousMonth(true)">
         <router-link
