@@ -36,6 +36,9 @@
         setFilterCategory: "setFilterCategory"
       }),
       updateCategory(e) {
+        if(!this.filterDate){
+          return;
+        }
         const date = new Date(this.filterDate);
         const week = calendarHelper.getWeek(date);
         const year = date.getFullYear();

@@ -77,7 +77,11 @@
     methods: {
       getCurrentMonth() {
         try{
-          const date = new Date(this.filterDate);
+          if (!this.filterDate) {
+            return "";
+          }
+          let date = new Date(this.filterDate);
+          date.setHours(0,0,0,0);
           let month = date.getMonth();
           return calendarHelper.getMonthName(month);
         }catch(error){
@@ -86,7 +90,11 @@
       },
       getCurrentYear() {
         try{
-          const date = new Date(this.filterDate);
+          if (!this.filterDate) {
+            return "";
+          }
+          let date = new Date(this.filterDate);
+          date.setHours(0,0,0,0);
           return date.getFullYear();
         }catch(error){
           return "";
@@ -94,6 +102,9 @@
       },
       isCurrentWeek(week) {
         try{
+          if (!week) {
+            return false;
+          }
           const weekNow = calendarHelper.getWeek(this.filterDate);
           if (week === weekNow) {
             return true;
@@ -105,6 +116,9 @@
       },
       isInPast(week, year) {
         try{
+          if (!week || !year) {
+            return false;
+          }
           const yearNow = new Date(Date.now()).getFullYear();
           const weekNow = calendarHelper.getWeek(Date.now());
           if ((week <= weekNow && year == yearNow) || year < yearNow) {
@@ -117,6 +131,9 @@
       },
       isDayDisabled(date) {
         try{
+          if (!date) {
+            return false;
+          }
           return (date - Date.now() > 0)
         }catch(error) {
           return false;
@@ -125,6 +142,9 @@
       getNextMonth(action) {
         try{
           if (!this.filterCalendar || !this.filterCalendar.weeks) {
+            return { week: "", year: ""};
+          }
+          if (this.filterCalendar.weeks.length === 0) {
             return { week: "", year: ""};
           }
 
@@ -152,11 +172,16 @@
           if (!this.filterCalendar || !this.filterCalendar.weeks) {
             return { week: "", year: ""};
           }
+          if (this.filterCalendar.weeks.length === 0) {
+            return { week: "", year: ""};
+          }
           const firstWeek = this.filterCalendar.weeks[0];
           let firstWeekFirstDay = new Date(firstWeek.days[0].date);
           firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
+          firstWeekFirstDay.setHours(0,0,0,0);
 
-          const date = new Date(firstWeekFirstDay);
+          let date = new Date(firstWeekFirstDay);
+          date.setHours(0,0,0,0);
           const week = calendarHelper.getWeek(date);
           const year = date.getFullYear();
           if (action) {
@@ -169,6 +194,9 @@
       },
       isMonthInPast() {
         try{
+          if (!this.filterDate) {
+            return;
+          }
           let date = new Date(this.filterDate);
           date.setHours(0,0,0,0);
 
@@ -196,6 +224,9 @@
       },
       getDateWeek(newDate) {
         try{
+          if (!newDate) {
+            return;
+          }
           return calendarHelper.getWeek(new Date(newDate));
         }catch(error){
           return "";
@@ -203,6 +234,9 @@
       },
       getDateYear(newDate) {
         try{
+          if(!newDate){
+            return;
+          }
           return (new Date(newDate)).getFullYear();
         }catch(error){
           return "";
@@ -210,6 +244,9 @@
       },
       setNewDate(newDate) {
         try{
+          if(!newDate){
+            return;
+          }
           if (this.isDayDisabled(newDate)) {
             return "";
           }
@@ -223,6 +260,10 @@
       },
       updatePath(week, year) {
         try{
+          if(!this.$route.params || !this.$route.params.week || !this.$route.params.year){
+            return;
+          }
+
           if(week == this.$route.params.week && year == this.$route.params.year){
             return;
           }
