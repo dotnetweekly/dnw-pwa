@@ -52,6 +52,9 @@
         this.$router.push(`/week/${week}/year/${year}`);
       },
       isSelected(categoryLabel) {
+        if(!this.filterCategory){
+          return false;
+        }
         return categoryLabel.trim() === this.filterCategory.trim()
       }
     }
