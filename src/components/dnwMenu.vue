@@ -6,9 +6,12 @@
     <div class="calendar-select control has-icons-left">
       <div class="select is-full-width">
         <select class="is-full-width" v-on:change="updateCategory">
-          <option :selected="isSelected(category.value)"
+          <option
+            v-if="filterCategories"
+            v-for="category in filterCategories"
+            :selected="isSelected(category.value)"
             :value="category.value" v-bind:key="category.label"
-            v-for="category in filterCategories">
+            >
             {{category.label}}
             </option>
         </select>

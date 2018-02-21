@@ -1,7 +1,6 @@
 <template>
 <div class="columns">
   <div class="column is-one-quarter main-menu tight">
-    <dnw-menu></dnw-menu>
     <div v-if="loading" class="menu-loading"></div>
   </div>
   <div class="column">

@@ -30,7 +30,9 @@ const routerMeta = [
 ]
 
 function parseLink(routerMetaItem, state) {
-  if (!state || !state.linkModule || !state.linkModule.link) {
+  if (!state ||
+    !state.linkModule ||
+    !state.linkModule.link) {
     return;
   }
   routerMetaItem.rss =
@@ -42,12 +44,16 @@ function parseLink(routerMetaItem, state) {
 }
 
 function parseLinks(routerMetaItem, state) {
-  if (!state || !state.linksModule || !state.linksModule.filter || !state.linksModule.filter.dateWeek) {
+  if (!state ||
+    !state.linksModule ||
+    !state.linksModule.filter ||
+    !state.linksModule.filter.dateWeek ||
+    !state.linksModule.filter.dateYear) {
     return;
   }
   const week = state.linksModule.filter.dateWeek;
   const year = state.linksModule.filter.dateYear;
-  const category = state.linksModule.filter.category;
+  const category = state.linksModule.filter.category || "";
   const dateRoute = (week && year) ? `week=${week}&year=${year}` : "";
   const dateTitle = (week && year) ? ` | Week ${week} Year ${year}` : "";
 
@@ -60,7 +66,7 @@ function parseLinks(routerMetaItem, state) {
 }
 
 function getMeta(url, state) {
-  if (!url) {
+  if (!url || !state) {
     return;
   }
 

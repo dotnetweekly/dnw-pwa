@@ -101,6 +101,11 @@ app.get("*", (req, res) => {
       return;
     }
 
+    if (req.url.replace(/\/$/g, '') === "/page/2" || req.url.replace(/\/$/g, '') === "/page/3"){
+      res.redirect(301, `${config.client}`);
+      return;
+    }
+
     if (!renderer) {
       return res.end("waiting for compilation... refresh in a moment.");
     }
