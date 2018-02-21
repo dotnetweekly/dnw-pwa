@@ -32,9 +32,9 @@
             v-for="(week, index) in filterCalendar.weeks"
             v-bind:class="{
               dnwWeek: true,
-              current: isCurrentWeek(week.week),
-              weekInPast: isInPast(week.week, week.year),
-              weekInFuture: !isInPast(week.week, week.year)
+              current: isCurrentWeek(week.week) || false,
+              weekInPast: isInPast(week.week, week.year) || false,
+              weekInFuture: !isInPast(week.week, week.year) || false
             }"
              v-bind:key="index">
             <td v-on:click="setNewDate(week.days[0].date)">
@@ -46,9 +46,9 @@
             </td>
             <td v-for="(weekDay, dayIndex) in week.days"
               v-bind:class="{
-                dayInFuture: weekDay.inFuture,
-                dayInPast: weekDay.inPast,
-                disabled: isDayDisabled(weekDay.date)
+                dayInFuture: weekDay.inFuture || false,
+                dayInPast: weekDay.inPast || false,
+                disabled: isDayDisabled(weekDay.date) || false
               }"
               v-on:click="setNewDate(weekDay.date)"
               v-bind:key="dayIndex">
@@ -102,7 +102,7 @@
       },
       isCurrentWeek(week) {
         try{
-          if (!week) {
+          if (!week || !this.filterDate) {
             return false;
           }
           const weekNow = calendarHelper.getWeek(this.filterDate);
@@ -150,13 +150,15 @@
 
           const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
           let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
+          lastWeekFirstDay.setHours(0,0,0,0);
           lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
 
           if (lastWeekFirstDay > Date.now()) {
             lastWeekFirstDay = Date.now();
           }
 
-          const date = new Date(lastWeekFirstDay);
+          let date = new Date(lastWeekFirstDay);
+          date.setHours(0,0,0,0);
           const week = calendarHelper.getWeek(date);
           const year = date.getFullYear();
           if (action) {
@@ -177,8 +179,8 @@
           }
           const firstWeek = this.filterCalendar.weeks[0];
           let firstWeekFirstDay = new Date(firstWeek.days[0].date);
-          firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
           firstWeekFirstDay.setHours(0,0,0,0);
+          firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
 
           let date = new Date(firstWeekFirstDay);
           date.setHours(0,0,0,0);
