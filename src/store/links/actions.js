@@ -22,6 +22,7 @@ const actions = {
           state.filter.date = params.date;
           state.filter.dateYear = params.year;
           state.filter.dateWeek = params.week;
+          state.filter.calendar = calendarHelper.getCalendar(state.filter.date);
           resolve();
         })
         .catch(error => reject(error));
