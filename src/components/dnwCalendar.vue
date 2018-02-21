@@ -52,7 +52,7 @@
                 disabled: isDayDisabled(weekDay.date) || false
               }"
               v-on:click="setNewDate(weekDay.date)"
-              v-bind:key="dayIndex">
+              v-bind:key="`day${dayIndex}`">
               <router-link v-if="!isDayDisabled(weekDay.date)"
               :to="'/week/' + week.week + '/year/' + week.year">
                 {{weekDay.date ? weekDay.date.getDate() : ""}}
