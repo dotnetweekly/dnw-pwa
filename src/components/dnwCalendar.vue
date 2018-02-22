@@ -47,12 +47,13 @@
               v-bind:class="{
                 dayInFuture: weekDay.inFuture,
                 dayInPast: weekDay.inPast,
-                disabled: (weekDay.date - now > 0)
+                disabled: ((now - weekDay.date) < 0)
               }">
-              <router-link v-if="!(weekDay.date - now > 0)"
+              <router-link v-if="!((now - weekDay.date) < 0)"
               :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                 {{ weekDay.date ? weekDay.date.getDate() : "" }}
               </router-link>
+              <span v-if="((now - weekDay.date) < 0)">{{ weekDay.date ? weekDay.date.getDate() : "" }}</span>
             </td>
         </tr>
       </tbody>
