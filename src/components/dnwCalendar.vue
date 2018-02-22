@@ -239,6 +239,7 @@ tr.weekInFuture td:first-child, td.disabled {
 
 td.disabled {
   cursor: default;
+  display: none;
 }
 
 tr.current, tr.weekInPast:hover {
