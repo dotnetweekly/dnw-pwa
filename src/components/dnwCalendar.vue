@@ -27,34 +27,33 @@
           <td>T</td> <td>F</td> <td>S</td> <td>S</td>
         </tr>
         <tr v-if="filterCalendar && filterCalendar.weeks"
-            v-for="(week, index) in filterCalendar.weeks"
+            v-for="(calendarWeek, index) in filterCalendar.weeks"
             v-bind:class="{
               dnwWeek: true,
-              current: (week.week == filterWeek),
-              weekInPast: isInPast(week.week, week.year) || false,
-              weekInFuture: !isInPast(week.week, week.year) || false
+              current: (calendarWeek.week == filterWeek),
+              weekInPast: isInPast(calendarWeek.week, calendarWeek.year) || false,
+              weekInFuture: !isInPast(calendarWeek.week, calendarWeek.year) || false
             }"
              v-bind:key="index">
             <td>
-                <router-link v-if="isInPast(week.week, week.year)"
-                :to="'/week/' + week.week + '/year/' + week.year">
-                  {{week.week}}
+                <router-link v-if="isInPast(calendarWeek.week, calendarWeek.year)"
+                :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
+                  {{calendarWeek.week}}
                 </router-link>
-                <span v-if="!isInPast(week.week, week.year)">{{week.week}}</span>
+                <span v-if="!isInPast(calendarWeek.week, calendarWeek.year)">{{calendarWeek.week}}</span>
             </td>
-            <td v-if="week && week.days"
-              v-for="(weekDay, dayIndex) in week.days"
+            <td v-if="calendarWeek && calendarWeek.days"
+              v-for="(weekDay, dayIndex) in calendarWeek.days"
               v-bind:class="{
                 dayInFuture: weekDay.inFuture,
                 dayInPast: weekDay.inPast,
                 disabled: (weekDay.date - now > 0)
-              }"
-              v-bind:key="`day${dayIndex}`">
+              }">
               <router-link v-if="!(weekDay.date - now > 0)"
-              :to="'/week/' + week.week + '/year/' + week.year">
-                {{weekDay.date ? weekDay.date.getDate() : ""}}
+              :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
+                {{ weekDay.date ? weekDay.date.getDate() : "" }}
               </router-link>
-              <span v-if="(weekDay.date - now > 0)">{{weekDay.date ? weekDay.date.getDate() : ""}}</span>
+              <span v-if="(weekDay.date - now > 0)">{{ weekDay.date ? weekDay.date.getDate() : "" }}</span>
             </td>
         </tr>
       </tbody>

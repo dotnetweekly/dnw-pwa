@@ -10,7 +10,8 @@ var config = {
     "/assets/styles.css",
     "/assets/js/app.js",
     "/assets/js/vendor.js",
-    "/offline-redirect/"
+    "/offline-redirect/",
+    "/"
   ],
   "paths": {
     "api": "https://dnw-api.azurewebsites.com/",

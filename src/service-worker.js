@@ -30,8 +30,7 @@ self.addEventListener('fetch', function (event) {
   var requestUrl = new URL(event.request.url)
   var requestPath = requestUrl.pathname
 
-  if (config.assets.indexOf(requestPath) > -1 ||
-    stringContains(event.request.url, config.paths.client)) {
+  if (config.assets.indexOf(requestPath) > -1) {
     // console.log("cache first:", requestUrl.href);
     event.respondWith(cacheFirstStrategy(event.request))
   } else if (stringContains(event.request.url, config.paths.api)) {
