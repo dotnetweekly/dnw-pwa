@@ -9,6 +9,7 @@ const express = require("express");
 const compression = require("compression");
 const favicon = require("serve-favicon");
 const serialize = require("serialize-javascript");
+const LRU = require('lru-cache');
 const createBundleRenderer = require("vue-server-renderer")
   .createBundleRenderer;
 
@@ -88,6 +89,11 @@ if (isProd) {
   });
 }
 
+const microCache = LRU({
+  max: 100,
+  maxAge: 5000 // Important: entries expires after 1 second.
+})
+
 app.get("*", (req, res) => {
   try {
     // if (req.url.indexOf('well-known/acme-challenge') !== -1) {
@@ -108,6 +114,11 @@ app.get("*", (req, res) => {
 
     if (!renderer) {
       return res.end("waiting for compilation... refresh in a moment.");
+    }
+
+    const hit = microCache.get(req.url)
+    if (hit) {
+      return res.end(hit)
     }
 
     const context = { url: req.url };

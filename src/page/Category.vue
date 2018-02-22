@@ -46,17 +46,10 @@ const fetchInitialData = (store, route) => {
     route.params.week = calendarHelper.getWeek(route.params.date);
   }
 
-  if (route.params.week && route.params.year) {
-    route.params.date = calendarHelper.getDateRangeOfWeek(
-      route.params.week,
-      route.params.year
-    ).from;
-  }
   return store.dispatch(`linksModule/getLinks`, {
     week: route.params.week,
     year: route.params.year,
-    category: route.params.category,
-    date: route.params.date
+    category: route.params.category
   });
 };
 
@@ -72,11 +65,11 @@ export default {
   },
   computed: {
     ...mapGetters("linksModule", ["links", "olderLinks", "filter"]),
-    filterDateChange () {
-      return this.filter ? this.filter.date : ""
+    filterWeekChange () {
+      return this.filterWeek
     },
     linkCount() {
-      return (this.links && this.olderLinks) ? this.links.length + this.olderLinks.length : 0;
+      return this.filterWeek + this.links.length + this.olderLinks.length;
     }
   },
   methods: {
@@ -94,14 +87,12 @@ export default {
       this.loading = true;
       this.loadLinks();
     },
-    filterDateChange () {
+    filterWeekChange () {
       this.loading = false;
       setMetadata(this.$route.path, this.$store.state);
     },
     linkCount (newData, oldData) {
-      if (newData != 0) {
-        this.loading = false;
-      }
+      setTimeout(() => {this.loading = false;});
     }
   },
   prefetch: fetchInitialData,
@@ -120,6 +111,7 @@ export default {
     position: absolute;
     top: 0;
     left: -1rem;
+    padding-right: 1rem;
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);

@@ -1,19 +1,17 @@
 <template>
   <div>
     <div class="columns constant-flex dnwCalendarHeader" v-if="filterCalendar && filterCalendar.weeks">
-      <div class="column date-arrow is-one-quarter has-text-right is-pointer"
-        v-on:click="getPreviousMonth(true)">
+      <div class="column date-arrow is-one-quarter has-text-right is-pointer">
         <router-link
-          :to="'/week/' + getPreviousMonth().week + '/year/' + getPreviousMonth().year">
+          :to="'/week/' + previousMonth.week + '/year/' + previousMonth.year">
           <i class="icon-left-open" aria-hidden="true"></i>
         </router-link>
       </div>
-      <div class="column has-text-centered">{{getCurrentMonth()}} {{getCurrentYear()}}</div>
+      <div class="column has-text-centered">{{getCurrentMonth()}} {{filterYear}}</div>
       <div  class="column date-arrow is-one-quarter has-text-left is-pointer"
-        v-on:click="getNextMonth(true)"
         v-show="isMonthInPast()">
         <router-link
-          :to="'/week/' + getNextMonth().week + '/year/' + getNextMonth().year">
+          :to="'/week/' + nextMonth.week + '/year/' + nextMonth.year">
           <i class="icon-right-open" aria-hidden="true"></i>
         </router-link>
       </div>
@@ -32,12 +30,12 @@
             v-for="(week, index) in filterCalendar.weeks"
             v-bind:class="{
               dnwWeek: true,
-              current: isCurrentWeek(week.week) || false,
+              current: (week.week == filterWeek),
               weekInPast: isInPast(week.week, week.year) || false,
               weekInFuture: !isInPast(week.week, week.year) || false
             }"
              v-bind:key="index">
-            <td v-on:click="setNewDate(week.days[0].date)">
+            <td>
                 <router-link v-if="isInPast(week.week, week.year)"
                 :to="'/week/' + week.week + '/year/' + week.year">
                   {{week.week}}
@@ -47,17 +45,16 @@
             <td v-if="week && week.days"
               v-for="(weekDay, dayIndex) in week.days"
               v-bind:class="{
-                dayInFuture: weekDay.inFuture || false,
-                dayInPast: weekDay.inPast || false,
-                disabled: isDayDisabled(weekDay.date) || false
+                dayInFuture: weekDay.inFuture,
+                dayInPast: weekDay.inPast,
+                disabled: (weekDay.date - now > 0)
               }"
-              v-on:click="setNewDate(weekDay.date)"
               v-bind:key="`day${dayIndex}`">
-              <router-link v-if="!isDayDisabled(weekDay.date)"
+              <router-link v-if="!(weekDay.date - now > 0)"
               :to="'/week/' + week.week + '/year/' + week.year">
                 {{weekDay.date ? weekDay.date.getDate() : ""}}
               </router-link>
-              <span v-if="isDayDisabled(weekDay.date)">{{weekDay.date ? weekDay.date.getDate() : ""}}</span>
+              <span v-if="(weekDay.date - now > 0)">{{weekDay.date ? weekDay.date.getDate() : ""}}</span>
             </td>
         </tr>
       </tbody>
@@ -68,218 +65,133 @@
   import { mapGetters, mapActions } from "vuex";
   import * as calendarHelper from "../helpers/calendar";
   export default {
+    data(){
+      return {
+        now: new Date(Date.now()),
+        previousMonth: { week: "", year: "" },
+        nextMonth: { week: "", year: "" },
+        filterCalendar: { weeks: [] }
+      }
+    },
     computed: {
       ...mapGetters("linksModule", [
-        "filterDate",
-        "filterCalendar",
-        "filterCategory"
-      ])
+        "filterCategory",
+        "filterWeek",
+        "filterYear"
+      ]),
+      filterWeekChange () {
+        return this.filterWeek
+      }
+    },
+    watch: {
+      filterWeekChange () {
+        this.updateCalendar();
+      }
+    },
+    mounted() {
+      this.now.setHours(0,0,0,0);
+      this.updateCalendar();
+    },
+    created() {
+      this.now.setHours(0,0,0,0);
+      this.updateCalendar();
     },
     methods: {
+      updateCalendar() {
+        this.filterCalendar = calendarHelper.getCalendar(this.filterWeek, this.filterYear);
+        if (!this.filterCalendar ||
+        !this.filterCalendar.weeks ||
+        this.filterCalendar.weeks.length == 0) {
+          this.previousMonth = { week: "", year: "" }
+          this.nextMonth = { week: "", year: "" }
+
+          return;
+        }
+
+        const firstWeek = this.filterCalendar.weeks[0];
+        let firstWeekFirstDay = new Date(firstWeek.days[0].date);
+        firstWeekFirstDay.setHours(0,0,0,0);
+        firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
+
+        let previousWeekLastDay = new Date(firstWeekFirstDay);
+        previousWeekLastDay.setHours(0,0,0,0);
+        this.previousMonth = {
+          week: calendarHelper.getWeek(previousWeekLastDay),
+          year: previousWeekLastDay.getFullYear()
+        }
+
+        const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
+        let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
+        lastWeekFirstDay.setHours(0,0,0,0);
+        lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
+
+        let nextWeekFirstDay = new Date(lastWeekFirstDay);
+        nextWeekFirstDay.setHours(0,0,0,0);
+        this.nextMonth = {
+          week: calendarHelper.getWeek(nextWeekFirstDay),
+          year: nextWeekFirstDay.getFullYear()
+        }
+      },
       getCurrentMonth() {
-        try{
-          if (!this.filterDate) {
-            return "";
-          }
-          let date = new Date(this.filterDate);
-          date.setHours(0,0,0,0);
-          let month = date.getMonth();
-          return calendarHelper.getMonthName(month);
-        }catch(error){
+        if (!this.filterWeek || !this.filterYear) {
           return "";
         }
-      },
-      getCurrentYear() {
-        try{
-          if (!this.filterDate) {
-            return "";
-          }
-          let date = new Date(this.filterDate);
-          date.setHours(0,0,0,0);
-          return date.getFullYear();
-        }catch(error){
-          return "";
-        }
-      },
-      isCurrentWeek(week) {
-        try{
-          if (!week || !this.filterDate) {
-            return false;
-          }
-          const weekNow = calendarHelper.getWeek(this.filterDate);
-          if (week === weekNow) {
-            return true;
-          }
-          return false;
-        } catch(error) {
-          return false;
-        }
+        return calendarHelper.getMonthName(calendarHelper.getMonthFromWeek(this.filterWeek, this.filterYear));
       },
       isInPast(week, year) {
-        try{
-          if (!week || !year) {
-            return false;
-          }
-          const yearNow = new Date(Date.now()).getFullYear();
-          const weekNow = calendarHelper.getWeek(Date.now());
-          if ((week <= weekNow && year == yearNow) || year < yearNow) {
-            return true;
-          }
-          return false;
-        } catch(error) {
+        if (!week || !year) {
           return false;
         }
-      },
-      isDayDisabled(date) {
-        try{
-          if (!date) {
-            return false;
-          }
-          return (date - Date.now() > 0)
-        }catch(error) {
-          return false;
+        const yearNow = new Date(this.now).getFullYear();
+        const weekNow = calendarHelper.getWeek(this.now);
+        if ((week <= weekNow && year == yearNow) || year < yearNow) {
+          return true;
         }
-      },
-      getNextMonth(action) {
-        try{
-          if (!this.filterCalendar || !this.filterCalendar.weeks) {
-            return { week: "", year: ""};
-          }
-          if (this.filterCalendar.weeks.length === 0) {
-            return { week: "", year: ""};
-          }
-
-          const lastWeek = this.filterCalendar.weeks[this.filterCalendar.weeks.length - 1];
-          let lastWeekFirstDay = new Date(lastWeek.days[lastWeek.days.length - 1].date);
-          lastWeekFirstDay.setHours(0,0,0,0);
-          lastWeekFirstDay.setDate(lastWeekFirstDay.getDate() + 1)
-
-          if (lastWeekFirstDay > Date.now()) {
-            lastWeekFirstDay = Date.now();
-          }
-
-          let date = new Date(lastWeekFirstDay);
-          date.setHours(0,0,0,0);
-          const week = calendarHelper.getWeek(date);
-          const year = date.getFullYear();
-          if (action) {
-            this.updatePath(week, year);
-          }
-          return { week, year }
-        }catch(error){
-          return { week: "", year: ""};
-        }
-      },
-      getPreviousMonth(action) {
-        try{
-          if (!this.filterCalendar || !this.filterCalendar.weeks) {
-            return { week: "", year: ""};
-          }
-          if (this.filterCalendar.weeks.length === 0) {
-            return { week: "", year: ""};
-          }
-          const firstWeek = this.filterCalendar.weeks[0];
-          let firstWeekFirstDay = new Date(firstWeek.days[0].date);
-          firstWeekFirstDay.setHours(0,0,0,0);
-          firstWeekFirstDay.setDate(firstWeekFirstDay.getDate() - 1);
-
-          let date = new Date(firstWeekFirstDay);
-          date.setHours(0,0,0,0);
-          const week = calendarHelper.getWeek(date);
-          const year = date.getFullYear();
-          if (action) {
-            this.updatePath(week, year);
-          }
-          return { week, year }
-        }catch(error){
-            return { week: "", year: ""};
-        }
+        return false;
       },
       isMonthInPast() {
-        try{
-          if (!this.filterDate) {
-            return;
-          }
-          let date = new Date(this.filterDate);
-          date.setHours(0,0,0,0);
+        if (!this.filterWeek || !this.filterYear) {
+          return false;
+        }
 
-          let month = date.getMonth();
-          let year = date.getFullYear();
+        let month = calendarHelper.getMonthFromWeek(this.filterWeek, this.filterYear);
+        let year = this.filterYear;
 
-          const yearNow = new Date(Date.now()).getFullYear();
-          const monthNow = new Date(Date.now()).getMonth();
+        const yearNow = this.now.getFullYear();
+        const monthNow = this.now.getMonth();
 
-          if (month === 11) {
-            year = year + 1;
-            month = 0;
-          } else {
-            month += 1;
-          }
+        if (month === 11) {
+          year = year + 1;
+          month = 0;
+        } else {
+          month += 1;
+        }
 
-          if (year > yearNow || (yearNow <= year && month > monthNow)) {
-            return false;
-          }
-
-          return true;
-        }catch(error){
+        if (yearNow > year) {
           return true;
         }
-      },
-      getDateWeek(newDate) {
-        try{
-          if (!newDate) {
-            return;
-          }
-          return calendarHelper.getWeek(new Date(newDate));
-        }catch(error){
-          return "";
+
+        if  (yearNow == year && month <= monthNow)  {
+          return true;
         }
-      },
-      getDateYear(newDate) {
-        try{
-          if(!newDate){
-            return;
-          }
-          return (new Date(newDate)).getFullYear();
-        }catch(error){
-          return "";
-        }
-      },
-      setNewDate(newDate) {
-        try{
-          if(!newDate){
-            return;
-          }
-          if (this.isDayDisabled(newDate)) {
-            return "";
-          }
-          const date = new Date(newDate);
-          const week = calendarHelper.getWeek(date);
-          const year = date.getFullYear();
-          this.updatePath(week, year);
-        }catch(error){
-          return "";
-        }
+
+        return false;
       },
       updatePath(week, year) {
-        try{
-          if(!this.$route.params || !this.$route.params.week || !this.$route.params.year){
-            return;
-          }
-
-          if(week == this.$route.params.week && year == this.$route.params.year){
-            return;
-          }
-
-          if (this.filterCategory) {
-            this.$router.push(`/${this.filterCategory}/week/${week}/year/${year}`);
-
-            return;
-          }
-          this.$router.push(`/week/${week}/year/${year}`);
-        }catch(error){
-          return "";
+        if(!this.$route.params || !this.$route.params.week || !this.$route.params.year){
+          return;
         }
+
+        if(week == this.$route.params.week && year == this.$route.params.year){
+          return;
+        }
+
+        if (this.filterCategory) {
+          this.$router.push(`/${this.filterCategory}/week/${week}/year/${year}`);
+
+          return;
+        }
+        this.$router.push(`/week/${week}/year/${year}`);
       }
     }
   }
@@ -304,29 +216,37 @@
   color: $black;
 }
 
-.dnwCalendar{
+.dnwCalendar {
   font-size: 70%;
 }
 
-table, tr, td{
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+table, tr, td {
+  padding: 0 !important;
   text-align: center;
 }
 
-.disabled-arrow, tr.weekInFuture, td.dayInPast, td.dayInFuture{
+td a {
+  padding: 0.5em 0.75em !important;
+  display: block;
+}
+
+.disabled-arrow, tr.weekInFuture, td.dayInPast, td.dayInFuture {
   opacity: 0.5;
 }
 
-td.disabled{
-  text-decoration: line-through;
+tr.weekInFuture td:first-child, td.disabled {
+  opacity: 0.3;
+  font-style: italic;
+  padding: 0.5em 0.75em !important;
+}
+
+td.disabled {
   cursor: default;
 }
 
-tr.current, tr.weekInPast:hover{
+tr.current, tr.weekInPast:hover {
   background-color: $primary;
   color: #ffffff;
-  cursor: pointer;
   a {
     color: $white;
   }

@@ -6,7 +6,6 @@ const actions = {
   refreshLinks({commit, state}){
     actions.getLinks({ commit, state }, {
       category: state.filter.category,
-      date: state.filter.date,
       week: state.filter.dateWeek,
       year: state.filter.dateYear
     })
@@ -19,7 +18,6 @@ const actions = {
           state.links = response.links;
           state.olderLinks = response.olderLinks;
           state.filter.category = params.category ? params.category : "";
-          state.filter.date = params.date;
           state.filter.dateYear = params.year;
           state.filter.dateWeek = params.week;
           resolve();

@@ -28,7 +28,7 @@
   export default {
     computed: {
       ...mapGetters("linksModule", ["links", "filterCategory", "filter",
-        "filterCategories", "filterDate"])
+        "filterCategories"])
     },
     components: {
       "dnw-category-icon": dnwCategoryIcon,
@@ -39,12 +39,11 @@
         setFilterCategory: "setFilterCategory"
       }),
       updateCategory(e) {
-        if(!this.filterDate){
+        if(!this.filterWeek || !this.filterYear){
           return;
         }
-        const date = new Date(this.filterDate);
-        const week = calendarHelper.getWeek(date);
-        const year = date.getFullYear();
+        const week = this.filterWeek;
+        const year = this.filterYear;
         const newCategory = e.target.value;
 
         if (newCategory) {

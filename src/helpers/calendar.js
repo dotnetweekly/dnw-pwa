@@ -42,7 +42,7 @@ const getWeek = function(dateValue) {
 const getDateRangeOfWeek = function(week, year) {
 	let date = new Date(year, 0, 1);
   date.setHours(0,0,0,0);
-  date.setDate(date.getDate() +(week * 7));
+  date.setDate(date.getDate() + (week * 7) - 1);
 
   let fromDate = new Date(date.setDate(date.getDate() - 6));
   fromDate.setHours(0,0,0,0);
@@ -69,9 +69,15 @@ const getFebruaryDays = function(dateValue) {
 	}
 };
 
-const getCalendar = function(date) {
-	const today = Date.now();
-	let dateNow = new Date(date);
+const getMonthFromWeek = function(week, year) {
+  let date = new Date(year, 0, 1);
+  date.setHours(0,0,0,0);
+  date.setDate(date.getDate() + (week * 7));
+  return date.getMonth();
+}
+
+const getCalendar = function(setWeek, setYear) {
+	let dateNow = new Date(setYear, getMonthFromWeek(setWeek, setYear), 1);
   dateNow.setHours(0,0,0,0);
 	const dayPerMonth = monthDays;
 	dayPerMonth[1] = getFebruaryDays(dateNow);
@@ -165,4 +171,4 @@ const getCalendar = function(date) {
 	};
 };
 
-export { getWeek, getDateRangeOfWeek, getMonthName, getFebruaryDays, getCalendar, getDayName };
+export { getWeek, getDateRangeOfWeek, getMonthName, getFebruaryDays, getMonthFromWeek, getCalendar, getDayName };
