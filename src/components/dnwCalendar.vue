@@ -53,7 +53,6 @@
               :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                 {{ weekDay.date ? weekDay.date.getDate() : "" }}
               </router-link>
-              <span v-if="(weekDay.date - now > 0)">{{ weekDay.date ? weekDay.date.getDate() : "" }}</span>
             </td>
         </tr>
       </tbody>
