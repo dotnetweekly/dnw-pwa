@@ -28,7 +28,7 @@
   export default {
     computed: {
       ...mapGetters("linksModule", ["links", "filterCategory", "filter",
-        "filterCategories"])
+        "filterCategories", "filterWeek", "filterYear"])
     },
     components: {
       "dnw-category-icon": dnwCategoryIcon,
@@ -39,7 +39,7 @@
         setFilterCategory: "setFilterCategory"
       }),
       updateCategory(e) {
-        if(!this.filterWeek || !this.filterYear){
+        if(!this.filterWeek && !this.filterYear){
           return;
         }
         const week = this.filterWeek;

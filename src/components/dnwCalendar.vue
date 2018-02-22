@@ -26,13 +26,13 @@
           <td> Week </td> <td>M</td> <td>T</td> <td>W</td>
           <td>T</td> <td>F</td> <td>S</td> <td>S</td>
         </tr>
-        <tr v-if="filterCalendar && filterCalendar.weeks"
+        <tr v-if="filterCalendar && filterCalendar.weeks && isInPast(calendarWeek.week, calendarWeek.year)"
             v-for="(calendarWeek, index) in filterCalendar.weeks"
             v-bind:class="{
               dnwWeek: true,
               current: (calendarWeek.week == filterWeek),
-              weekInPast: isInPast(calendarWeek.week, calendarWeek.year) || false,
-              weekInFuture: !isInPast(calendarWeek.week, calendarWeek.year) || false
+              weekInPast: true,
+              weekInFuture: false
             }"
              v-bind:key="index">
             <td>
@@ -40,7 +40,6 @@
                 :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                   {{calendarWeek.week}}
                 </router-link>
-                <span v-if="!isInPast(calendarWeek.week, calendarWeek.year)">{{calendarWeek.week}}</span>
             </td>
             <td v-if="calendarWeek && calendarWeek.days"
               v-for="(weekDay, dayIndex) in calendarWeek.days"
@@ -53,7 +52,6 @@
               :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                 {{ weekDay.date ? weekDay.date.getDate() : "" }}
               </router-link>
-              <span v-if="((now - weekDay.date) < 0)">{{ weekDay.date ? weekDay.date.getDate() : "" }}</span>
             </td>
         </tr>
       </tbody>

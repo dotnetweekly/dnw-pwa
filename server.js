@@ -101,6 +101,12 @@ app.get("*", (req, res) => {
     //   return;
     // }
 
+    const legacyNewsletter = req.url.match(/\/newsletter\/show\_newsletter\.php\?w=(.*?)&y=(.*?)$/)
+    if (legacyNewsletter) {
+      res.redirect(301, `${config.newsletterDomain}issues/${parseInt(legacyNewsletter[2])}/${parseInt(legacyNewsletter[1])}`);
+      return;
+    }
+
     const indexOfLegacy = legacyRedirects.oldLinks.indexOf(req.url.replace(/\/$/g, ''));
     if (indexOfLegacy !== -1) {
       res.redirect(301, `${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`);

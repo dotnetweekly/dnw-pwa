@@ -24,7 +24,12 @@
         </p>
       </div>
     </div>
-    <p class="link-content">{{link.content}}</p>
+    <p v-if="!link.content" class="link-content">
+      Loading...
+    </p>
+    <p class="link-content">
+      {{link.content}}
+    </p>
     <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
     <dnw-comments v-bind:linkId="link._id" v-bind:comments="link.comments"></dnw-comments>
   </div>

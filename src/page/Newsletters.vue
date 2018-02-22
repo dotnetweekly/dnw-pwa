@@ -3,6 +3,7 @@
   <div class="link-back-button"><router-link to="/"><i class="icon-left-open" aria-hidden="true"></i> This week</router-link></div>
   <h1>Previous Newsletters</h1>
   <div class="separator newsletter-separator"></div>
+  <div class="columns" v-if="rows && rows.length === 0">Loading...</div>
   <div class="columns" v-for="(row, weeksIndex) in rows" v-bind:key="weeksIndex">
     <div class="column card" v-for="(item, weekIndex) in row" v-bind:key="weekIndex">
       <a :href="newsletterDomain + 'issues/' + item.year + '/' + item.week">Week: {{item.week}} Year: {{item.year}}</a>
