@@ -4,12 +4,12 @@
     <app-header></app-header>
     <section class="main-section section">
       <div class="container content">
+        <recaptcha ref="recaptcha"></recaptcha>
         <router-view></router-view>
       </div>
     </section>
     <app-footer></app-footer>
     <ga-analytics ua="UA-31484897-2"></ga-analytics>
-    <recaptcha ref="recaptcha"></recaptcha>
   </div>
 </template>
 <script>

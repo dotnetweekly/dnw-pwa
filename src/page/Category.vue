@@ -5,6 +5,7 @@
     <div v-if="loading" class="menu-loading"></div>
   </div>
   <div class="column">
+    <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
     <dnw-link v-if="links" v-for="link in links" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
     <div v-if="!loading && links && links.length == 0">
       <h2 class="has-text-centered">Oops, no links found for this week/category.
@@ -31,6 +32,8 @@
 import { mapGetters } from "vuex";
 import dnwLink from "../components/dnwLink";
 import dnwMenu from "../components/dnwMenu";
+import dnwSubscribe from "../components/dnwSubscribe";
+
 import * as calendarHelper from "../helpers/calendar";
 import setMetadata from "../helpers/metadata";
 
@@ -61,10 +64,12 @@ export default {
   },
   components: {
     "dnw-link": dnwLink,
-    "dnw-menu": dnwMenu
+    "dnw-menu": dnwMenu,
+    "dnw-subscribe": dnwSubscribe
   },
   computed: {
     ...mapGetters("linksModule", ["links", "olderLinks", "filter"]),
+    ...mapGetters("authModule", ["isAuthenticated"]),
     filterWeekChange () {
       return this.filterWeek
     },
