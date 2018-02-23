@@ -249,4 +249,11 @@ tr.current, tr.weekInPast:hover {
     color: $white;
   }
 }
+
+@media (min-width: $tablet) and (max-width: 1070px) {
+  .content table td, .content table th, td a {
+    padding: 0 !important;
+  }
+}
+
 </style>

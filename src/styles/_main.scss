@@ -2,6 +2,10 @@ body {
   font-size: $font-size;
 }
 
+#app{
+  min-height: 600px;
+}
+
 .is-full-width {
   width: 100%;
 }
@@ -36,6 +40,12 @@ body {
 
 .main-section.section {
   background-color: $background;
+}
+
+@media screen and (max-width: $tablet-large) {
+  .main-section.section {
+    padding-top: 1rem;
+  }
 }
 
 footer.footer {
