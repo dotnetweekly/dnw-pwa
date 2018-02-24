@@ -56,8 +56,8 @@ const generateSwConfigFile = () => {
     var swConfigFilename = 'sw_config_' + self.assetCacheHash + '.js';
     fs.outputFile( (dirPath + "/" + swConfigFilename), 'var config = ' +  JSON.stringify({
       assets: self.assetFiles.concat('/offline-redirect/').concat('/'),
-      paths:{api: config.apiDomain, client: config.client},
-      cacheNames:{assetCache:`vwpCacheAsset-${self.assetCacheHash}`, remoteCache:`vwpCacheRemote-${self.assetCacheHash}`}
+      paths:{client: config.client},
+      cacheNames:{assetCache:`vwpCacheAsset-${self.assetCacheHash}`}
     }), () => {
       resolve(swConfigFilename);
     });

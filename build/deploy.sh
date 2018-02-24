@@ -9,6 +9,7 @@ npm run build
 
 rm -rf ../wwwroot/dist
 cp -TR ./dist/ ../wwwroot/dist/
+
 cp -R ./seo.js ../wwwroot/seo.js
 cp -R ./router-meta.js ../wwwroot/router-meta.js
 cp -R ./server.js ../wwwroot/server.js
@@ -16,6 +17,7 @@ cp -R ./legacyRedirects.json ../wwwroot/legacyRedirects.json
 cp -R ./app.config.js ../wwwroot/app.config.js
 cp -R ./package.json ../wwwroot/package.json
 cp -R ./package-lock.json ../wwwroot/package-lock.json
+
 cp -R ./src/assets/app-icon.png ../wwwroot/dist/assets/app-icon.png
 cp -R ./src/assets/favicon.ico ../wwwroot/dist/favicon.ico
 cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
