@@ -30,12 +30,11 @@ self.addEventListener('fetch', function (event) {
   var requestUrl = new URL(event.request.url)
   var requestPath = requestUrl.pathname
 
-  if (config.assets.indexOf(requestPath) > -1) {
+  if (requestPath == "/") {
+    event.respondWith(networkFirstStrategy(event.request))
+  } else if (config.assets.indexOf(requestPath) > -1) {
     // console.log("cache first:", requestUrl.href);
     event.respondWith(cacheFirstStrategy(event.request))
-  } else if (stringContains(event.request.url, config.paths.api)) {
-    // console.log("network first:", requestUrl.href, " current",currentDomain, "requestPath:", requestPath);
-    event.respondWith(networkFirstStrategy(event.request))
   } else {
     event.respondWith(fetch(event.request))
   }
