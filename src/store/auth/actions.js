@@ -24,13 +24,16 @@ const actions = {
 				});
 		});
   },
-  getCount(state, token) {
+  getCount({ context, state }) {
     axios.get("/user/count")
     .then(response => {
       if(response && response.data && response.data.data){
         state.subscribers = response.data.data;
       }
     })
+  },
+  setLoginStatus({ context, state }, loginStatus) {
+    state.isAuthenticated = loginStatus;
   },
 	setAuthToken(context, token) {
 		context.commit('login', token);

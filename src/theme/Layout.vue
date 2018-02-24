@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import AppHeader from "./AppHeader.vue";
 import AppFooter from "./AppFooter.vue";
 import Recaptcha from '../components/recaptcha'
@@ -24,10 +25,26 @@ export default {
     "ga-analytics": gaAnalytics,
     Recaptcha
   },
+  methods: {
+    ...mapActions("authModule", {
+      getCount: "getCount",
+      setLoginStatus: "setLoginStatus"
+    })
+  },
   mounted() {
     window.recaptchaComponent = this.$refs.recaptcha;
     if (typeof window !== "undefined") {
-      document.querySelector('[data-name="site-style"]').removeAttribute("disabled");
+      setTimeout(() => {
+        document.querySelector('[data-name="site-style"]').removeAttribute("disabled");
+      });
+    }
+    if (typeof window !== "undefined") {
+      let expiration = window.localStorage.getItem("dnwTokenExpiration");
+      var unixTimestamp = new Date().getTime() / 1000;
+      if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
+        this.setLoginStatus(true);
+      }
+      this.getCount();
     }
   }
 };
