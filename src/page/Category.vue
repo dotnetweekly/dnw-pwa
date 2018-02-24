@@ -6,7 +6,7 @@
   </div>
   <div class="column">
     <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
-    <dnw-link v-if="links" v-for="link in links" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
+    <dnw-link v-if="links" v-for="link in linksOrdered" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
     <div v-if="!loading && links && links.length == 0">
       <h2 class="has-text-centered">Oops, no links found for this week/category.
         <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
@@ -76,6 +76,9 @@ export default {
     },
     linkCount() {
       return this.filterWeek + this.links.length + this.olderLinks.length;
+    },
+    linksOrdered() {
+      return this.links;
     }
   },
   methods: {

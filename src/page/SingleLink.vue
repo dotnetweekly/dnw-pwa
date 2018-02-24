@@ -1,37 +1,37 @@
 <template>
   <div v-if="link">
     <div class="link-back-button"><a v-on:click="goBackLink()"><i class="icon-left-open" aria-hidden="true"></i> Back</a></div>
-    <div class="columns link-title-wrapper">
-      <div class="column upvote-column">
-        <dnw-upvote class="column"
-        :linkId="link._id"
-        :hasUpvoted.sync="link.hasUpvoted"
-        :upvoteCount.sync="link.upvoteCount">
-        </dnw-upvote>
+    <dnw-loading v-if="!link.content"></dnw-loading>
+    <div v-if="link.content">
+      <div class="columns link-title-wrapper">
+        <div class="column upvote-column">
+          <dnw-upvote class="column"
+          :linkId="link._id"
+          :hasUpvoted.sync="link.hasUpvoted"
+          :upvoteCount.sync="link.upvoteCount">
+          </dnw-upvote>
+        </div>
+        <div class="column">
+          <h1 class="link-title">
+            <dnw-category-icon :category="link.category" class="link-category-icon"></dnw-category-icon>
+            <a :href="link.url" target="_blank">{{link.title}}</a>
+          </h1>
+          <p class="link-subline">
+            <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
+            <span>{{ link.createdOn | formatDate }}</span>
+          </p>
+          <p class="link-tags">
+            <span v-for="tag in link.tags" v-bind:key="tag._id"
+              class="tag is-light">{{ tag }}</span>
+          </p>
+        </div>
       </div>
-      <div class="column">
-        <h1 class="link-title">
-          <dnw-category-icon :category="link.category" class="link-category-icon"></dnw-category-icon>
-          <a :href="link.url" target="_blank">{{link.title}}</a>
-        </h1>
-        <p class="link-subline">
-          <span>by </span><router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link><span>, </span>
-          <span>{{ link.createdOn | formatDate }}</span>
-        </p>
-        <p class="link-tags">
-          <span v-for="tag in link.tags" v-bind:key="tag._id"
-            class="tag is-light">{{ tag }}</span>
-        </p>
-      </div>
+      <p class="link-content">
+        {{link.content}}
+      </p>
+      <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
+      <dnw-comments v-bind:linkId="link._id" v-bind:comments="link.comments"></dnw-comments>
     </div>
-    <p v-if="!link.content" class="link-content">
-      Loading...
-    </p>
-    <p class="link-content">
-      {{link.content}}
-    </p>
-    <p class="link-more"><a :href="link.url" target="_blank" class="button is-primary">Read More</a></p>
-    <dnw-comments v-bind:linkId="link._id" v-bind:comments="link.comments"></dnw-comments>
   </div>
 </template>
 <script>
@@ -39,6 +39,7 @@ import { mapGetters } from "vuex";
 import DNWComments from "../components/dnwComments.vue";
 import dnwCategoryIcon from "../components/dnwCategoryIcon";
 import dnwUpvote from "../components/dnwUpvote";
+import dnwLoading from "../components/dnwLoading";
 import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
@@ -49,7 +50,8 @@ export default {
   components: {
     "dnw-category-icon": dnwCategoryIcon,
     "dnw-comments": DNWComments,
-    "dnw-upvote": dnwUpvote
+    "dnw-upvote": dnwUpvote,
+    "dnw-loading": dnwLoading
   },
   computed: {
     ...mapGetters("linkModule", ["link"]),
