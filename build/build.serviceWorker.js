@@ -103,15 +103,11 @@ const cleanIndex = () => {
       fs.unlink(dirPath + "/assets/styles.css");
       fs.unlink(dirPath + "/assets/styles.css.map");
       data = data.replace(
-        '<link rel="stylesheet" href="/assets/styles.css">',
+        /<link(.*?)href=\"\/assets\/styles\.css\"(.*?)>/gim,
         ""
       );
       data = data.replace(
-        '<link href="/assets/styles.css" rel="stylesheet">',
-        ""
-      );
-      data = data.replace(
-        '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
+        '<script src="/assets/js/vendor.js" async defer></script><script src="/assets/js/app.js" async defer></script>',
         ""
       );
       data = data.replace(/type="text\/javascript"/gim, ' async defer type="text/javascript"');
