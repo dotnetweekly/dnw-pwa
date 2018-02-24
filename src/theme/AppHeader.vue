@@ -11,8 +11,8 @@
       <div class="column tight"></div>
       <div class="header-menu">
         <div class="header-cta">
-          <router-link v-if="isAuthenticated" to="/add" class="is-text">+ Add a link</router-link>
-          <router-link v-if="!isAuthenticated" to="/login" class="is-text">+ Add a link</router-link>
+          <router-link v-if="isAuthenticated" alt="add a link" to="/add" class="is-text">+ Add a link</router-link>
+          <router-link v-if="!isAuthenticated" alt="login" to="/login" class="is-text">+ Add a link</router-link>
         </div>
         <div class="header-profile">
           <div class="header-profile-inner">

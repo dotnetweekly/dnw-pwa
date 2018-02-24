@@ -47,12 +47,7 @@
         if(typeof window === "undefined") {
           return;
         }
-        this.recaptchaCheck = setInterval(() => {
-          if (window && window.grecaptcha) {
-            window.recaptchaComponent.execute(this.unsubscribeAction);
-            clearInterval(this.recaptchaCheck);
-          }
-        }, 100);
+        window.recaptchaComponent.execute(this.unsubscribeAction);
       },
       unsubscribeAction(recaptchaKey) {
         const verifyKey = this.$route.params.key;

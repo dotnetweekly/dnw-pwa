@@ -15,7 +15,7 @@
           <span v-if="link.user">by <router-link :to="`/users/${link.user.username}`">{{ link.user.username }}</router-link>, </span>
           <time :datetime="link.createdOn">{{ link.createdOn | formatDate }}</time>
         </p>
-        <p class="link-tags">
+        <p class="link-tags" v-if="link.tags && link.tags.length > 0">
           <span v-for="tag in link.tags" v-bind:key="tag"
             class="tag is-light">{{ tag }}</span>
         </p>

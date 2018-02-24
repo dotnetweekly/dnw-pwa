@@ -13,7 +13,6 @@ const linksService = {
         .get(path, 0)
         .then(response => {
           if (!response || !response.data) {
-            console.log(response);
             reject();
           }
           const responseData = {

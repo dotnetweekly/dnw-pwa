@@ -29,15 +29,7 @@
         if(typeof window === "undefined") {
           return;
         }
-        this.recaptchaCheck = setInterval(() => {
-          if (window && window.grecaptcha) {
-            setTimeout(() => {
-              window.recaptchaComponent.execute(this.sendUpdateRequest);
-            }, 100);
-            clearInterval(this.recaptchaCheck);
-            this.running = false;
-          }
-        }, 100);
+        window.recaptchaComponent.execute(this.sendUpdateRequest);
       },
       sendUpdateRequest(recaptchaKey) {
         const verifyKey = this.$route.params.key;

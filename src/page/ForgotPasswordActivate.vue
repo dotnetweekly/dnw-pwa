@@ -71,14 +71,7 @@ export default {
       if(typeof window === "undefined") {
         return;
       }
-      this.recaptchaCheck = setInterval(() => {
-        if (window && window.grecaptcha) {
-          setTimeout(() => {
-            window.recaptchaComponent.execute(this.forgotPassword);
-          }, 0);
-          clearInterval(this.recaptchaCheck);
-        }
-      }, 100);
+      window.recaptchaComponent.execute(this.forgotPassword);
     },
     forgotPassword(recaptchaKey) {
       const verifyKey = this.$route.params.key;

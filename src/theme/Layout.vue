@@ -26,6 +26,9 @@ export default {
   },
   mounted() {
     window.recaptchaComponent = this.$refs.recaptcha;
+    if (typeof window !== "undefined") {
+      document.querySelector('[data-name="site-style"]').removeAttribute("disabled");
+    }
   }
 };
 </script>
