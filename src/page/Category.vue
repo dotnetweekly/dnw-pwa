@@ -1,29 +1,31 @@
 <template>
-<div class="columns">
-  <div class="column is-one-quarter main-menu tight">
-    <dnw-menu></dnw-menu>
-    <div v-if="loading" class="menu-loading"></div>
-  </div>
-  <div class="column">
-    <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
-    <dnw-link v-if="links" v-for="link in linksOrdered" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
-    <div v-if="!loading && links && links.length == 0">
-      <h2 class="has-text-centered">Oops, no links found for this week/category.
-        <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
-      <p class="has-text-centered">
-        <span>Don't see the cool .NET link you found this week?</span>
-        <router-link alt="add a link" to="/add">Add your favorite dotNET link</router-link>
-      </p>
-      <div class="separator"></div>
-      <dnw-link v-if="olderLinks && olderLinks.length > 0" v-for="link in olderLinks"
-        v-bind:id="link._id"
-        v-bind:key="link._id"
-        :link="link">
-      </dnw-link>
+<div>
+  <div class="columns">
+    <div class="column is-one-quarter main-menu tight">
+      <dnw-menu></dnw-menu>
+      <div v-if="linksLoading" class="menu-loading"></div>
     </div>
-    <div class="separator"></div>
-    <div class="has-text-centered">
-      <p>A free weekly newsletter on .NET latest</p>
+    <div class="column">
+      <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
+      <dnw-link v-if="links" v-for="link in linksOrdered" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
+      <div v-if="!linksLoading && links && links.length == 0">
+        <h2 class="has-text-centered">Oops, no links found for this week/category.
+          <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
+        <p class="has-text-centered">
+          <span>Don't see the cool .NET link you found this week?</span>
+          <router-link alt="add a link" to="/add">Add your favorite dotNET link</router-link>
+        </p>
+        <div class="separator"></div>
+        <dnw-link v-if="olderLinks && olderLinks.length > 0" v-for="link in olderLinks"
+          v-bind:id="link._id"
+          v-bind:key="link._id"
+          :link="link">
+        </dnw-link>
+      </div>
+      <div class="separator"></div>
+      <div class="has-text-centered">
+        <p>A free weekly newsletter on .NET latest</p>
+      </div>
     </div>
   </div>
 </div>
@@ -58,24 +60,16 @@ const fetchInitialData = (store, route) => {
 };
 
 export default {
-  data() {
-    return {
-      loading: false
-    }
-  },
   components: {
     "dnw-link": dnwLink,
     "dnw-menu": dnwMenu,
     "dnw-subscribe": dnwSubscribe
   },
   computed: {
-    ...mapGetters("linksModule", ["links", "olderLinks", "filter"]),
+    ...mapGetters("linksModule", ["links", "olderLinks", "filter", "linksLoading"]),
     ...mapGetters("authModule", ["isAuthenticated"]),
     filterWeekChange () {
       return this.filterWeek
-    },
-    linkCount() {
-      return this.filterWeek + this.links.length + this.olderLinks.length;
     },
     linksOrdered() {
       return this.links;
@@ -93,15 +87,10 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.loading = true;
       this.loadLinks();
     },
     filterWeekChange () {
-      this.loading = false;
       setMetadata(this.$route.path, this.$store.state);
-    },
-    linkCount (newData, oldData) {
-      setTimeout(() => {this.loading = false;});
     }
   },
   prefetch: fetchInitialData,

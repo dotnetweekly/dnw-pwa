@@ -14,7 +14,8 @@ const defaultState = {
     ],
     category: "",
     dateYear: "",
-    dateWeek: ""
+    dateWeek: "",
+    linksLoading: false
   }
 };
 

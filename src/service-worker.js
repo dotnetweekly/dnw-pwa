@@ -30,11 +30,17 @@ self.addEventListener('fetch', function (event) {
   var requestUrl = new URL(event.request.url)
   var requestPath = requestUrl.pathname
 
-  if (requestPath == "/") {
-    event.respondWith(networkFirstStrategy(event.request))
-  } else if (config.assets.indexOf(requestPath) > -1) {
+  if (
+    !requestPath.includes("hot-update.json") &&
+    !requestPath.includes("hot-update.js") &&
+    config.assets.indexOf(requestPath) > -1) {
     // console.log("cache first:", requestUrl.href);
     event.respondWith(cacheFirstStrategy(event.request))
+  } else if (
+    !requestPath.includes("hot-update.json") &&
+    !requestPath.includes("hot-update.js") &&
+    stringContains(event.request.url, config.paths.client)) {
+    event.respondWith(fetchRequestOrReturnOffline(event.request))
   } else {
     event.respondWith(fetch(event.request))
   }
@@ -46,10 +52,21 @@ function cacheFirstStrategy (request) {
   })
 }
 
+function fetchRequestOrReturnOffline (request) {
+  return fetch(request).then(function (networkResponse) {
+    return networkResponse.clone()
+  }).catch(function(){
+    var requestUrl = new URL(request.url)
+    var requestPath = requestUrl.pathname
+
+    return caches.match('/offline-redirect/#' + requestPath)
+  })
+}
+
 function networkFirstStrategy (request) {
   return fetchRequestAndCache(request).catch(function (response) {
     return caches.match(request).then(function (cacheResponse) {
-      var requestUrl = new URL(event.request.url)
+      var requestUrl = new URL(request.url)
       var requestPath = requestUrl.pathname
 
       if (!cacheResponse) {

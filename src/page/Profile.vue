@@ -142,39 +142,6 @@
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Subscribed to weekly newsletter</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <label class="radio">
-            <input
-            v-on:keyup.enter="executeRecaptcha"
-            v-model="updatedUser.subscribed"
-            value="true"
-            type="radio"
-            name="foobar"
-            >
-            Yes
-          </label>
-          <label class="radio">
-            <input
-            v-on:keyup.enter="executeRecaptcha"
-            v-model="updatedUser.subscribed"
-            value="false"
-            type="radio"
-            name="foobar"
-            checked
-            >
-            No
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
       <label class="label"></label>
     </div>
     <div class="field-body">
@@ -231,7 +198,6 @@ export default {
         lastName: "",
         username: "",
         newPassword: "",
-        subscribed: true,
         twitter: "",
         github: "",
         email: ""

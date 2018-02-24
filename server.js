@@ -101,18 +101,18 @@ app.get("*", (req, res) => {
     //   return;
     // }
 
-    // if (!isProd) {
-    //   if (req.url === "/service-worker.js") {
-    //     res.setHeader('content-type', 'text/javascript');
-    //     res.end(fs.readFileSync(path.resolve(__dirname, "src/service-worker.js")));
-    //     return;
-    //   }
-    //   if (req.url === "/sw_config.js") {
-    //     res.setHeader('content-type', 'text/javascript');
-    //     res.end(fs.readFileSync(path.resolve(__dirname, "src/assets/sw-config.js")));
-    //     return;
-    //   }
-    // }
+    if (!isProd) {
+      if (req.url === "/service-worker.js") {
+        res.setHeader('content-type', 'text/javascript');
+        res.end(fs.readFileSync(path.resolve(__dirname, "src/service-worker.js")));
+        return;
+      }
+      if (req.url === "/sw_config.js") {
+        res.setHeader('content-type', 'text/javascript');
+        res.end(fs.readFileSync(path.resolve(__dirname, "src/assets/sw-config.js")));
+        return;
+      }
+    }
 
     const legacyNewsletter = req.url.match(/\/newsletter\/show\_newsletter\.php\?w=(.*?)&y=(.*?)$/)
     if (legacyNewsletter) {

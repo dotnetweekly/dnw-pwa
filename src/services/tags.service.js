@@ -7,7 +7,7 @@ const tagsService = {
     return new Promise((resolve, reject) => {
       const path = `/tags`;
       appCache
-        .get(path, 0)
+        .get(path)
         .then(response => {
           if (!response || !response.data || !response.data.data) {
             reject();

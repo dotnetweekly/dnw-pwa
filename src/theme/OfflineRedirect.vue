@@ -1,8 +1,9 @@
 <template></template>
 <script>
 export default {
-  beforeMount () {
-    this.$router.push(this.$route.hash.replace('#', ''))
+  mounted () {
+    const hash = this.$route.hash.replace('#', '').replace(/\s+/g, "");
+    this.$router.push(hash || "/");
   }
 }
 </script>

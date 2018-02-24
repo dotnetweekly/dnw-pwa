@@ -7,7 +7,7 @@ const linksService = {
 		return new Promise((resolve, reject) => {
 			const path = `${Config.newsletterDomain}api/v1/newsletters`;
 			appCache
-				.get(path, 0)
+				.get(path)
 				.then((response) => {
 					if (!response || !response.data) {
 						reject();

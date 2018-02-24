@@ -13,6 +13,8 @@ const filterWeek = state =>
 const filterYear = state =>
   state.filter && state.filter.dateYear ? parseInt(state.filter.dateYear) : "";
 
+const linksLoading = state => state.linksLoading;
+
 export {
   links,
   olderLinks,
@@ -20,5 +22,6 @@ export {
   filterCategory,
   filterCategories,
   filterYear,
-  filterWeek
+  filterWeek,
+  linksLoading
 };

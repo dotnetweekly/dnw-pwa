@@ -12,6 +12,7 @@ const actions = {
   },
   getLinks({ commit, state }, params) {
     return new Promise((resolve, reject) => {
+      state.linksLoading = true;
       linksService
         .getLinks(params)
         .then(response => {
@@ -20,9 +21,11 @@ const actions = {
           state.filter.category = params.category ? params.category : "";
           state.filter.dateYear = params.year;
           state.filter.dateWeek = params.week;
+          state.linksLoading = false;
           resolve();
         })
         .catch(error => {
+          state.linksLoading = false;
           console.log("link request error: ", error);
           reject(error);
         });

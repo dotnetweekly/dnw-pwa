@@ -4,6 +4,7 @@ var config = {
     "/robots.txt",
     "/assets/index.html",
     "/assets/app-icon.png",
+    "/assets/logo.jpg",
     "/assets/fontello.svg",
     "/assets/styles.css",
     "/assets/styles.css.map",
@@ -14,8 +15,8 @@ var config = {
     "/"
   ],
   "paths": {
-    "api": "https://dnw-api.azurewebsites.com/",
-    "client": "https://www.dotnetweekly.com/"
+    "api": "http://localhost:3000/",
+    "client": "http://localhost:5000/"
   },
   "cacheNames": {
     "assetCache": "vwpCacheAsset"
