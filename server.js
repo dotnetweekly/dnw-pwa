@@ -91,7 +91,7 @@ if (isProd) {
 
 const microCache = LRU({
   max: 100,
-  maxAge: 5000 // Important: entries expires after 1 second.
+  maxAge: 30000 // Important: entries expires after 1 second.
 })
 
 app.get("*", (req, res) => {

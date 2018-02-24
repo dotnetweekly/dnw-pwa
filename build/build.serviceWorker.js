@@ -17,15 +17,17 @@ self.assetCacheHash = "";
 
 const generateAssetHash = () => {
   return new Promise((resolve, reject) => {
-    getAllAssets().then((assetFiles) => {
-      self.assetFiles = assetFiles;
-      const indexIndex = self.assetFiles.indexOf("/index.html");
-      if (indexIndex > -1) {
-        self.assetFiles[indexIndex] = "/assets/index.html";
-      }
-      self.assetCacheHash = md5(self.assetFiles.join(''));
-      resolve();
-    })
+    setTimeout(() => {
+      getAllAssets().then((assetFiles) => {
+        self.assetFiles = assetFiles;
+        const indexIndex = self.assetFiles.indexOf("/index.html");
+        if (indexIndex > -1) {
+          self.assetFiles[indexIndex] = "/assets/index.html";
+        }
+        self.assetCacheHash = md5(self.assetFiles.join(''));
+        resolve();
+      })
+    }, 100);
   });
 }
 
@@ -53,8 +55,8 @@ const generateSwConfigFile = () => {
   return new Promise((resolve, reject) => {
     var swConfigFilename = 'sw_config_' + self.assetCacheHash + '.js';
     fs.outputFile( (dirPath + "/" + swConfigFilename), 'var config = ' +  JSON.stringify({
-      assets: self.assetFiles.concat('/offline-redirect/'),
-      paths:{api:config.wpDomain + 'wp-json', remote:config.wpDomain, client: config.client},
+      assets: self.assetFiles.concat('/offline-redirect/').concat('/'),
+      paths:{api: config.apiDomain, client: config.client},
       cacheNames:{assetCache:`vwpCacheAsset-${self.assetCacheHash}`, remoteCache:`vwpCacheRemote-${self.assetCacheHash}`}
     }), () => {
       resolve(swConfigFilename);
@@ -81,15 +83,6 @@ const serviceWorker = () => {
   })
 }
 
-// const appCache = () => {
-//   fs.copySync(path.resolve(__dirname, '../index-appCache.html'), (dirPath + "/index-appCache.html"));
-//   fs.copySync(path.resolve(__dirname, '../src/assets/local.appcache'), (dirPath + "/assets/local.appcache"));
-//   fs.readFile((dirPath + "/assets/local.appcache"), "utf-8", function(err, data){
-//     data = data.replace("{{cachedFiles}}", self.assetFiles.join('\n')).replace("{{assetCacheHash}}", self.assetCacheHash);
-//     fs.writeFile((dirPath + "/assets/local.appcache"), data, 'utf8');
-//   });
-// }
-
 const manifest = () => {
   fs.copySync(path.resolve(__dirname, '../src/assets/manifest.json'), (dirPath + "/assets/manifest.json"));
   fs.readFile((dirPath + "/assets/manifest.json"), "utf-8", function(err, data){
@@ -105,42 +98,39 @@ const manifest = () => {
 }
 
 const cleanIndex = () => {
-  fs.readFile((dirPath + "/index.html"), "utf-8", function(err, data){
-    data = data.replace(
-      '<link rel="stylesheet" href="/assets/styles.css">',
-      ""
-    );
-    data = data.replace(
-      '<link href="/assets/styles.css" rel="stylesheet">',
-      ""
-    );
-    data = data.replace(
-      '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
-      ""
-    );
-    data = data.replace(/type="text\/javascript"/gim, 'defer type="text/javascript"');
-    data = data.replace(/rel="stylesheet"/gim, 'media="all" rel="stylesheet"');
-    fs.writeFile((dirPath + "/assets/index.html"), data, 'utf8');
-    fs.unlink(dirPath + "/index.html");
-    /* return new Promise((resolve, reject) => {
-      self.assetFiles.forEach(file => {
-        if (file.match(/styles\..*?\.css$/)) {
-          _exec(`purifycss ${dirPath}${file} ${dirPath}/assets/js/app.js --min --info --out ${dirPath}${file}`);
-        }
-        resolve();
-      })
-    }) */
+  return new Promise((resolve, reject) => {
+    fs.readFile((dirPath + "/index.html"), "utf-8", function(err, data){
+      fs.unlink(dirPath + "/assets/styles.css");
+      fs.unlink(dirPath + "/assets/styles.css.map");
+      data = data.replace(
+        '<link rel="stylesheet" href="/assets/styles.css">',
+        ""
+      );
+      data = data.replace(
+        '<link href="/assets/styles.css" rel="stylesheet">',
+        ""
+      );
+      data = data.replace(
+        '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
+        ""
+      );
+      data = data.replace(/type="text\/javascript"/gim, 'defer type="text/javascript"');
+      data = data.replace(/rel="stylesheet"/gim, 'media="all" rel="stylesheet"');
+      fs.writeFile((dirPath + "/assets/index.html"), data, 'utf8');
+      fs.unlink(dirPath + "/index.html");
+    });
+    resolve();
+    console.log("Index Cleaned")
   });
 }
 
 const execSW = () => {
-  generateAssetHash()
+  cleanIndex()
+  .then(() => generateAssetHash())
   .then(() => copyServiceWorker())
   .then(() => {
     serviceWorker();
-    // appCache();
-    manifest();
-    return cleanIndex();
+    return manifest();
   })
 }
 
