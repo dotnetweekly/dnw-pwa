@@ -131,13 +131,13 @@ app.get("*", (req, res) => {
       return;
     }
 
-    if (!renderer) {
-      return res.end("waiting for compilation... refresh in a moment.");
-    }
-
     const hit = microCache.get(req.url)
     if (hit) {
       return res.end(hit)
+    }
+
+    if (!renderer) {
+      return res.end("waiting for compilation... refresh in a moment.");
     }
 
     const context = { url: req.url };
