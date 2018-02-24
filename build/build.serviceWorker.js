@@ -114,8 +114,8 @@ const cleanIndex = () => {
         '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
         ""
       );
-      data = data.replace(/type="text\/javascript"/gim, 'defer type="text/javascript"');
-      data = data.replace(/rel="stylesheet"/gim, 'media="all" rel="stylesheet"');
+      data = data.replace(/type="text\/javascript"/gim, ' async defer type="text/javascript"');
+      data = data.replace(/rel="stylesheet"/gim, 'media="all" data-name="site-style" rel="stylesheet"');
       fs.writeFile((dirPath + "/assets/index.html"), data, 'utf8');
       fs.unlink(dirPath + "/index.html");
     });
