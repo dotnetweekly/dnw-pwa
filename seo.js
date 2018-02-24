@@ -2,6 +2,7 @@ const routerMeta = require("./router-meta");
 
 function seoOptimize(html, req, state) {
   const url = req.url;
+
   let metadata = routerMeta(url, state) || {
     title: "dotNET Weekly",
     description: "A free weekly newsletter on .NET latest"

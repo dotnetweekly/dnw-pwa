@@ -49,10 +49,10 @@ function cacheFirstStrategy (request) {
 function networkFirstStrategy (request) {
   return fetchRequestAndCache(request).catch(function (response) {
     return caches.match(request).then(function (cacheResponse) {
-      if (!cacheResponse) {
-        var requestUrl = new URL(request.url)
-        var requestPath = requestUrl.pathname
+      var requestUrl = new URL(event.request.url)
+      var requestPath = requestUrl.pathname
 
+      if (!cacheResponse) {
         if (stringContains(request.url, config.paths.client)) {
           return caches.match('/offline-redirect/#' + requestPath)
         }

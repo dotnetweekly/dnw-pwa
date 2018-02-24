@@ -55,8 +55,10 @@
       }
     },
     prefetch: fetchInitialData,
-    created() {
-      this.loadItems();
+    mounted() {
+      if(typeof window !== "undefined"){
+        this.loadItems();
+      }
     }
   }
 </script>

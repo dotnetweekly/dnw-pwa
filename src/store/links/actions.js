@@ -15,6 +15,7 @@ const actions = {
       linksService
         .getLinks(params)
         .then(response => {
+          console.log(response);
           state.links = response.links;
           state.olderLinks = response.olderLinks;
           state.filter.category = params.category ? params.category : "";
@@ -22,7 +23,10 @@ const actions = {
           state.filter.dateWeek = params.week;
           resolve();
         })
-        .catch(error => reject(error));
+        .catch(error => {
+          console.log("link request error: ", error);
+          reject(error);
+        });
     });
   },
   setFilterCategory({ commit, state }, category) {

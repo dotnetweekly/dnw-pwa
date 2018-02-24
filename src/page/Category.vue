@@ -38,21 +38,22 @@ import * as calendarHelper from "../helpers/calendar";
 import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
-  route.params.week = route.params.week || "";
-  route.params.year = route.params.year || "";
-  route.params.category = route.params.category || "";
+  let params = route.params || {};
+  let week = params.week || "";
+  let year = params.year || "";
+  let category = params.category || "";
 
-  if (!route.params.week || !route.params.year) {
-    route.params.date = new Date(Date.now());
-    route.params.date.setHours(0,0,0,0);
-    route.params.year = route.params.date.getFullYear();
-    route.params.week = calendarHelper.getWeek(route.params.date);
+  if (!week || !year) {
+    let date = new Date(Date.now());
+    date.setHours(0,0,0,0);
+    year = date.getFullYear();
+    week = calendarHelper.getWeek(date);
   }
 
   return store.dispatch(`linksModule/getLinks`, {
-    week: route.params.week,
-    year: route.params.year,
-    category: route.params.category
+    week,
+    year,
+    category
   });
 };
 
@@ -104,10 +105,8 @@ export default {
   mounted() {
     if(typeof window !== "undefined"){
       setTimeout(() => {this.refreshScroll()});
+      this.loadLinks();
     }
-  },
-  created() {
-    this.loadLinks();
   }
 };
 </script>

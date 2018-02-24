@@ -90,7 +90,9 @@ export default {
   },
   prefetch: fetchInitialData,
   mounted() {
-    this.loadLink();
+    if(typeof window !== "undefined"){
+      this.loadLink();
+    }
   }
 };
 </script>

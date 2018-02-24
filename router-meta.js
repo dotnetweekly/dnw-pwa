@@ -1,4 +1,5 @@
 const config = require("./app.config");
+const urlParser = require('url');
 
 const routerMeta = [
   {
@@ -29,7 +30,7 @@ const routerMeta = [
   }
 ]
 
-function parseLink(routerMetaItem, state) {
+function parseLink(url, routerMetaItem, state) {
   if (!state ||
     !state.linkModule ||
     !state.linkModule.link) {
@@ -43,7 +44,7 @@ function parseLink(routerMetaItem, state) {
   return routerMetaItem;
 }
 
-function parseLinks(routerMetaItem, state) {
+function parseLinks(url, routerMetaItem, state) {
   if (!state ||
     !state.linksModule ||
     !state.linksModule.filter ||
@@ -62,6 +63,14 @@ function parseLinks(routerMetaItem, state) {
   routerMetaItem.title = `dotNET Weekly${dateTitle}`;
   routerMetaItem.description = `A free weekly newsletter on .NET latest${dateTitle}`;
 
+  var requestUrl = urlParser.parse(url);
+  var requestPath = requestUrl.pathname;
+
+  if (requestPath === "/") {
+    routerMetaItem.title = `dotNET Weekly | A free weekly newsletter on .NET latest`;
+    routerMetaItem.description = `A free weekly newsletter on .NET latest`;
+  }
+
   return routerMetaItem;
 }
 
@@ -73,9 +82,9 @@ function getMeta(url, state) {
   for (var key = 0; key < routerMeta.length; key++) {
     if (url.match(routerMeta[key].match)) {
       if (routerMeta[key].id === "link") {
-        return parseLink(routerMeta[key], state);
+        return parseLink(url, routerMeta[key], state);
       } else if (routerMeta[key].id === "links") {
-        return parseLinks(routerMeta[key], state);
+        return parseLinks(url, routerMeta[key], state);
       }
       return routerMeta[key];
     }

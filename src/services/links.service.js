@@ -8,24 +8,21 @@ const linksService = {
       filter.category = "";
     }
     return new Promise((resolve, reject) => {
-      const path = `/links?category=${filter.category}&week=${
-        filter.week
-      }&year=${filter.year}`;
+      const path = `/links?category=${filter.category}&week=${filter.week}&year=${filter.year}`;
       appCache
         .get(path, 0)
         .then(response => {
           if (!response || !response.data) {
+            console.log(response);
             reject();
           }
-          const totalPages = response.data.data.totalPages || 0;
           const responseData = {
             links: response.data.data.links,
-            totalPages,
             olderLinks: response.data.data.olderLinks
           };
           resolve(responseData);
         })
-        .catch(error => reject(error));
+        .catch(error => { console.log(error); reject(error) });
     });
   },
   getLink(slug) {
