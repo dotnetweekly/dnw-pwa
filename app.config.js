@@ -6,6 +6,7 @@ const Config = {
   appThemeColor: "#5c2d91",
   appBgColor: "#ffffff",
   appIcon: "assets/app-icon.png",
+  appIconLarge: "assets/app-icon-large.png",
   newsletterDomain: "http://localhost:6100/",
   apiDomain: "http://localhost:3000/api/v1/",
   client: "http://localhost:5000/",

@@ -89,6 +89,7 @@ const manifest = () => {
     data = data.replace("${config.appBgColor}", config.appBgColor)
     data = data.replace("${config.appDescription}", config.appDescription)
     data = data.replace("${config.appIcon}", config.client + config.appIcon)
+    data = data.replace("${config.appIconLarge}", config.client + config.appIconLarge)
     data = data.replace("${config.appTitle}", config.appTitle)
     data = data.replace("${config.appTitleShort}", config.appTitleShort)
     data = data.replace("${config.appThemeColor}", config.appThemeColor)
