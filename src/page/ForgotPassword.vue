@@ -16,7 +16,7 @@
           placeholder="Email"
           v-focus
           >
-          <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
+          <span v-if="hasError('email')" class="help is-danger">{{getError("email")}}</span>
         </p>
       </div>
     </div>
@@ -28,14 +28,14 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <div v-show="success" class="dnwIconSmall is-pulled-left">
+        <div v-if="success" class="dnwIconSmall is-pulled-left">
           <p>
             <span class="icon">
               <i class="icon-ok" aria-hidden="true"></i>
             </span>
           </p>
         </div>
-        <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+        <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
         <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Submit</a>
         <p class="dnwIconSuccessMessage" v-if="success">Please visit your email address {{email}} to update your password.</p>
         <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>

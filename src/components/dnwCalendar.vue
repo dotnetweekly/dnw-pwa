@@ -9,14 +9,14 @@
       </div>
       <div class="column has-text-centered">{{getCurrentMonth()}} {{filterYear}}</div>
       <div  class="column date-arrow is-one-quarter has-text-left is-pointer"
-        v-show="isMonthInPast()">
+        v-if="isMonthInPast()">
         <router-link
           :to="'/week/' + nextMonth.week + '/year/' + nextMonth.year">
           <i class="icon-right-open" aria-hidden="true"></i>
         </router-link>
       </div>
       <div class="column date-arrow is-one-quarter disabled-arrow"
-        v-show="!isMonthInPast()">
+        v-if="!isMonthInPast()">
         <i class="icon-right-open" aria-hidden="true"></i>
       </div>
     </div>

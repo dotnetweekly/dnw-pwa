@@ -15,7 +15,7 @@
           <i class="icon-mail" aria-hidden="true"></i>
         </span>
       </p>
-      <span v-show="!running && hasError('email')" class="help is-danger">{{getError("email")}}</span>
+      <span v-if="!running && hasError('email')" class="help is-danger">{{getError("email")}}</span>
     </div>
     <div class="field">
       <p class="control has-icons-left is-marginless">
@@ -30,10 +30,10 @@
           <i class="icon-lock" aria-hidden="true"></i>
         </span>
       </p>
-      <span v-show="!running && hasError('password')" class="help is-danger">{{getError("password")}}</span>
+      <span v-if="!running && hasError('password')" class="help is-danger">{{getError("password")}}</span>
     </div>
-    <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
-    <span v-show="error" class="help is-danger">{{ error }}</span>
+    <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+    <span v-if="error" class="help is-danger">{{ error }}</span>
     <p class="is-pulled-right"><router-link to="/forgot-password">Forgot Password</router-link></p>
     <div class="is-text-right">
       <a v-if="!running" v-on:click="executeRecaptcha()" class="button is-link is-medium ">Submit</a>

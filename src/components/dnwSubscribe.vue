@@ -2,7 +2,7 @@
   <div>
     <section id="newsletter" class="hero is-primary">
       <div class="hero-body subscribe-body">
-        <div v-show="success" class="column has-text-centered">
+        <div v-if="success" class="column has-text-centered">
           <p>
             <span class="dnwIconLarge icon is-large">
               <i class="icon-ok" aria-hidden="true"></i>
@@ -13,7 +13,7 @@
             Successfully registered! Please check your email to verify your account.
           </p>
         </div>
-        <div v-show="!success">
+        <div v-if="!success">
           <div class="columns is-vcentered">
             <div class="column">
               <p>
@@ -38,7 +38,7 @@
                     <input v-if="isLoading" type="submit" value="Subscribe" name="submit" class="button is-white is-outlined" disabled>
                   </div>
                 </div>
-                <p v-show="hasError('email')" class="subscribe-danger help is-danger">{{getError("email")}}</p>
+                <p v-if="hasError('email')" class="subscribe-danger help is-danger">{{getError("email")}}</p>
               </form>
               <p class="help subscribe-help">Once subscribed you can login, submit a link, upvote and receive the weekly newsletter. We do not share your email!</p>
             </div>

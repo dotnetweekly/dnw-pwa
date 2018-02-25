@@ -3,7 +3,7 @@
     <div class="dnw-comments-wrapper">
       <dnw-comment v-for="comment in comments" v-bind:comment="comment" v-bind:key="comment._id"></dnw-comment>
       <p></p>
-      <div v-show="success" class="column has-text-centered">
+      <div v-if="success" class="column has-text-centered">
         <p>
           <span class="dnwIconLarge icon">
             <i class="icon-ok" aria-hidden="true"></i>
@@ -14,20 +14,20 @@
           Comment submitted! Once approved it will appear in this area.
         </p>
       </div>
-      <article v-show="!success" class="media">
+      <article v-if="!success" class="media">
         <div class="media-content">
           <div class="field">
             <p class="control is-marginless">
               <textarea :class="{'textarea': true, 'is-danger': hasError('comment')}"
               v-model="comment" placeholder="Add a comment..."></textarea>
             </p>
-            <p v-show="hasError('comment')" class="help is-danger">{{getError("comment")}}</p>
+            <p v-if="hasError('comment')" class="help is-danger">{{getError("comment")}}</p>
           </div>
           <div class="field">
-            <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+            <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
             <p class="control">
-              <button class="button" disabled v-show="sending && isAuthenticated">Post comment</button>
-              <button class="button" v-show="!sending" v-if="isAuthenticated" v-on:click="executeRecaptcha()">Post comment</button>
+              <button class="button" disabled v-if="sending && isAuthenticated">Post comment</button>
+              <button class="button" v-if="!sending && isAuthenticated" v-on:click="executeRecaptcha()">Post comment</button>
               <router-link v-if="!isAuthenticated" to="/login" class="button">Login to comment</router-link>
             </p>
           </div>

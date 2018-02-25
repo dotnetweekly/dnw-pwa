@@ -23,7 +23,7 @@
     </div>
     <div v-if="noKey">
       <p>{{ error }}</p>
-      <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+      <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
       <p>Please <router-link to="/register">register</router-link> first to activate your account.</p>
       <p>If you already have and account you can <router-link to="/login">login</router-link> here.</p>
     </div>

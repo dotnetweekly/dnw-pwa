@@ -15,7 +15,7 @@
       </div>
       <div v-if="noKey">
         <p>{{ error }}</p>
-        <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+        <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
         <p>Unsubscribe key not found.</p>
         <p>You can <router-link to="/login">login</router-link> and change your subscription status.</p>
       </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 v-if="profile">Register</h2>
-    <div v-show="success" class="column has-text-centered">
+    <div v-if="success" class="column has-text-centered">
       <p>
         <span class="dnwIconLarge icon is-large">
           <i class="icon-ok" aria-hidden="true"></i>
@@ -12,7 +12,7 @@
         Successfully registered! Please check your email to verify your account.
       </p>
     </div>
-    <div v-show="!success" class="columns">
+    <div v-if="!success" class="columns">
       <div class="column is-one-third">
         Register today!
         <ul>
@@ -42,7 +42,7 @@
                   <i class="fa fa-user"></i>
                 </span>
               </p>
-              <p v-show="hasError('firstName')" class="help is-danger">{{getError("firstName")}}</p>
+              <p v-if="hasError('firstName')" class="help is-danger">{{getError("firstName")}}</p>
             </div>
             <div class="field">
               <p class="control is-expanded has-icons-left">
@@ -78,7 +78,7 @@
                   <i class="fa fa-user"></i>
                 </span>
               </p>
-              <p v-show="hasError('username')" class="help is-danger">{{getError("username")}}</p>
+              <p v-if="hasError('username')" class="help is-danger">{{getError("username")}}</p>
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@
                   <i class="fa fa-user"></i>
                 </span>
               </p>
-              <p v-show="hasError('email')" class="help is-danger">{{getError("email")}}</p>
+              <p v-if="hasError('email')" class="help is-danger">{{getError("email")}}</p>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@
                   <i class="fa fa-user"></i>
                 </span>
               </p>
-              <p v-show="hasError('password')" class="help is-danger">{{getError("password")}}</p>
+              <p v-if="hasError('password')" class="help is-danger">{{getError("password")}}</p>
             </div>
           </div>
         </div>
@@ -132,10 +132,10 @@
           </div>
           <div class="field-body">
             <div class="field">
-              <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+              <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
               <p class="control is-expanded has-icons-left">
-                <a v-show="isLoading" disabled class="button is-loading is-link is-medium ">Loading</a>
-                <a v-show="!isLoading" v-on:click="executeRecaptcha()" class="button is-link is-medium ">Register</a>
+                <a v-if="isLoading" disabled class="button is-loading is-link is-medium ">Loading</a>
+                <a v-if="!isLoading" v-on:click="executeRecaptcha()" class="button is-link is-medium ">Register</a>
               </p>
             </div>
           </div>

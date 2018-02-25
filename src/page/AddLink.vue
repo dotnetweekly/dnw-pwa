@@ -25,7 +25,7 @@
           v-focus
           >
         </div>
-        <p v-show="hasError('title')" class="help is-danger">{{getError("title")}}</p>
+        <p v-if="hasError('title')" class="help is-danger">{{getError("title")}}</p>
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@
           placeholder="http://chris.bohatka.com/breaking-down-dependency-injection-and-inversion-of-control-in-csharp-with-simpleinjector/"
           >
         </div>
-        <p v-show="hasError('url')" class="help is-danger">{{getError("url")}}</p>
+        <p v-if="hasError('url')" class="help is-danger">{{getError("url")}}</p>
       </div>
     </div>
   </div>
@@ -67,7 +67,7 @@
               >
             </multiselect>
           </div>
-          <p v-show="hasError('category')" class="help is-danger">{{getError("category")}}</p>
+          <p v-if="hasError('category')" class="help is-danger">{{getError("category")}}</p>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
             >
           </multiselect>
         </div>
-        <p v-show="hasError('tags')" class="help is-danger">{{getError("tags")}}</p>
+        <p v-if="hasError('tags')" class="help is-danger">{{getError("tags")}}</p>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
           v-model="link.content"
           rows="13" ref="editorText" placeholder=""></textarea>
         </div>
-        <p v-show="hasError('content')" class="help is-danger">{{getError("content")}}</p>
+        <p v-if="hasError('content')" class="help is-danger">{{getError("content")}}</p>
       </div>
     </div>
   </div>
@@ -117,14 +117,14 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <div v-show="success" class="dnwIconSmall is-pulled-left">
+        <div v-if="success" class="dnwIconSmall is-pulled-left">
           <p>
             <span class="icon">
               <i class="icon-ok" aria-hidden="true"></i>
             </span>
           </p>
         </div>
-        <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+        <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
         <a v-if="!sending && !success" v-on:click="executeRecaptcha" class="button is-link is-medium is-pulled-left">Save</a>
         <p class="dnwIconSuccessMessage" v-if="success">Link submitted, once approved it will appear on the front page!</p>
         <a v-if="sending" disabled class="button is-link is-medium ">Save</a>

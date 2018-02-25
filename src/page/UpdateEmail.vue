@@ -5,7 +5,7 @@
       <p v-html="error"></p>
     </div>
     <div v-if="noKey">
-      <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+      <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
       <p>No key found. To update your email please visit the <router-link to="/profile">profile</router-link> page.</p>
     </div>
   </div>

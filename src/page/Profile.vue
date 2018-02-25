@@ -18,7 +18,7 @@
             placeholder="First Name"
             v-focus
             >
-            <span v-show="hasError('firstName')" class="help is-danger">{{getError("firstName")}}</span>
+            <span v-if="hasError('firstName')" class="help is-danger">{{getError("firstName")}}</span>
           </p>
         </div>
         <div class="field">
@@ -30,7 +30,7 @@
             v-model="updatedUser.lastName"
             placeholder="Last Name"
             >
-            <span v-show="hasError('lastName')" class="help is-danger">{{getError("lastName")}}</span>
+            <span v-if="hasError('lastName')" class="help is-danger">{{getError("lastName")}}</span>
           </p>
         </div>
       </div>
@@ -50,7 +50,7 @@
             v-model="updatedUser.username"
             placeholder="Username"
             >
-            <span v-show="hasError('username')" class="help is-danger">{{getError("username")}}</span>
+            <span v-if="hasError('username')" class="help is-danger">{{getError("username")}}</span>
           </p>
         </div>
       </div>
@@ -75,7 +75,7 @@
               v-model="updatedUser.twitter"
               placeholder="Twitter Username"
               >
-              <span v-show="hasError('twitter')" class="help is-danger">{{getError("twitter")}}</span>
+              <span v-if="hasError('twitter')" class="help is-danger">{{getError("twitter")}}</span>
             </p>
         </div>
       </div>
@@ -95,7 +95,7 @@
             v-model="updatedUser.github"
             placeholder="Github Username"
             >
-            <span v-show="hasError('github')" class="help is-danger">{{getError("github")}}</span>
+            <span v-if="hasError('github')" class="help is-danger">{{getError("github")}}</span>
           </p>
         </div>
       </div>
@@ -115,7 +115,7 @@
             v-model="updatedUser.newPassword"
             placeholder="New Password"
             >
-            <span v-show="hasError('newPassword')" class="help is-danger">{{getError("newPassword")}}</span>
+            <span v-if="hasError('newPassword')" class="help is-danger">{{getError("newPassword")}}</span>
           </p>
         </div>
       </div>
@@ -135,7 +135,7 @@
             v-model="updatedUser.email"
             placeholder="Email"
             >
-            <span v-show="hasError('email')" class="help is-danger">{{getError("email")}}</span>
+            <span v-if="hasError('email')" class="help is-danger">{{getError("email")}}</span>
           </p>
         </div>
       </div>
@@ -147,7 +147,7 @@
       </div>
       <div class="field-body">
         <div class="field">
-          <div v-show="success" class="dnwIconSmall is-pulled-left">
+          <div v-if="success" class="dnwIconSmall is-pulled-left">
             <p>
               <span class="icon">
                 <i class="icon-ok" aria-hidden="true"></i>
@@ -156,7 +156,7 @@
           </div>
           <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Save</a>
           <p class="dnwIconSuccessMessage" v-if="success">Profile saved successfully!</p>
-          <p v-show="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
+          <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
           <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
         </div>
       </div>
