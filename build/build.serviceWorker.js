@@ -144,8 +144,8 @@ const execSW = () => {
   .then(() => copyServiceWorker())
   .then(() => {
     serviceWorker();
-    manifest();
-    return purifycss();
+    return manifest();
+    // return purifycss();
   })
 }
 
