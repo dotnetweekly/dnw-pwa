@@ -9,6 +9,13 @@ const config = require(path.resolve(__dirname, '../app.config.js'));
 const distFolder = 'dist/';
 const dirPath = path.resolve(__dirname,'../' + distFolder);
 
+const promisify = (ctx, func = ctx) => (...args) => {
+  return new Promise((resolve, reject) => {
+    func.apply(ctx, [...args, (err, result) => err ? reject(err) : resolve(result)])
+  })
+}
+const exec = promisify(_exec)
+
 const excludedFiles = ['([\\/|\\\\]server[\\/|\\\\].*)', '([\\/|\\\\]server\\.js)', '([\\/|\\\\]web\\.config)']
 var excludedFilesRegExp = new RegExp(excludedFiles.join("|"), "gi");
 var self = this;
@@ -121,13 +128,24 @@ const cleanIndex = () => {
   });
 }
 
+const purifycss = () => {
+  const styleAsset = self.assetFiles.filter(asset => {
+    return asset.match(/\/assets\/styles\.(.*?)\.css$/);
+  })[0]
+  const appAsset = self.assetFiles.filter(asset => {
+    return asset.match(/\/assets\/js\/app\.(.*?)\.js$/);
+  })[0]
+  return exec(`purifycss ${path.resolve(__dirname,`../dist${styleAsset}`)} ${path.resolve(__dirname,`../dist${appAsset}`)} --min --info --out ${path.resolve(__dirname,`../dist${styleAsset}`)}`)
+}
+
 const execSW = () => {
   cleanIndex()
   .then(() => generateAssetHash())
   .then(() => copyServiceWorker())
   .then(() => {
     serviceWorker();
-    return manifest();
+    manifest();
+    return purifycss();
   })
 }
 
