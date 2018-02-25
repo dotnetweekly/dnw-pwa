@@ -25,3 +25,4 @@ cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
 
 cd ../wwwroot
 npm install --only=production
+npm install forever -g
