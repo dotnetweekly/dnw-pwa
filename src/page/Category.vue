@@ -5,7 +5,10 @@
       <dnw-menu></dnw-menu>
       <div v-if="linksLoading" class="menu-loading"></div>
     </div>
-    <div class="column">
+    <div class="column" v-if="linksLoading">
+      <dnw-loading></dnw-loading>
+    </div>
+    <div class="column" v-if="!linksLoading">
       <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
       <dnw-link v-if="links" v-for="link in linksOrdered" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
       <div v-if="!linksLoading && links && links.length == 0">
@@ -35,6 +38,7 @@ import { mapGetters } from "vuex";
 import dnwLink from "../components/dnwLink";
 import dnwMenu from "../components/dnwMenu";
 import dnwSubscribe from "../components/dnwSubscribe";
+import dnwLoading from "../components/dnwLoading";
 
 import * as calendarHelper from "../helpers/calendar";
 import setMetadata from "../helpers/metadata";
@@ -63,7 +67,8 @@ export default {
   components: {
     "dnw-link": dnwLink,
     "dnw-menu": dnwMenu,
-    "dnw-subscribe": dnwSubscribe
+    "dnw-subscribe": dnwSubscribe,
+    "dnw-loading": dnwLoading
   },
   computed: {
     ...mapGetters("linksModule", ["links", "olderLinks", "filter", "linksLoading"]),
@@ -107,8 +112,7 @@ export default {
     position: absolute;
     top: 0;
     left: -1rem;
-    padding-right: 1rem;
-    width: 100%;
+    width: calc(25% + 1rem);
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
   }

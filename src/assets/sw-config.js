@@ -11,8 +11,7 @@ var config = {
     "/assets/styles.css",
     "/assets/js/app.js",
     "/assets/js/vendor.js",
-    "/offline-redirect/",
-    "/"
+    "/offline-redirect/"
   ],
   "paths": {
     "api": "http://localhost:3000/",
