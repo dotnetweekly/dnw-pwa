@@ -23,7 +23,7 @@ cp -R ./src/assets/favicon.ico ../wwwroot/dist/favicon.ico
 cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
 cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
 
-cd ../wwwroot
+# cd ../wwwroot
 # npm install --only=production
-npm install inherits
-npm install forever
+# npm install inherits
+# npm install forever
