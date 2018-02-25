@@ -37,7 +37,6 @@
 		"compression": "^1.7.1",
 		"cross-env": "^5.0.5",
 		"express": "^4.16.2",
-		"forever": "^0.15.3",
 		"intersection-observer-polyfill": "^0.1.0",
 		"localforage": "^1.5.3",
 		"lru-cache": "^4.1.1",
