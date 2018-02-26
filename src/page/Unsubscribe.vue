@@ -47,7 +47,9 @@
         if(typeof window === "undefined") {
           return;
         }
-        window.recaptchaComponent.execute(this.unsubscribeAction);
+        setTimeout(() => {
+          window.recaptchaComponent.execute(this.unsubscribeAction);
+        }, 100);
       },
       unsubscribeAction(recaptchaKey) {
         const verifyKey = this.$route.params.key;
