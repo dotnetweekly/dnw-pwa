@@ -10,6 +10,7 @@ const compression = require("compression");
 const favicon = require("serve-favicon");
 const serialize = require("serialize-javascript");
 const LRU = require('lru-cache');
+const axios = require("axios");
 const createBundleRenderer = require("vue-server-renderer")
   .createBundleRenderer;
 
@@ -101,6 +102,15 @@ app.get("*", (req, res) => {
     //   return;
     // }
 
+    const context = { url: req.url };
+    const legacyNewsletter = req.url.match(/\/newsletter\/show\_newsletter\.php\?w=(.*?)&y=(.*?)$/);
+    const indexOfLegacy = legacyRedirects.oldLinks.indexOf(req.url.replace(/\/$/g, ''));
+    const isJSONTrue = { isJSON: true };
+    const weekRegex = /\/week\/(\d*)\/year\/(\d*)((\/?\?feed=rss)|(\/rss\.xml))/gi;
+    const weekRegexLegacy = /\/feed\/week\/(\d*)\/year\/(\d*)\/?/gi;
+    const singleRegex = /\/(articles|books|libraries\-tools|events\-training|videos)\/(.*?)((\/?\?feed=rss)|(\/rss\.xml))/gi;
+    const singleRegexLegacy = /\/feed\/(articles|books|libraries\-tools|events\-training|videos)\/(.*?)\/?$/gi;
+
     if (!isProd) {
       if (req.url === "/service-worker.js") {
         res.setHeader('content-type', 'text/javascript');
@@ -114,54 +124,81 @@ app.get("*", (req, res) => {
       }
     }
 
-    const legacyNewsletter = req.url.match(/\/newsletter\/show\_newsletter\.php\?w=(.*?)&y=(.*?)$/)
-    if (legacyNewsletter) {
+    if (isProd) {
+      const hit = microCache.get(req.url)
+      if (hit) {
+        return res.end(hit)
+      }
+    }
+
+    if(req.url !== "/" && req.url.match(/(.*?)\/$/)){
+      res.redirect(301, req.url.replace(/\/$/, ""));
+      return;
+    } else if(req.url === "/contribute/"){
+      res.redirect(301, `${config.client}about`);
+      return;
+    } else if (req.url.replace(/\/$/g, '') == "/feed" || req.url == "/?feed=rss" || req.url == "/rss.xml") {
+      axios.get(`${config.apiDomain}links?feed=rss`).then((feedResponse) => {
+        res.header("Accept", "application/rss+xml");
+        res.end(feedResponse.data);
+      });
+    } else if(req.url.match(weekRegex)) {
+      const weekParts = weekRegex.exec(req.url);
+      axios.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`).then((feedResponse) => {
+        res.header("Accept", "application/rss+xml");
+        res.end(feedResponse.data);
+      })
+    } else if(req.url.match(weekRegexLegacy)) {
+      const weekParts = weekRegexLegacy.exec(req.url);
+      axios.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`).then((feedResponse) => {
+        res.header("Accept", "application/rss+xml");
+        res.end(feedResponse.data);
+      })
+    } else if(req.url.match(singleRegex)) {
+      const singleParts = singleRegex.exec(req.url);
+      axios.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`).then((feedResponse) => {
+        res.header("Accept", "application/rss+xml");
+        res.end(feedResponse.data);
+      })
+    } else if(req.url.match(singleRegexLegacy)) {
+      const singleParts = singleRegexLegacy.exec(req.url);
+      axios.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`).then((feedResponse) => {
+        res.header("Accept", "application/rss+xml");
+        res.end(feedResponse.data);
+      })
+    } else if (legacyNewsletter) {
       res.redirect(301, `${config.newsletterDomain}issues/${parseInt(legacyNewsletter[2])}/${parseInt(legacyNewsletter[1])}`);
       return;
-    }
-
-    const indexOfLegacy = legacyRedirects.oldLinks.indexOf(req.url.replace(/\/$/g, ''));
-    if (indexOfLegacy !== -1) {
+    } else if (indexOfLegacy !== -1) {
       res.redirect(301, `${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`);
       return;
-    }
-
-    if (req.url.replace(/\/$/g, '') === "/page/2" || req.url.replace(/\/$/g, '') === "/page/3"){
+    } else if (req.url.replace(/\/$/g, '') === "/page/2" || req.url.replace(/\/$/g, '') === "/page/3"){
       res.redirect(301, `${config.client}`);
       return;
-    }
-
-    const hit = microCache.get(req.url)
-    if (hit) {
-      return res.end(hit)
-    }
-
-    if (!renderer) {
+    } else if (!renderer) {
       return res.end("waiting for compilation... refresh in a moment.");
-    }
-
-    const context = { url: req.url };
-    renderer.renderToString(context, (err, html) => {
-      if (err) {
-        if (!isProd) {
-          console.log(err);
+    } else {
+      renderer.renderToString(context, (err, html) => {
+        if (err) {
+          if (!isProd) {
+            console.log(err);
+          }
+          return res.sendStatus(500);
         }
-        return res.sendStatus(500);
-      }
-      html = indexHTML.replace('<div id="app"></div>', html);
-      html = seoOptimize(html, req, context.initialState);
-      html = html.replace(
-        '<meta name="vue-state" />',
-        `<script>window.__INITIAL_STATE__=${serialize(context.initialState, {
-          isJSON: true
-        })}</script>`
-      );
-      res.setHeader("Content-Length", Buffer.byteLength(html));
-      res.write(html);
-      res.end();
-    });
-  } catch(error) {
+        html = indexHTML.replace('<div id="app"></div>', html);
+        html = seoOptimize(html, req, context.initialState);
+        html = html.replace(
+          '<meta name="vue-state" />',
+          `<script>window.__INITIAL_STATE__=${serialize(context.initialState, isJSONTrue)}</script>`
+        );
+        res.setHeader("Content-Length", Buffer.byteLength(html));
+        res.write(html);
+        res.end();
+      });
+    }
+  } catch (error) {
     console.log(error);
+    res.end("Service Error");
   }
 });
 

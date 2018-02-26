@@ -59,7 +59,8 @@ const fetchInitialData = (store, route) => {
   return store.dispatch(`linksModule/getLinks`, {
     week,
     year,
-    category
+    category,
+    authenticated: store.state.authModule.isAuthenticated
   });
 };
 

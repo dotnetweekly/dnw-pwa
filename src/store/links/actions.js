@@ -11,6 +11,12 @@ const actions = {
     })
   },
   getLinks({ commit, state }, params) {
+
+    if (state.firstLoad && !params.authenticated) {
+      state.firstLoad = false;
+      return;
+    }
+
     return new Promise((resolve, reject) => {
       state.linksLoading = true;
       linksService

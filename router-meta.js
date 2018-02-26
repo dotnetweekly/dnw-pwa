@@ -37,7 +37,7 @@ function parseLink(url, routerMetaItem, state) {
     return;
   }
   routerMetaItem.rss =
-    `${config.apiDomain}links/${state.linkModule.link.slug}?feed=rss`;
+    `${config.client}${state.linkModule.link.category}/${state.linkModule.link.slug}?feed=rss`;
   routerMetaItem.title = state.linkModule.link.title;
   routerMetaItem.description = state.linkModule.link.content;
 
@@ -55,11 +55,11 @@ function parseLinks(url, routerMetaItem, state) {
   const week = state.linksModule.filter.dateWeek;
   const year = state.linksModule.filter.dateYear;
   const category = state.linksModule.filter.category || "";
-  const dateRoute = (week && year) ? `week=${week}&year=${year}` : "";
+  const dateRoute = (week && year) ? `/week/${week}/year/${year}` : "";
   const dateTitle = (week && year) ? ` | Week ${week} Year ${year}` : "";
 
   routerMetaItem.rss =
-    `${config.apiDomain}links/?category=${category}&${dateRoute}&feed=rss`;
+    `${config.client}links${dateRoute}?feed=rss`;
   routerMetaItem.title = `dotNET Weekly${dateTitle}`;
   routerMetaItem.description = `A free weekly newsletter on .NET latest${dateTitle}`;
 
@@ -69,7 +69,7 @@ function parseLinks(url, routerMetaItem, state) {
   if (requestPath === "/") {
     routerMetaItem.title = `dotNET Weekly | A free weekly newsletter on .NET latest`;
     routerMetaItem.description = `A free weekly newsletter on .NET latest`;
-    routerMetaItem.rss = `${config.apiDomain}links?feed=rss`;
+    routerMetaItem.rss = `${config.client}?feed=rss`;
   }
 
   return routerMetaItem;
