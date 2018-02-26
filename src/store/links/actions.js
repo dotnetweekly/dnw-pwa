@@ -12,7 +12,8 @@ const actions = {
   },
   getLinks({ commit, state }, params) {
 
-    if (typeof windows !== "undefined" ) {
+    if (typeof window !== "undefined" ) {
+      console.log(state.firstLoad && !params.authenticated);
       if (state.firstLoad && !params.authenticated) {
         state.firstLoad = false;
         return;

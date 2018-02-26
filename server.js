@@ -111,18 +111,18 @@ app.get("*", (req, res) => {
     const singleRegex = /\/(articles|books|libraries\-tools|events\-training|videos)\/(.*?)((\/?\?feed=rss)|(\/rss\.xml))/gi;
     const singleRegexLegacy = /\/feed\/(articles|books|libraries\-tools|events\-training|videos)\/(.*?)\/?$/gi;
 
-    if (!isProd) {
-      if (req.url === "/service-worker.js") {
-        res.setHeader('content-type', 'text/javascript');
-        res.end(fs.readFileSync(path.resolve(__dirname, "src/service-worker.js")));
-        return;
-      }
-      if (req.url === "/sw_config.js") {
-        res.setHeader('content-type', 'text/javascript');
-        res.end(fs.readFileSync(path.resolve(__dirname, "src/assets/sw-config.js")));
-        return;
-      }
-    }
+    // if (!isProd) {
+    //   if (req.url === "/service-worker.js") {
+    //     res.setHeader('content-type', 'text/javascript');
+    //     res.end(fs.readFileSync(path.resolve(__dirname, "src/service-worker.js")));
+    //     return;
+    //   }
+    //   if (req.url === "/sw_config.js") {
+    //     res.setHeader('content-type', 'text/javascript');
+    //     res.end(fs.readFileSync(path.resolve(__dirname, "src/assets/sw-config.js")));
+    //     return;
+    //   }
+    // }
 
     if (isProd) {
       const hit = microCache.get(req.url)
