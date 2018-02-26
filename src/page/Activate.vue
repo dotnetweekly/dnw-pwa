@@ -56,7 +56,9 @@ export default {
       if(typeof window === "undefined") {
         return;
       }
-      window.recaptchaComponent.execute(this.activateAction);
+      setTimeout(() => {
+        window.recaptchaComponent.execute(this.activateAction);
+      }, 100);
     },
     activateAction(recaptchaKey) {
       const verifyKey = this.$route.params.key;

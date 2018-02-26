@@ -3,15 +3,15 @@
   <div class="columns">
     <div class="column is-one-quarter main-menu tight">
       <dnw-menu></dnw-menu>
-      <div v-if="linksLoading" class="menu-loading"></div>
+      <div v-show="linksAreLoading" class="menu-loading"></div>
     </div>
-    <div class="column" v-if="linksLoading">
+    <div class="column" v-show="linksAreLoading">
       <dnw-loading></dnw-loading>
     </div>
-    <div class="column" v-if="!linksLoading">
+    <div class="column" v-if="!linksAreLoading">
       <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
-      <dnw-link v-if="links" v-for="link in linksOrdered" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
-      <div v-if="!linksLoading && links && links.length == 0">
+      <dnw-link v-if="links" v-for="link in links" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
+      <div v-if="links && links.length == 0">
         <h2 class="has-text-centered">Oops, no links found for this week/category.
           <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
         <p class="has-text-centered">
@@ -65,13 +65,10 @@ export default {
     "dnw-loading": dnwLoading
   },
   computed: {
-    ...mapGetters("linksModule", ["links", "olderLinks", "filter", "linksLoading"]),
+    ...mapGetters("linksModule", ["linksAreLoading", "links", "olderLinks", "filter"]),
     ...mapGetters("authModule", ["isAuthenticated"]),
     filterWeekChange () {
       return this.filterWeek
-    },
-    linksOrdered() {
-      return this.links;
     }
   },
   methods: {
@@ -109,5 +106,11 @@ export default {
     width: calc(25% + 1rem);
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 900px) {
+    .menu-loading {
+      width: calc(100% + 2rem);
+    }
   }
 </style>

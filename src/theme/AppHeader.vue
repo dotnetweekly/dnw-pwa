@@ -109,6 +109,15 @@ a.navbar-item.main-logo {
   }
 }
 
+@media (min-width: $mobile) and (max-width: $tablet) {
+  .header-profile-inner {
+    float: right;
+  }
+  .header-cta {
+    text-align: right;
+  }
+}
+
 @media screen and (max-width: $mobile) {
   .header-profile-inner{
     margin: 0 auto;

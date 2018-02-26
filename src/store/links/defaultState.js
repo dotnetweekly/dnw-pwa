@@ -20,7 +20,7 @@ const defaultState = {
     serverWeek: "",
     serverMonth: "",
     serverDate: "",
-    linksLoading: false
+    linksAreLoading: false
   }
 };
 

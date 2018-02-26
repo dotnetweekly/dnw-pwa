@@ -12,13 +12,21 @@ const actions = {
     }
 
 		return new Promise((resolve, reject) => {
+      state.linkLoading = true;
 			linksService
 				.getLink(params.slug)
 				.then((response) => {
 					Object.assign(state, {}, { link: response });
+          state.linkLoading = false;
+          if (typeof window !== "undefined" ) {
+            state.firstLoad = false;
+          }
 					resolve();
 				})
-				.catch((error) => reject(error));
+				.catch((error) => {
+          state.linkLoading = false;
+          reject(error)
+        });
 		});
   },
   sendComment({ commit, state }, comment) {

@@ -1,8 +1,8 @@
 <template>
   <div v-if="link">
     <div class="link-back-button"><a v-on:click="goBackLink()"><i class="icon-left-open" aria-hidden="true"></i> Back</a></div>
-    <dnw-loading v-if="!link.content"></dnw-loading>
-    <div v-if="link.content">
+    <dnw-loading v-if="linkLoading"></dnw-loading>
+    <div v-if="!linkLoading">
       <div class="columns link-title-wrapper">
         <div class="column upvote-column">
           <dnw-upvote class="column"
@@ -57,7 +57,7 @@ export default {
     "dnw-loading": dnwLoading
   },
   computed: {
-    ...mapGetters("linkModule", ["link"]),
+    ...mapGetters("linkModule", ["link", "linkLoading"]),
     ...mapGetters("authModule", ["latestPath"]),
     routeStateChange () {
       return this.link

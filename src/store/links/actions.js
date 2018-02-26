@@ -1,6 +1,7 @@
 import linksService from "../../services/links.service";
 import defaultState from "./defaultState";
 import * as calendarHelper from "../../helpers/calendar";
+import Vue from "vue";
 
 const actions = {
   refreshLinks({commit, state}){
@@ -20,7 +21,7 @@ const actions = {
     }
 
     return new Promise((resolve, reject) => {
-      state.linksLoading = true;
+      Vue.set(state, "linksAreLoading", true);
       linksService
         .getLinks(params)
         .then(response => {
@@ -33,12 +34,14 @@ const actions = {
           state.filter.serverWeek = response.serverWeek;
           state.filter.serverMonth = response.serverMonth;
           state.filter.serverDate = response.serverDate;
-          state.linksLoading = false;
-          console.log(response);
+          Vue.set(state, "linksAreLoading", false);
+          if (typeof window !== "undefined" ) {
+            state.firstLoad = false;
+          }
           resolve();
         })
         .catch(error => {
-          state.linksLoading = false;
+          Vue.set(state, "linksAreLoading", false);
           console.log("link request error: ", error);
           reject(error);
         });

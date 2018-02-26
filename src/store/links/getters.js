@@ -22,7 +22,7 @@ const serverMonth = state =>
 const serverDate = state =>
   state.filter && state.filter.serverDate ? parseInt(state.filter.serverDate) : "";
 
-const linksLoading = state => state.linksLoading;
+const linksAreLoading = state => state.linksAreLoading;
 const firstLoad = state => state.firstLoad;
 
 export {
@@ -33,7 +33,7 @@ export {
   filterCategories,
   filterYear,
   filterWeek,
-  linksLoading,
+  linksAreLoading,
   firstLoad,
   serverWeek,
   serverYear,

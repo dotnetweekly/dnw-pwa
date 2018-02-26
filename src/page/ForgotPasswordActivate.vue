@@ -71,7 +71,9 @@ export default {
       if(typeof window === "undefined") {
         return;
       }
-      window.recaptchaComponent.execute(this.forgotPassword);
+      setTimeout(() => {
+        window.recaptchaComponent.execute(this.forgotPassword);
+      }, 100);
     },
     forgotPassword(recaptchaKey) {
       const verifyKey = this.$route.params.key;
