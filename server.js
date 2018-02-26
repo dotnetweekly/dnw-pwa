@@ -110,7 +110,7 @@ app.get("*", (req, res) => {
     const weekRegexLegacy = /\/feed\/week\/(\d*)\/year\/(\d*)\/?/gi;
     const singleRegex = /\/(articles|books|libraries\-tools|events\-training|videos)\/(.*?)((\/?\?feed=rss)|(\/rss\.xml))/gi;
     const singleRegexLegacy = /\/feed\/(articles|books|libraries\-tools|events\-training|videos)\/(.*?)\/?$/gi;
-
+    const weekSitemapRegex = /^\/sitemap-(.*?)-(.*?)\.xml$/gi;
     // if (!isProd) {
     //   if (req.url === "/service-worker.js") {
     //     res.setHeader('content-type', 'text/javascript');
@@ -136,6 +136,19 @@ app.get("*", (req, res) => {
       return;
     } else if(req.url === "/sitemap.xml"){
       axios.get(`${config.apiDomain}sitemap`).then((feedResponse) => {
+        res.header('Content-Type', 'application/xml');
+        res.end(feedResponse.data);
+      })
+      return;
+    } else if(req.url === "/sitemap-weeks.xml"){
+      axios.get(`${config.apiDomain}sitemap/weeks`).then((feedResponse) => {
+        res.header('Content-Type', 'application/xml');
+        res.end(feedResponse.data);
+      })
+      return;
+    } else  if(req.url.match(weekSitemapRegex)){
+      const weekParts = weekSitemapRegex.exec(req.url);
+      axios.get(`${config.apiDomain}sitemap/week/${weekParts[1]}/${weekParts[2]}`).then((feedResponse) => {
         res.header('Content-Type', 'application/xml');
         res.end(feedResponse.data);
       })
