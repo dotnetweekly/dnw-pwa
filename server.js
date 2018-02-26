@@ -134,6 +134,12 @@ app.get("*", (req, res) => {
     if(req.url !== "/" && req.url.match(/(.*?)\/$/)){
       res.redirect(301, req.url.replace(/\/$/, ""));
       return;
+    } else if(req.url === "/sitemap.xml"){
+      axios.get(`${config.apiDomain}sitemap`).then((feedResponse) => {
+        res.header('Content-Type', 'application/xml');
+        res.end(feedResponse.data);
+      })
+      return;
     } else if(req.url === "/contribute/"){
       res.redirect(301, `${config.client}about`);
       return;
