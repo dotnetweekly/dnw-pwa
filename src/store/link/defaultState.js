@@ -1,4 +1,5 @@
 const defaultState = {
+  firstLoad: true,
 	link: {
 		user: {
 			username: ''

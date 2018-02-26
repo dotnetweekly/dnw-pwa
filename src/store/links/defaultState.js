@@ -16,6 +16,10 @@ const defaultState = {
     category: "",
     dateYear: "",
     dateWeek: "",
+    serverYear: "",
+    serverWeek: "",
+    serverMonth: "",
+    serverDate: "",
     linksLoading: false
   }
 };

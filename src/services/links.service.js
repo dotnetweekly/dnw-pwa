@@ -15,11 +15,7 @@ const linksService = {
           if (!response || !response.data) {
             reject();
           }
-          const responseData = {
-            links: response.data.data.links,
-            olderLinks: response.data.data.olderLinks
-          };
-          resolve(responseData);
+          resolve(response.data.data);
         })
         .catch(error => { console.log(error); reject(error) });
     });

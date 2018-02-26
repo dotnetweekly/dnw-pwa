@@ -43,7 +43,10 @@ import dnwLoading from "../components/dnwLoading";
 import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
-  return store.dispatch(`linkModule/getLink`, route.params.id);
+  return store.dispatch(`linkModule/getLink`, {
+    slug: route.params.id,
+    authenticated: store.state.authModule.isAuthenticated
+  });
 };
 
 export default {

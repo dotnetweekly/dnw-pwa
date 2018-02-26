@@ -46,9 +46,8 @@
               v-bind:class="{
                 dayInFuture: weekDay.inFuture,
                 dayInPast: weekDay.inPast,
-                disabled: ((now - weekDay.date) < 0)
               }">
-              <router-link v-if="!((now - weekDay.date) < 0)"
+              <router-link
               :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                 {{ weekDay.date ? weekDay.date.getDate() : "" }}
               </router-link>
@@ -64,7 +63,6 @@
   export default {
     data(){
       return {
-        now: new Date(Date.now()),
         previousMonth: { week: "", year: "" },
         nextMonth: { week: "", year: "" },
         filterCalendar: { weeks: [] }
@@ -74,7 +72,11 @@
       ...mapGetters("linksModule", [
         "filterCategory",
         "filterWeek",
-        "filterYear"
+        "filterYear",
+        "serverWeek",
+        "serverYear",
+        "serverMonth",
+        "serverDate"
       ]),
       filterWeekChange () {
         return this.filterWeek
@@ -86,11 +88,9 @@
       }
     },
     mounted() {
-      this.now.setHours(0,0,0,0);
       this.updateCalendar();
     },
     created() {
-      this.now.setHours(0,0,0,0);
       this.updateCalendar();
     },
     methods: {
@@ -139,9 +139,7 @@
         if (!week || !year) {
           return false;
         }
-        const yearNow = new Date(this.now).getFullYear();
-        const weekNow = calendarHelper.getWeek(this.now);
-        if ((week <= weekNow && year == yearNow) || year < yearNow) {
+        if ((week <= this.serverWeek && year == this.serverYear) || year < this.serverYear) {
           return true;
         }
         return false;
@@ -154,9 +152,6 @@
         let month = calendarHelper.getMonthFromWeek(this.filterWeek, this.filterYear);
         let year = this.filterYear;
 
-        const yearNow = this.now.getFullYear();
-        const monthNow = this.now.getMonth();
-
         if (month === 11) {
           year = year + 1;
           month = 0;
@@ -164,11 +159,11 @@
           month += 1;
         }
 
-        if (yearNow > year) {
+        if (this.serverYear > year) {
           return true;
         }
 
-        if  (yearNow == year && month <= monthNow)  {
+        if  (this.serverYear == year && month <= this.serverMonth)  {
           return true;
         }
 

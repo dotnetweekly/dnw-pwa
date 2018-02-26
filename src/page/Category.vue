@@ -49,13 +49,6 @@ const fetchInitialData = (store, route) => {
   let year = params.year || "";
   let category = params.category || "";
 
-  if (!week || !year) {
-    let date = new Date(Date.now());
-    date.setHours(0,0,0,0);
-    year = date.getFullYear();
-    week = calendarHelper.getWeek(date);
-  }
-
   return store.dispatch(`linksModule/getLinks`, {
     week,
     year,

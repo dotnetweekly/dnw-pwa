@@ -13,6 +13,15 @@ const filterWeek = state =>
 const filterYear = state =>
   state.filter && state.filter.dateYear ? parseInt(state.filter.dateYear) : "";
 
+const serverWeek = state =>
+  state.filter && state.filter.serverWeek ? parseInt(state.filter.serverWeek) : "";
+const serverYear = state =>
+  state.filter && state.filter.serverYear ? parseInt(state.filter.serverYear) : "";
+const serverMonth = state =>
+  state.filter && state.filter.serverMonth ? parseInt(state.filter.serverMonth) : "";
+const serverDate = state =>
+  state.filter && state.filter.serverDate ? parseInt(state.filter.serverDate) : "";
+
 const linksLoading = state => state.linksLoading;
 const firstLoad = state => state.firstLoad;
 
@@ -25,5 +34,9 @@ export {
   filterYear,
   filterWeek,
   linksLoading,
-  firstLoad
+  firstLoad,
+  serverWeek,
+  serverYear,
+  serverMonth,
+  serverDate
 };

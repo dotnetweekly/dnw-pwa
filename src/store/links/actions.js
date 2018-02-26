@@ -13,8 +13,7 @@ const actions = {
   getLinks({ commit, state }, params) {
 
     if (typeof window !== "undefined" ) {
-      console.log(state.firstLoad && !params.authenticated);
-      if (state.firstLoad && !params.authenticated) {
+      if ((state.links.length > 0 || state.olderLinks.length > 0) && state.firstLoad && !params.authenticated) {
         state.firstLoad = false;
         return;
       }
@@ -28,9 +27,14 @@ const actions = {
           state.links = response.links;
           state.olderLinks = response.olderLinks;
           state.filter.category = params.category ? params.category : "";
-          state.filter.dateYear = params.year;
-          state.filter.dateWeek = params.week;
+          state.filter.dateYear = response.year;
+          state.filter.dateWeek = response.week;
+          state.filter.serverYear = response.serverYear;
+          state.filter.serverWeek = response.serverWeek;
+          state.filter.serverMonth = response.serverMonth;
+          state.filter.serverDate = response.serverDate;
           state.linksLoading = false;
+          console.log(response);
           resolve();
         })
         .catch(error => {

@@ -46,7 +46,7 @@
         </div>
       </div>
     </section>
-    <div class="separator" v-if="links.length === 0"></div>
+    <div class="separator" v-if="links && links.length === 0"></div>
   </div>
 </template>
 <style>
