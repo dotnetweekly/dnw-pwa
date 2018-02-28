@@ -194,7 +194,8 @@ app.configure(function() {
 					});
 					res.end(feedResponse.data);
 					return;
-				});
+        });
+        // Redirect to new
 		} else if (req.url.match(weekRegexLegacy)) {
 			const weekParts = weekRegexLegacy.exec(req.url);
 			axios
@@ -218,7 +219,8 @@ app.configure(function() {
 				});
 				res.end(feedResponse.data);
 				return;
-			});
+      });
+      // Redirect to new
 		} else if (req.url.match(singleRegexLegacy)) {
 			const singleParts = singleRegexLegacy.exec(req.url);
 			axios.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`).then(feedResponse => {
