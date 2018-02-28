@@ -92,7 +92,7 @@ if (isProd) {
 
 const microCache = LRU({
   max: 100,
-  maxAge: 30000 // Important: entries expires after 1 second.
+  maxAge: 60000 // Important: entries expires after 1 second.
 })
 
 // HTTPS Redirect
