@@ -91,11 +91,14 @@ const microCache = LRU({
 	maxAge: 60000 // Important: entries expires after 1 second.
 });
 
-// Trailing slash Redirect
+// HTTPS Redirect
 app.use(function(req, res, next) {
-	if (req.url !== '/' && req.url.match(/(.*?)\/$/)) {
-		res.redirect(301, req.url.replace(/\/$/, ''));
-		return;
+	if (isProd) {
+		if (!req.protocol.includes('https')) {
+			res.redirect('https://' + req.headers.host + req.url);
+		} else {
+			return next();
+		}
 	} else {
 		return next();
 	}
@@ -218,9 +221,7 @@ app.get('*', (req, res) => {
 		} else {
 			renderer.renderToString(context, (err, html) => {
 				if (err) {
-					if (!isProd) {
-						console.log(err);
-					}
+					console.log(err);
 					return res.sendStatus(500);
 				}
 				html = indexHTML.replace('<div id="app"></div>', html);
