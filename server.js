@@ -124,12 +124,15 @@ app.get("*", (req, res) => {
     //   }
     // }
 
-    if (isProd) {
       const hit = microCache.get(req.url)
       if (hit) {
-        return res.end(hit)
+        if (hit.type === "xml") {
+          res.header('Content-Type', 'application/xml');
+        }
+        console.log(hit.type);
+        console.log(hit.data);
+        return res.end(hit.data);
       }
-    }
 
     if(req.url !== "/" && req.url.match(/(.*?)\/$/)){
       res.redirect(301, req.url.replace(/\/$/, ""));
@@ -159,30 +162,35 @@ app.get("*", (req, res) => {
     } else if (req.url.replace(/\/$/g, '') == "/feed" || req.url == "/?feed=rss" || req.url == "/rss.xml") {
       axios.get(`${config.apiDomain}links?feed=rss`).then((feedResponse) => {
         res.header("Accept", "application/rss+xml");
+        microCache.set(req.url, { type: "xml", data: feedResponse.data });
         res.end(feedResponse.data);
       });
     } else if(req.url.match(weekRegex)) {
       const weekParts = weekRegex.exec(req.url);
       axios.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`).then((feedResponse) => {
         res.header("Accept", "application/rss+xml");
+        microCache.set(req.url, { type: "xml", data: feedResponse.data });
         res.end(feedResponse.data);
       })
     } else if(req.url.match(weekRegexLegacy)) {
       const weekParts = weekRegexLegacy.exec(req.url);
       axios.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`).then((feedResponse) => {
         res.header("Accept", "application/rss+xml");
+        microCache.set(req.url, { type: "xml", data: feedResponse.data });
         res.end(feedResponse.data);
       })
     } else if(req.url.match(singleRegex)) {
       const singleParts = singleRegex.exec(req.url);
       axios.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`).then((feedResponse) => {
         res.header("Accept", "application/rss+xml");
+        microCache.set(req.url, { type: "xml", data: feedResponse.data });
         res.end(feedResponse.data);
       })
     } else if(req.url.match(singleRegexLegacy)) {
       const singleParts = singleRegexLegacy.exec(req.url);
       axios.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`).then((feedResponse) => {
         res.header("Accept", "application/rss+xml");
+        microCache.set(req.url, { type: "xml", data: feedResponse.data });
         res.end(feedResponse.data);
       })
     } else if (legacyNewsletter) {
@@ -211,7 +219,7 @@ app.get("*", (req, res) => {
           `<script>window.__INITIAL_STATE__=${serialize(context.initialState, isJSONTrue)}</script>`
         );
         res.setHeader("Content-Length", Buffer.byteLength(html));
-        microCache.set(req.url, html);
+        microCache.set(req.url, { type: "html", data: html });
         res.write(html);
         res.end();
       });
