@@ -95,6 +95,19 @@ const microCache = LRU({
   maxAge: 30000 // Important: entries expires after 1 second.
 })
 
+// HTTPS Redirect
+app.use(function (req, res, next) {
+  if (isProd) {
+    if (!/https/.test(req.protocol)) {
+      res.redirect("https://" + req.headers.host + req.url);
+    } else {
+      return next();
+    }
+  } else {
+    return next();
+  }
+});
+
 app.get("*", (req, res) => {
   try {
     // if (req.url.indexOf('well-known/acme-challenge') !== -1) {
@@ -126,13 +139,11 @@ app.get("*", (req, res) => {
 
       const hit = microCache.get(req.url)
       if (hit) {
-        if (hit.type === "xml") {
-          res.header('Content-Type', 'application/xml');
-        }
-        console.log(hit.type);
-        console.log(hit.data);
-        return res.end(hit.data);
+      if (hit.type === "xml") {
+        res.header('Content-Type', 'application/xml');
       }
+      return res.end(hit.data);
+    }
 
     if(req.url !== "/" && req.url.match(/(.*?)\/$/)){
       res.redirect(301, req.url.replace(/\/$/, ""));
