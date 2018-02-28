@@ -95,19 +95,6 @@ const microCache = LRU({
   maxAge: 60000 // Important: entries expires after 1 second.
 })
 
-// HTTPS Redirect
-app.use(function (req, res, next) {
-  if (isProd) {
-    if (!/https/.test(req.protocol)) {
-      res.redirect("https://" + req.headers.host + req.url);
-    } else {
-      return next();
-    }
-  } else {
-    return next();
-  }
-});
-
 app.get("*", (req, res) => {
   try {
     // if (req.url.indexOf('well-known/acme-challenge') !== -1) {
