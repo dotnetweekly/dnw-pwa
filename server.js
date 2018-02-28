@@ -211,6 +211,7 @@ app.get("*", (req, res) => {
           `<script>window.__INITIAL_STATE__=${serialize(context.initialState, isJSONTrue)}</script>`
         );
         res.setHeader("Content-Length", Buffer.byteLength(html));
+        microCache.set(req.url, html);
         res.write(html);
         res.end();
       });
