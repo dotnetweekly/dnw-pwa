@@ -120,17 +120,17 @@ app.get('*', (req, res) => {
 		//   }
 		// }
 
-		if (isProd) {
-			if (!req.protocol.includes('https')) {
-				res.redirect('https://' + req.headers.host + req.url);
-				return;
-			}
-		}
+		// if (isProd) {
+		// 	if (!req.protocol.includes('https')) {
+		// 		res.redirect('https://' + req.headers.host + req.url);
+		// 		return;
+		// 	}
+		// }
 
-		if (req.url !== '/' && req.url.match(/(.*?)\/$/)) {
-			res.redirect(301, req.url.replace(/\/$/, ''));
-			return;
-		}
+		// if (req.url !== '/' && req.url.match(/(.*?)\/$/)) {
+		// 	res.redirect(301, req.url.replace(/\/$/, ''));
+		// 	return;
+		// }
 
 		const hit = microCache.get(req.url);
 		if (hit) {
@@ -236,6 +236,7 @@ app.get('*', (req, res) => {
 			});
 		}
 	} catch (error) {
+    console.log(req.url);
 		console.log(error);
 		res.end('Service Error');
 	}
