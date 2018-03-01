@@ -34,11 +34,6 @@ export default {
   mounted() {
     window.recaptchaComponent = this.$refs.recaptcha;
     if (typeof window !== "undefined") {
-      setTimeout(() => {
-        document.querySelector('[data-name="site-style"]').removeAttribute("disabled");
-      });
-    }
-    if (typeof window !== "undefined") {
       let expiration = window.localStorage.getItem("dnwTokenExpiration");
       var unixTimestamp = new Date().getTime() / 1000;
       if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {

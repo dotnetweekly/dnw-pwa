@@ -91,19 +91,6 @@ const microCache = LRU({
 	maxAge: 60000 // Important: entries expires after 1 second.
 });
 
-// HTTPS Redirect
-app.use(function(req, res, next) {
-	if (isProd) {
-		if (!req.protocol.includes('https')) {
-			res.redirect('https://' + req.headers.host + req.url);
-		} else {
-			return next();
-		}
-	} else {
-		return next();
-	}
-});
-
 app.get('*', (req, res) => {
 	try {
 		// if (req.url.indexOf('well-known/acme-challenge') !== -1) {
@@ -133,6 +120,18 @@ app.get('*', (req, res) => {
 		//   }
 		// }
 
+		if (isProd) {
+			if (!req.protocol.includes('https')) {
+				res.redirect('https://' + req.headers.host + req.url);
+				return;
+			}
+		}
+
+		if (req.url !== '/' && req.url.match(/(.*?)\/$/)) {
+			res.redirect(301, req.url.replace(/\/$/, ''));
+			return;
+		}
+
 		const hit = microCache.get(req.url);
 		if (hit) {
 			if (hit.type === 'xml') {
@@ -141,18 +140,17 @@ app.get('*', (req, res) => {
 			return res.end(hit.data);
 		}
 
-		if (req.url !== '/' && req.url.match(/(.*?)\/$/)) {
-			res.redirect(301, req.url.replace(/\/$/, ''));
-			return;
-		} else if (req.url === '/sitemap.xml') {
+		if (req.url === '/sitemap.xml') {
 			axios.get(`${config.apiDomain}sitemap`).then(feedResponse => {
 				res.header('Content-Type', 'application/xml');
+				microCache.set(req.url, { type: 'xml', data: feedResponse.data });
 				res.end(feedResponse.data);
 			});
 			return;
 		} else if (req.url === '/sitemap-weeks.xml') {
 			axios.get(`${config.apiDomain}sitemap/weeks`).then(feedResponse => {
 				res.header('Content-Type', 'application/xml');
+				microCache.set(req.url, { type: 'xml', data: feedResponse.data });
 				res.end(feedResponse.data);
 			});
 			return;
@@ -160,6 +158,7 @@ app.get('*', (req, res) => {
 			const weekParts = weekSitemapRegex.exec(req.url);
 			axios.get(`${config.apiDomain}sitemap/week/${weekParts[1]}/${weekParts[2]}`).then(feedResponse => {
 				res.header('Content-Type', 'application/xml');
+				microCache.set(req.url, { type: 'xml', data: feedResponse.data });
 				res.end(feedResponse.data);
 			});
 			return;
