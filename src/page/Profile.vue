@@ -155,7 +155,7 @@
             </p>
           </div>
           <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Save</a>
-          <p class="dnwIconSuccessMessage" v-if="success">Profile saved successfully!</p>
+          <p class="dnwIconSuccessMessage" v-if="success">Profile saved successfully! <span>{{successMessage}}</span></p>
           <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
           <a v-if="sending" disabled class="button is-link is-medium ">Save</a>
         </div>
@@ -250,7 +250,7 @@ export default {
           setTimeout(() => {
             this.success = false;
             this.successMessage = "";
-          }, 3000);
+          }, 6000);
           // Notification
         })
         .catch(err => {

@@ -51,7 +51,7 @@
         }
         setTimeout(() => {
           window.recaptchaComponent.execute(this.unsubscribeAction);
-        }, 100);
+        }, 1000);
       },
       unsubscribeAction(recaptchaKey) {
         const verifyKey = this.$route.params.key;

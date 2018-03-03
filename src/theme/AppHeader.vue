@@ -5,7 +5,7 @@
         <img alt="dotNET Weekly" src="/assets/logo.jpg" /><span class="dnw-logo-txt">dotNET Weekly</span>
         <div class="header-user-count tags has-addons">
           <span class="tag"><i aria-hidden="true" class="icon-user"></i></span>
-          <span class="tag is-info">{{subscribers}}</span>
+          <span class="tag is-info">{{dnwSubscriberCount}}</span>
         </div>
       </router-link>
       <div class="column tight"></div>
@@ -31,8 +31,28 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      dnwSubscriberCount: 3467
+    }
+  },
   computed: {
     ...mapGetters("authModule", ["isAuthenticated", "subscribers"])
+  },
+  watch: {
+    subscribers(to, from) {
+      if (typeof window === "undefined") {
+        this.dnwSubscriberCount = to;
+        return;
+      }
+      let interval = setInterval(() => {
+        if (this.dnwSubscriberCount >= to) {
+          clearInterval(interval);
+          return;
+        }
+        this.dnwSubscriberCount++;
+      }, 50);
+    }
   },
   methods: {
     logout() {

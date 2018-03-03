@@ -45,8 +45,8 @@ import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
   let params = route.params || {};
-  let week = params.week || "";
-  let year = params.year || "";
+  let week = params.week === 'undefined' ? "" : (params.week || "");
+  let year = params.year === 'undefined' ? "" : (params.year || "");
   let category = params.category || "";
 
   return store.dispatch(`linksModule/getLinks`, {

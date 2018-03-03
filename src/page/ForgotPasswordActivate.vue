@@ -73,7 +73,7 @@ export default {
       }
       setTimeout(() => {
         window.recaptchaComponent.execute(this.forgotPassword);
-      }, 100);
+      }, 1000);
     },
     forgotPassword(recaptchaKey) {
       const verifyKey = this.$route.params.key;
