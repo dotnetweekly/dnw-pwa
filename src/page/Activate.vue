@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="running">
-      Loading...
+      <dnw-loading></dnw-loading>
     </div>
     <div v-if="success" class="column has-text-centered">
       <p>
@@ -34,7 +34,12 @@
 import axios from "axios";
 import { mapActions } from "vuex";
 import errorHelper from "../helpers/errors";
+import dnwLoading from "../components/dnwLoading";
+
 export default {
+  components: {
+    "dnw-loading": dnwLoading
+  },
   data() {
     return {
       errors: [],
@@ -48,8 +53,7 @@ export default {
   methods: {
     ...errorHelper,
     ...mapActions("authModule", {
-      setAuthToken: "setAuthToken",
-      goBack: "goBack"
+      setAuthToken: "setAuthToken"
     }),
     executeRecaptcha () {
       this.running = true;
@@ -58,7 +62,7 @@ export default {
       }
       setTimeout(() => {
         window.recaptchaComponent.execute(this.activateAction);
-      }, 100);
+      }, 1000);
     },
     activateAction(recaptchaKey) {
       const verifyKey = this.$route.params.key;

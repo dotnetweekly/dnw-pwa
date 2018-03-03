@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="!error && !noKey">Loading...</div>
+    <div v-if="!error && !noKey">
+      <dnw-loading></dnw-loading>
+    </div>
     <div v-if="error">
       <p v-html="error"></p>
     </div>
@@ -14,7 +16,12 @@
 <script>
   import axios from "axios";
   import errorHelper from "../helpers/errors";
+  import dnwLoading from "../components/dnwLoading";
+
   export default {
+    components: {
+      "dnw-loading": dnwLoading
+    },
     data() {
       return {
         errors: [],

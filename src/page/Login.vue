@@ -65,8 +65,7 @@ export default {
   methods: {
     ...errorHelper,
     ...mapActions("authModule", {
-      logout: "logout",
-      goBack: "goBack"
+      logout: "logout"
     }),
     executeRecaptcha () {
       this.running = true;

@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 import authService from '../../services/auth.service';
 import defaultState from './defaultState';
-import router from "../../router"
+import router from '../../router';
 
 const actions = {
 	setLatestPath({ commit, state }, latestPath) {
@@ -12,51 +12,40 @@ const actions = {
 	},
 	login(context, credentials) {
 		return new Promise((resolve, reject) => {
-			authService
-				.login(credentials)
-				.then((response) => {
-					context.commit('login', response.data);
+			try {
+				authService
+					.login(credentials)
+					.then(response => {
+						context.commit('login', response.data);
 
-					resolve();
-				})
-				.catch((response) => {
-					reject(response);
-				});
+						resolve();
+					})
+					.catch(response => {
+						reject(response);
+					});
+			} catch (error) {
+				console.log(error);
+				reject(error);
+			}
 		});
-  },
-  getCount({ context, state }) {
-    axios.get("/user/count")
-    .then(response => {
-      if(response && response.data && response.data.data){
-        state.subscribers = response.data.data;
-      }
-    })
-  },
-  setLoginStatus({ context, state }, loginStatus) {
-    state.isAuthenticated = loginStatus;
-  },
+	},
+	getCount({ context, state }) {
+		try {
+			axios.get('/user/count').then(response => {
+				if (response && response.data && response.data.data) {
+					state.subscribers = response.data.data;
+				}
+			});
+		} catch (error) {
+			console.log(error);
+			reject(error);
+		}
+	},
+	setLoginStatus({ context, state }, loginStatus) {
+		state.isAuthenticated = loginStatus;
+	},
 	setAuthToken(context, token) {
 		context.commit('login', token);
-	},
-	goBack({ context, state }, params) {
-    return;
-		if (typeof window === 'undefined' || !router) {
-			return;
-    }
-
-    if(!state.isAuthenticated){
-      router.push("/");
-
-      return;
-    }
-
-		if (state.latestPath && state.latestPath != router.route.path) {
-      router.push(state.latestPath);
-
-			return;
-		}
-
-		router.push('/');
 	}
 };
 

@@ -5,16 +5,24 @@ import axios from 'axios';
 const linksService = {
 	getNewsletters(filter) {
 		return new Promise((resolve, reject) => {
-			const path = `${Config.newsletterDomain}api/v1/newsletters`;
-			appCache
-				.get(path)
-				.then((response) => {
-					if (!response || !response.data) {
-						reject();
-					}
-					resolve(response.data.data);
-				})
-				.catch((error) => reject(error));
+			try {
+				const path = `${Config.newsletterDomain}api/v1/newsletters`;
+				appCache
+					.get(path)
+					.then(response => {
+						if (!response || !response.data) {
+							reject();
+						}
+						resolve(response.data.data);
+					})
+					.catch(error => {
+						console.log(error);
+						reject(error);
+					});
+			} catch (error) {
+				console.log(error);
+				reject(error);
+			}
 		});
 	}
 };
