@@ -12,6 +12,7 @@ const serialize = require('serialize-javascript');
 const LRU = require('lru-cache');
 const axios = require('axios');
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer;
+const force = require('express-force-domain');
 
 const seoOptimize = require('./seo');
 const legacyRedirects = require('./legacyRedirects.json');
@@ -66,6 +67,10 @@ app.use(compression({ threshold: 0, filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
+
+if (isProd) {
+	app.use(force('https://www.dotnetweekly.com'));
+}
 
 if (isProd) {
 	app.use('/', express.static(resolve('./dist')));
@@ -236,7 +241,7 @@ app.get('*', (req, res) => {
 			});
 		}
 	} catch (error) {
-    console.log(req.url);
+		console.log(req.url);
 		console.log(error);
 		res.end('Service Error');
 	}
