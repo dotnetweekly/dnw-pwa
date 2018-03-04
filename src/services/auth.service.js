@@ -20,6 +20,10 @@ const service = {
 				console.log(error);
 				reject(error);
 			}
+			setTimeout(function() {
+				console.log('auth.service/login hanging');
+				reject('auth.service/login hanging');
+			}, 3000);
 		});
 	}
 };

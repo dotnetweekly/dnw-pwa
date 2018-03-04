@@ -20,6 +20,10 @@ const userService = {
 				console.log(error);
 				reject(error);
 			}
+			setTimeout(function() {
+				console.log('user.service/getProfile hanging');
+				reject('user.service/getProfile hanging');
+			}, 3000);
 		});
 	},
 	getHistory({ type, page, username }) {
@@ -39,6 +43,10 @@ const userService = {
 				console.log(error);
 				reject(error);
 			}
+			setTimeout(function() {
+				console.log('user.service/getHistory hanging');
+				reject('user.service/getHistory hanging');
+			}, 3000);
 		});
 	}
 };

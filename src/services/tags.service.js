@@ -23,6 +23,10 @@ const tagsService = {
 				console.log(error);
 				reject(error);
 			}
+			setTimeout(function() {
+				console.log('tags.service/getTags hanging');
+				reject('tags.service/getTags hanging');
+			}, 3000);
 		});
 	}
 };
