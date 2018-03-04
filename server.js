@@ -92,7 +92,7 @@ if (isProd) {
 }
 
 const microCache = LRU({
-	max: 1000,
+	max: 1500,
 	maxAge: 60000 // Important: entries expires after 1 second.
 });
 
