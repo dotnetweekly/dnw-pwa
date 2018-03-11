@@ -57,7 +57,7 @@ app.use(allowCrossDomain);
 if (isProd) {
 	app.use(secure);
 }
-app.use(force(config.client));
+app.use(force(config.client.replace(/\/$/, '')));
 
 if (isProd) {
 	app.use('/', express.static(resolve('../dist')));
