@@ -1,9 +1,11 @@
 process.env.VUE_ENV = 'server';
+
 const instrumentationKey = process.env.INSTRUMENTATION_KEY || '';
 let appInsights = require('applicationinsights');
 appInsights.setup(instrumentationKey).start();
 
 const express = require('express');
+const secure = require('express-force-https');
 const path = require('path');
 const compression = require('compression');
 const force = require('express-force-domain');
@@ -49,6 +51,9 @@ app.use(compression({ threshold: 0, filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
+if (isProd) {
+	app.use(secure);
+}
 app.use(force(config.client));
 
 if (isProd) {

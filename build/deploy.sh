@@ -20,6 +20,7 @@ cp -R ./src/assets/app-icon.png ../wwwroot/dist/assets/app-icon.png
 cp -R ./src/assets/favicon.ico ../wwwroot/dist/favicon.ico
 cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
 cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
+cp -R ./src/assets/googlefce38ef115597145.html ../wwwroot/dist/googlefce38ef115597145.html
 
 cd ../wwwroot
 npm install --only=production
