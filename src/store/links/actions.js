@@ -52,10 +52,6 @@ const actions = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('links/actions/getLinks hanging');
-				reject('links/actions/getLinks hanging');
-			}, 3000);
 		});
 	},
 	setFilterCategory({ commit, state }, category) {

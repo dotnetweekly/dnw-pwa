@@ -1,4 +1,4 @@
-# npm install
+npm install
 
 rm -rf dist
 sed -i 's/http:\/\/localhost:3000/https:\/\/dnw-api.azurewebsites.net/g' ./app.config.js
@@ -10,10 +10,8 @@ npm run build
 rm -rf ../wwwroot/dist
 cp -TR ./dist/ ../wwwroot/dist/
 
-cp -R ./seo.js ../wwwroot/seo.js
-cp -R ./router-meta.js ../wwwroot/router-meta.js
+cp -TR ./server/ ../wwwroot/server/
 cp -R ./server.js ../wwwroot/server.js
-cp -R ./legacyRedirects.json ../wwwroot/legacyRedirects.json
 cp -R ./app.config.js ../wwwroot/app.config.js
 cp -R ./package.json ../wwwroot/package.json
 cp -R ./package-lock.json ../wwwroot/package-lock.json
@@ -23,7 +21,7 @@ cp -R ./src/assets/favicon.ico ../wwwroot/dist/favicon.ico
 cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
 cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
 
-# cd ../wwwroot
-# npm install --only=production
+cd ../wwwroot
+npm install --only=production
 # npm install inherits
 # npm install forever

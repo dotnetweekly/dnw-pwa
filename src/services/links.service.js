@@ -26,10 +26,6 @@ const linksService = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('links.service/getLinks hanging');
-				reject('links.service/getLinks hanging');
-			}, 3000);
 		});
 	},
 	getLink(slug) {
@@ -52,10 +48,6 @@ const linksService = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('links.service/getLink hanging');
-				reject('links.service/getLink hanging');
-			}, 3000);
 		});
 	}
 };

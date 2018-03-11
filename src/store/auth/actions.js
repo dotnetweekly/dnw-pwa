@@ -27,10 +27,6 @@ const actions = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('auth/actions/login hanging');
-				reject('auth/actions/login hanging');
-			}, 3000);
 		});
 	},
 	getCount({ context, state }) {
@@ -44,10 +40,6 @@ const actions = {
 			console.log(error);
 			reject(error);
 		}
-		setTimeout(function() {
-			console.log('auth/actions/getCount hanging');
-			reject('auth/actions/getCount hanging');
-		}, 3000);
 	},
 	setLoginStatus({ context, state }, loginStatus) {
 		state.isAuthenticated = loginStatus;

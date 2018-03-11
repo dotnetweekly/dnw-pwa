@@ -25,10 +25,6 @@ const actions = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('newsletters/actions/getNewsletters hanging');
-				reject('newsletters/actions/getNewsletters hanging');
-			}, 3000);
 		});
 	}
 };

@@ -19,10 +19,6 @@ const actions = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('user/actions/getProfile hanging');
-				reject('user/actions/getProfile hanging');
-			}, 3000);
 		});
 	}
 };

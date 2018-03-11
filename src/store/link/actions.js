@@ -31,10 +31,6 @@ const actions = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('link/actions/getLink hanging');
-				reject('link/actions/getLink hanging');
-			}, 3000);
 		});
 	},
 	sendComment({ commit, state }, comment) {}

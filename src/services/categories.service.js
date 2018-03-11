@@ -23,10 +23,6 @@ const categoriesService = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('categories.service/getCategories hanging');
-				reject('categories.service/getCategories hanging');
-			}, 3000);
 		});
 	}
 };

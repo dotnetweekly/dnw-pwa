@@ -23,10 +23,6 @@ const linksService = {
 				console.log(error);
 				reject(error);
 			}
-			setTimeout(function() {
-				console.log('newsletters.service/getNewsletters hanging');
-				reject('newsletters.service/getNewsletters hanging');
-			}, 3000);
 		});
 	}
 };

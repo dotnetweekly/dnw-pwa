@@ -73,10 +73,6 @@ const cacheService = {
 					}
 					reject(error);
 				});
-			setTimeout(function() {
-				console.log('app.service/get hanging');
-				reject('app.service/get hanging');
-			}, 3000);
 		});
 	}
 };
