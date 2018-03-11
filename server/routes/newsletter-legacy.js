@@ -5,6 +5,7 @@ const handler = function(req, res, next) {
 	const legacyNewsletter = /\?w=(\d*)&y=(\d*)$/.exec(req.originalUrl);
 
 	if (!legacyNewsletter || legacyNewsletter.length < 3) {
+		console.log(req.originalUrl);
 		throw 'Sitemap route wrong syntax';
 	}
 

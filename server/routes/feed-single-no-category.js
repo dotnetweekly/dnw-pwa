@@ -8,6 +8,7 @@ const handler = function(req, res, next) {
 	const singleParts = patterns.singleRegexNoCategory.exec(req.originalUrl);
 
 	if (!singleParts || singleParts.length < 2) {
+		console.log(req.originalUrl);
 		throw 'Sitemap route wrong syntax';
 	}
 
@@ -18,6 +19,7 @@ const handler = function(req, res, next) {
 			`${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacyFeed]}/feed`
 		);
 	} else {
+		console.log(req.originalUrl);
 		throw 'Sitemap route wrong syntax';
 	}
 };
