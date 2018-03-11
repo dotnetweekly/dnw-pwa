@@ -1,8 +1,12 @@
 process.env.VUE_ENV = 'server';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const instrumentationKey = process.env.INSTRUMENTATION_KEY || '';
 let appInsights = require('applicationinsights');
-appInsights.setup(instrumentationKey).start();
+if (isProd) {
+	appInsights.setup(instrumentationKey).start();
+}
 
 const express = require('express');
 const secure = require('express-force-https');
@@ -16,7 +20,6 @@ const config = require('../app.config');
 const routes = require('./routes');
 
 const resolve = file => path.resolve(__dirname, file);
-const isProd = process.env.NODE_ENV === 'production';
 
 const shouldCompress = function(req, res) {
 	if (req.headers['x-no-compression']) {
@@ -61,8 +64,8 @@ if (isProd) {
 	app.use(favicon(resolve('./dist/favicon.ico')));
 } else {
 	app.use('/dist', express.static(resolve('../dist')));
-	app.use('/assets', express.static(resolve('../dist/assets')));
-	app.use(favicon(resolve('../dist/src/assets/favicon.ico')));
+	app.use('/assets', express.static(resolve('../src/assets')));
+	app.use(favicon(resolve('../src/assets/favicon.ico')));
 }
 
 app.use('/', routes);

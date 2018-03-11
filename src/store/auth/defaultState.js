@@ -1,6 +1,6 @@
 const defaultState = {
 	isAuthenticated: false,
-	subscribers: 3467,
+	subscribers: 3502,
 	latestPath: '/'
 };
 

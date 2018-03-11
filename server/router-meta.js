@@ -67,7 +67,7 @@ function parseLinks(url, routerMetaItem, state) {
 	if (requestPath === '/') {
 		routerMetaItem.title = `dotNET Weekly | A free weekly newsletter on .NET latest`;
 		routerMetaItem.description = `A free weekly newsletter on .NET latest`;
-		routerMetaItem.rss = `${config.client}/feed`;
+		routerMetaItem.rss = `${config.client}feed`;
 	}
 
 	return routerMetaItem;
