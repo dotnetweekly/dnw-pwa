@@ -16,7 +16,7 @@ const handler = function(req, res, next) {
 		.get(`${config.apiDomain}sitemap/week/${weekParts[1]}/${weekParts[2]}`, { timeout: 7000 })
 		.then(feedResponse => {
 			res.header('Content-Type', 'application/xml');
-			microCache.set(req.url, { type: 'xml', data: feedResponse.data });
+			microCache.set(req.originalUrl, { type: 'xml', data: feedResponse.data });
 			res.end(feedResponse.data);
 		})
 		.catch(err => {

@@ -60,8 +60,8 @@ if (isProd) {
 app.use(force(config.client));
 
 if (isProd) {
-	app.use('/', express.static(resolve('./dist')));
-	app.use(favicon(resolve('./dist/favicon.ico')));
+	app.use('/', express.static(resolve('../dist')));
+	app.use(favicon(resolve('../dist/favicon.ico')));
 } else {
 	app.use('/dist', express.static(resolve('../dist')));
 	app.use('/assets', express.static(resolve('../src/assets')));

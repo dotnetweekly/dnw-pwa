@@ -15,7 +15,7 @@ const handler = function(req, res, next) {
 		.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`, { timeout: 7000 })
 		.then(feedResponse => {
 			res.header('Accept', 'application/rss+xml');
-			microCache.set(req.url, { type: 'xml', data: feedResponse.data });
+			microCache.set(req.originalUrl, { type: 'xml', data: feedResponse.data });
 			res.end(feedResponse.data);
 		})
 		.catch(err => {
