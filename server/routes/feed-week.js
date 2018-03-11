@@ -7,8 +7,8 @@ const handler = function(req, res, next) {
 	const weekParts = patterns.weekRegex.exec(req.originalUrl);
 
 	if (!weekParts || weekParts.length < 3) {
-		console.log(req.originalUrl);
-		throw 'Sitemap route wrong syntax';
+		console.log(weekParts, req.originalUrl);
+		throw 'Feed week - route wrong syntax';
 	}
 
 	axios

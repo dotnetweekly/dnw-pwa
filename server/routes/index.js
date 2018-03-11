@@ -10,13 +10,14 @@ router.use('/sitemap-weeks.xml', require('./sitemap-weeks'));
 router.use(patterns.weekSitemapRegex, require('./sitemap-week'));
 
 // Feeds
+router.use(/^\/feed$/, require('./feed'));
+router.use('/rss.xml', require('./feed'));
+router.use('/rss.php', require('./feed'));
 router.use(patterns.singleRegex, require('./feed-single'));
-router.use(patterns.singleRegexNoCategory, require('./feed-single-no-category'));
 router.use(patterns.singleRegexLegacy, require('./feed-single-legacy'));
 router.use(patterns.weekRegex, require('./feed-week'));
 router.use(patterns.weekRegexLegacy, require('./feed-week-legacy'));
-router.use(/^\/feed$/, require('./feed'));
-router.use('/rss.xml', require('./feed'));
+router.use(patterns.singleRegexNoCategory, require('./feed-single-no-category'));
 
 // Redirects
 router.use(patterns.newsletterLegacy, require('./newsletter-legacy'));

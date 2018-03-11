@@ -8,7 +8,7 @@ const handler = function(req, res, next) {
 
 	if (!weekParts || weekParts.length < 3) {
 		console.log(req.originalUrl);
-		throw 'Sitemap route wrong syntax';
+		throw 'Sitemap week - route wrong syntax';
 		return;
 	}
 

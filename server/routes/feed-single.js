@@ -7,8 +7,8 @@ const handler = function(req, res, next) {
 	const singleParts = patterns.singleRegex.exec(req.originalUrl);
 
 	if (!singleParts || singleParts.length < 3) {
-		console.log(req.originalUrl);
-		throw 'Sitemap route wrong syntax';
+		console.log(singleParts, req.originalUrl);
+		throw 'Feed single - route wrong syntax';
 		return;
 	}
 

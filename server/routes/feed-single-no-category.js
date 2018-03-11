@@ -8,8 +8,8 @@ const handler = function(req, res, next) {
 	const singleParts = patterns.singleRegexNoCategory.exec(req.originalUrl);
 
 	if (!singleParts || singleParts.length < 2) {
-		console.log(req.originalUrl);
-		throw 'Sitemap route wrong syntax';
+		console.log(singleParts, req.originalUrl);
+		throw 'Feed single no category - route wrong syntax';
 	}
 
 	const indexOfLegacyFeed = legacyRedirects.oldLinks.indexOf(`/${singleParts[1].replace(/\/$/g, '')}`);
@@ -20,7 +20,7 @@ const handler = function(req, res, next) {
 		);
 	} else {
 		console.log(req.originalUrl);
-		throw 'Sitemap route wrong syntax';
+		throw 'Feed single no legacy found -Sitemap route wrong syntax';
 	}
 };
 

@@ -6,7 +6,7 @@ const handler = function(req, res, next) {
 
 	if (!legacyNewsletter || legacyNewsletter.length < 3) {
 		console.log(req.originalUrl);
-		throw 'Sitemap route wrong syntax';
+		throw 'Newsletter legacy - route wrong syntax';
 	}
 
 	res.redirect(
