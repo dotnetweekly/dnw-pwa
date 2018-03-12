@@ -2,11 +2,14 @@ const axios = require('axios');
 const config = require('../../app.config');
 
 const handler = function(req, res, next) {
-	const legacyNewsletter = /\?w=(\d*)&y=(\d*)$/.exec(req.originalUrl);
+	let legacyNewsletter = /\?w=(\d*)&y=(\d*)$/.exec(req.originalUrl);
 
 	if (!legacyNewsletter || legacyNewsletter.length < 3) {
-		console.log(req.originalUrl);
-		throw 'Newsletter legacy - route wrong syntax';
+		legacyNewsletter = /\?week=(\d*)&year=(\d*)$/.exec(req.originalUrl);
+		if (!legacyNewsletter || legacyNewsletter.length < 3) {
+			console.log(req.originalUrl);
+			throw 'Newsletter legacy - route wrong syntax';
+		}
 	}
 
 	res.redirect(

@@ -12,7 +12,7 @@
       <dnw-subscribe v-if="!isAuthenticated"></dnw-subscribe>
       <dnw-link v-if="links" v-for="link in links" v-bind:id="link._id" v-bind:key="link._id" :link="link"></dnw-link>
       <div v-if="links && links.length == 0">
-        <h2 class="has-text-centered">Oops, no links found for this week/category.
+        <h2 class="has-text-centered">No links found for this week/category.
           <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
         <p class="has-text-centered">
           <span>Don't see the cool .NET link you found this week?</span>

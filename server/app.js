@@ -18,6 +18,7 @@ const favicon = require('serve-favicon');
 const app = require('./expressApp');
 const config = require('../app.config');
 const routes = require('./routes');
+const feedQueryRedirect = require('./routes/feed-query-redirect');
 
 const resolve = file => path.resolve(__dirname, file);
 
@@ -54,10 +55,12 @@ app.use(compression({ threshold: 0, filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
+
 if (isProd) {
 	app.use(secure);
 }
 app.use(force(config.client.replace(/\/$/, '')));
+app.use(feedQueryRedirect);
 
 if (isProd) {
 	app.use('/', express.static(resolve('../dist')));
