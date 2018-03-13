@@ -42,7 +42,6 @@ if (isProd) {
 
 const handler = function(req, res, next) {
 	try {
-		console.log('ORIGINAL URL:', req.originalUrl);
 		const reqUrl = req.originalUrl;
 		const context = { url: reqUrl };
 		const isJSONTrue = { isJSON: true };
