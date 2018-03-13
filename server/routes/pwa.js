@@ -54,6 +54,10 @@ const handler = function(req, res, next) {
 			);
 		}
 
+		if (reqUrl === '/week/undefined/year/undefined/feed') {
+			return res.redirect(301, `${config.client}feed`);
+		}
+
 		if (!renderer) {
 			return res.end('waiting for compilation... refresh in a moment.');
 		}
