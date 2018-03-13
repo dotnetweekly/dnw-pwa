@@ -1,4 +1,4 @@
-npm install
+# npm install
 
 rm -rf dist
 sed -i 's/http:\/\/localhost:3000/https:\/\/dnw-api.azurewebsites.net/g' ./app.config.js
@@ -22,7 +22,7 @@ cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
 cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
 cp -R ./src/assets/googlefce38ef115597145.html ../wwwroot/dist/googlefce38ef115597145.html
 
-cd ../wwwroot
-npm install --only=production
+# cd ../wwwroot
+# npm install --only=production
 # npm install inherits
 # npm install forever

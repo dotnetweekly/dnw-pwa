@@ -14,12 +14,12 @@ const path = require('path');
 const compression = require('compression');
 const force = require('express-force-domain');
 const favicon = require('serve-favicon');
-const trailingSlash = require('trailing-slash');
 
 const app = require('./expressApp');
 const config = require('../app.config');
 const routes = require('./routes');
 const feedQueryRedirect = require('./routes/feed-query-redirect');
+const trailingSlashRedirect = require('./routes/trailingSlashRedirect');
 
 const resolve = file => path.resolve(__dirname, file);
 
@@ -56,7 +56,7 @@ app.use(compression({ threshold: 0, filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
-app.use(trailingSlash({ slash: false }));
+app.use(trailingSlashRedirect);
 
 if (isProd) {
 	app.use(secure);
@@ -73,7 +73,7 @@ if (isProd) {
 	app.use(favicon(resolve('../src/assets/favicon.ico')));
 }
 
-app.use('/', routes);
+app.use(routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
