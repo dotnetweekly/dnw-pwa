@@ -74,19 +74,23 @@ function parseLinks(url, routerMetaItem, state) {
 }
 
 function getMeta(url, state) {
-	if (!url || !state) {
-		return;
-	}
-
-	for (var key = 0; key < routerMeta.length; key++) {
-		if (url.match(routerMeta[key].match)) {
-			if (routerMeta[key].id === 'link') {
-				return parseLink(url, routerMeta[key], state);
-			} else if (routerMeta[key].id === 'links') {
-				return parseLinks(url, routerMeta[key], state);
-			}
-			return routerMeta[key];
+	try {
+		if (!url || !state) {
+			return;
 		}
+
+		for (var key = 0; key < routerMeta.length; key++) {
+			if (url.match(routerMeta[key].match)) {
+				if (routerMeta[key].id === 'link') {
+					return parseLink(url, routerMeta[key], state);
+				} else if (routerMeta[key].id === 'links') {
+					return parseLinks(url, routerMeta[key], state);
+				}
+				return routerMeta[key];
+			}
+		}
+	} catch (error) {
+		return;
 	}
 }
 

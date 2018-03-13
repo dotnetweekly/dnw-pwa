@@ -48,7 +48,7 @@ const getDateRangeOfWeek = function(week, year) {
 	fromDate.setHours(0, 0, 0, 0);
 
 	let toDate = new Date(date.setDate(date.getDate() + 6));
-	toDate.setHours(0, 0, 0, 0);
+	toDate.setHours(23, 59, 59, 0);
 
 	const dateRange = {
 		from: fromDate,

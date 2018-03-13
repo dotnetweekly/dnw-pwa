@@ -14,6 +14,7 @@ const path = require('path');
 const compression = require('compression');
 const force = require('express-force-domain');
 const favicon = require('serve-favicon');
+const trailingSlash = require('trailing-slash');
 
 const app = require('./expressApp');
 const config = require('../app.config');
@@ -55,6 +56,7 @@ app.use(compression({ threshold: 0, filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
+app.use(trailingSlash({ slash: false }));
 
 if (isProd) {
 	app.use(secure);

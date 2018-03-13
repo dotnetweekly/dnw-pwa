@@ -41,44 +41,51 @@ if (isProd) {
 }
 
 const handler = function(req, res, next) {
-	const reqUrl = req.originalUrl;
-	const context = { url: reqUrl };
-	const isJSONTrue = { isJSON: true };
-	const indexOfLegacy = legacyRedirects.oldLinks.indexOf(reqUrl.replace(/\/$/g, ''));
+	try {
+		const reqUrl = req.originalUrl;
+		const context = { url: reqUrl };
+		const isJSONTrue = { isJSON: true };
+		const indexOfLegacy = legacyRedirects.oldLinks.indexOf(reqUrl.replace(/\/$/g, ''));
 
-	if (indexOfLegacy !== -1) {
-		return res.redirect(301, `${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`);
-	}
-
-	if (!renderer) {
-		return res.end('waiting for compilation... refresh in a moment.');
-	}
-
-	const hit = microCache.get(reqUrl);
-	if (hit) {
-		if (hit.type === 'xml') {
-			res.header('Content-Type', 'application/xml');
-		}
-		return res.end(hit.data);
-	}
-
-	renderer.renderToString(context, (err, html) => {
-		if (err) {
-			console.log(err);
-			return res.sendStatus(500);
+		if (indexOfLegacy !== -1) {
+			return res.redirect(
+				301,
+				`${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`
+			);
 		}
 
-		html = indexHTML.replace('<div id="app"></div>', html);
-		html = seoOptimize(html, req, context.initialState);
-		html = html.replace(
-			'<meta name="vue-state" />',
-			`<script>window.__INITIAL_STATE__=${serialize(context.initialState, isJSONTrue)}</script>`
-		);
-		res.setHeader('Content-Length', Buffer.byteLength(html));
-		microCache.set(reqUrl, { type: 'html', data: html });
-		res.write(html);
-		res.end();
-	});
+		if (!renderer) {
+			return res.end('waiting for compilation... refresh in a moment.');
+		}
+
+		const hit = microCache.get(reqUrl);
+		if (hit) {
+			if (hit.type === 'xml') {
+				res.header('Content-Type', 'application/xml');
+			}
+			return res.end(hit.data);
+		}
+
+		renderer.renderToString(context, (err, html) => {
+			if (err) {
+				console.log(err);
+				return res.sendStatus(500);
+			}
+
+			html = indexHTML.replace('<div id="app"></div>', html);
+			html = seoOptimize(html, req, context.initialState);
+			html = html.replace(
+				'<meta name="vue-state" />',
+				`<script>window.__INITIAL_STATE__=${serialize(context.initialState, isJSONTrue)}</script>`
+			);
+			res.setHeader('Content-Length', Buffer.byteLength(html));
+			microCache.set(reqUrl, { type: 'html', data: html });
+			res.write(html);
+			res.end();
+		});
+	} catch (error) {
+		return res.sendStatus(500);
+	}
 };
 
 module.exports = handler;
