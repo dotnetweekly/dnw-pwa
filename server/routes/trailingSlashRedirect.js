@@ -11,7 +11,7 @@ const feedQueryRedirect = function(req, res, next) {
 		}
 
 		if (queryParts && queryParts.length > 1) {
-			res.redirect(301, `${config.client.replace(/\/$/, '')}${queryParts[1]}`);
+			return res.redirect(301, `${config.client.replace(/\/$/, '')}${queryParts[1]}`);
 		} else {
 			next();
 		}

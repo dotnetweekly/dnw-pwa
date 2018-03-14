@@ -16,6 +16,9 @@ const handler = function(req, res, next) {
 		axios
 			.get(`${config.apiDomain}sitemap/week/${weekParts[1]}/${weekParts[2]}`, { timeout: 7000 })
 			.then(feedResponse => {
+				if (!feedResponse.data) {
+					return res.redirect(301, `${config.client}`);
+				}
 				res.header('Content-Type', 'application/xml');
 				microCache.set(req.originalUrl, { type: 'xml', data: feedResponse.data });
 				res.end(feedResponse.data);

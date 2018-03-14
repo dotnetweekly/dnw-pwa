@@ -20,6 +20,9 @@ const handler = function(req, res, next) {
 		axios
 			.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`, { timeout: 7000 })
 			.then(feedResponse => {
+				if (!feedResponse.data) {
+					return res.redirect(301, `${config.client}`);
+				}
 				res.header('Accept', 'application/rss+xml');
 				microCache.set(req.originalUrl, { type: 'xml', data: feedResponse.data });
 				res.end(feedResponse.data);
