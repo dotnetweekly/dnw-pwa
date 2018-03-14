@@ -11,6 +11,7 @@ router.use(patterns.weekSitemapRegex, require('./sitemap-week'));
 
 // Feeds
 router.use(/^\/feed$/, require('./feed'));
+router.use('/week/undefined/year/undefined/feed', require('./feed-week'));
 router.use('/rss.xml', require('./feed'));
 router.use('/rss.php', require('./feed'));
 router.use(patterns.singleRegex, require('./feed-single'));
