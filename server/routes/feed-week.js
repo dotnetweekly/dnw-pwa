@@ -5,6 +5,10 @@ const patterns = require('./patterns');
 
 const handler = function(req, res, next) {
 	try {
+		if (req.originalUrl === '/week/undefined/year/undefined/feed') {
+			return res.redirect(301, `${config.client}feed`);
+		}
+
 		const weekParts = patterns.weekRegex.exec(req.originalUrl);
 
 		if (!weekParts || weekParts.length < 3) {

@@ -47,15 +47,15 @@ const handler = function(req, res, next) {
 		const isJSONTrue = { isJSON: true };
 		const indexOfLegacy = legacyRedirects.oldLinks.indexOf(reqUrl.replace(/\/$/g, ''));
 
+		// if (reqUrl.indexOf('well-known/acme-challenge') !== -1) {
+		// 	return res.end(reqUrl.split('acme-challenge/')[1] + '.<key here>');
+		// }
+
 		if (indexOfLegacy !== -1) {
 			return res.redirect(
 				301,
 				`${config.client.replace(/^\/|\/$/g, '')}${legacyRedirects.newLinks[indexOfLegacy]}`
 			);
-		}
-
-		if (reqUrl === '/week/undefined/year/undefined/feed') {
-			return res.redirect(301, `${config.client}feed`);
 		}
 
 		if (!renderer) {
