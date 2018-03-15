@@ -7,7 +7,7 @@ const handler = function(req, res, next) {
 		axios
 			.get(`${config.apiDomain}links?feed=rss`, { timeout: 7000 })
 			.then(feedResponse => {
-				if (!feedResponse.data) {
+				if (!feedResponse || !feedResponse.data) {
 					return res.redirect(301, `${config.client}`);
 				}
 				res.header('Accept', 'application/rss+xml');
