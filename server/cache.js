@@ -2,7 +2,7 @@ const LRU = require('lru-cache');
 
 const microCache = LRU({
 	max: 500,
-	maxAge: 60000
+	maxAge: 120000
 });
 
 module.exports = microCache;

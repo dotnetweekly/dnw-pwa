@@ -9,6 +9,15 @@ const handler = function(req, res, next) {
 			return res.redirect(301, `${config.client}feed`);
 		}
 
+		const hit = microCache.get(req.originalUrl);
+		if (hit) {
+			console.log('from cache: ', req.originalUrl);
+			if (hit.type === 'xml') {
+				res.header('Content-Type', 'application/xml');
+			}
+			return res.end(hit.data);
+		}
+
 		const weekParts = patterns.weekRegex.exec(req.originalUrl);
 
 		if (!weekParts || weekParts.length < 3) {

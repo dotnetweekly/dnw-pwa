@@ -4,6 +4,15 @@ const microCache = require('../cache');
 
 const handler = function(req, res, next) {
 	try {
+		const hit = microCache.get(req.originalUrl);
+		if (hit) {
+			console.log('from cache: ', req.originalUrl);
+			if (hit.type === 'xml') {
+				res.header('Content-Type', 'application/xml');
+			}
+			return res.end(hit.data);
+		}
+
 		axios
 			.get(`${config.apiDomain}links?feed=rss`, { timeout: 7000 })
 			.then(feedResponse => {

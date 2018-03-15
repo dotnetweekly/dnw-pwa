@@ -1,9 +1,18 @@
 const axios = require('axios');
 const config = require('../../app.config');
-const cache = require('../cache');
+const microCache = require('../cache');
 
 const handler = function(req, res, next) {
 	try {
+		const hit = microCache.get(req.originalUrl);
+		if (hit) {
+			console.log('from cache: ', req.originalUrl);
+			if (hit.type === 'xml') {
+				res.header('Content-Type', 'application/xml');
+			}
+			return res.end(hit.data);
+		}
+
 		axios
 			.get(`${config.apiDomain}sitemap`, { timeout: 7000 })
 			.then(feedResponse => {
@@ -11,7 +20,7 @@ const handler = function(req, res, next) {
 					return res.redirect(301, `${config.client}`);
 				}
 				res.header('Content-Type', 'application/xml');
-				cache.set(req.originalUrl, { type: 'xml', data: feedResponse.data });
+				microCache.set(req.originalUrl, { type: 'xml', data: feedResponse.data });
 				res.end(feedResponse.data);
 			})
 			.catch(err => {

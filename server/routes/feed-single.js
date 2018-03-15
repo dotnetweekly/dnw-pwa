@@ -5,6 +5,15 @@ const patterns = require('./patterns');
 
 const handler = function(req, res, next) {
 	try {
+		const hit = microCache.get(req.originalUrl);
+		if (hit) {
+			console.log('from cache: ', req.originalUrl);
+			if (hit.type === 'xml') {
+				res.header('Content-Type', 'application/xml');
+			}
+			return res.end(hit.data);
+		}
+
 		const singleParts = patterns.singleRegex.exec(req.originalUrl);
 
 		if (!singleParts || singleParts.length < 3) {

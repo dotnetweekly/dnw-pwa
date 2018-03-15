@@ -64,6 +64,7 @@ const handler = function(req, res, next) {
 
 		const hit = microCache.get(reqUrl);
 		if (hit) {
+			console.log('from cache: ', req.originalUrl);
 			if (hit.type === 'xml') {
 				res.header('Content-Type', 'application/xml');
 			}

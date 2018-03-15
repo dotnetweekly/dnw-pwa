@@ -5,6 +5,15 @@ const patterns = require('./patterns');
 
 const handler = function(req, res, next) {
 	try {
+		const hit = microCache.get(req.originalUrl);
+		if (hit) {
+			console.log('from cache: ', req.originalUrl);
+			if (hit.type === 'xml') {
+				res.header('Content-Type', 'application/xml');
+			}
+			return res.end(hit.data);
+		}
+
 		const weekParts = patterns.weekSitemapRegex.exec(req.originalUrl);
 
 		if (!weekParts || weekParts.length < 3) {
