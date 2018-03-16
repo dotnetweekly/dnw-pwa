@@ -5,6 +5,7 @@ const patterns = require('./patterns');
 
 const handler = function(req, res, next) {
 	try {
+		const s = Date.now();
 		const hit = microCache.get(req.originalUrl);
 		if (hit) {
 			console.log('from cache: ', req.originalUrl);
@@ -25,6 +26,8 @@ const handler = function(req, res, next) {
 		axios
 			.get(`${config.apiDomain}sitemap/week/${weekParts[1]}/${weekParts[2]}`, { timeout: 7000 })
 			.then(feedResponse => {
+				console.log(`data sitemap-week fetch: ${Date.now() - s}ms`);
+
 				if (!feedResponse || !feedResponse.data) {
 					return res.redirect(301, `${config.client}`);
 				}

@@ -5,6 +5,7 @@ const patterns = require('./patterns');
 
 const handler = function(req, res, next) {
 	try {
+		const s = Date.now();
 		if (req.originalUrl === '/week/undefined/year/undefined/feed') {
 			return res.redirect(301, `${config.client}feed`);
 		}
@@ -29,6 +30,8 @@ const handler = function(req, res, next) {
 		axios
 			.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`, { timeout: 7000 })
 			.then(feedResponse => {
+				console.log(`data feed-week fetch: ${Date.now() - s}ms`);
+
 				if (!feedResponse || !feedResponse.data) {
 					return res.redirect(301, `${config.client}feed`);
 				}
