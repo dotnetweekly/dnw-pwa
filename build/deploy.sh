@@ -27,5 +27,5 @@ cp -R ./src/assets/googlefce38ef115597145.html ../wwwroot/dist/googlefce38ef1155
 cd ../wwwroot
 rm -rf node_modules
 npm install --only=production
-# npm install inherits
-# npm install forever
+npm install inherits
+npm install forever
