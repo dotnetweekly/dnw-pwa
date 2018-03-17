@@ -28,7 +28,7 @@ const handler = function(req, res, next) {
 		}
 
 		axios
-			.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`, { timeout: 7000 })
+			.get(`${config.apiDomain}links?week=${weekParts[1]}&year=${weekParts[2]}&feed=rss`, { timeout: 5000 })
 			.then(feedResponse => {
 				console.log(`data feed-week fetch: ${Date.now() - s}ms`);
 

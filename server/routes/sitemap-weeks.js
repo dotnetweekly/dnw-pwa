@@ -15,7 +15,7 @@ const handler = function(req, res, next) {
 		}
 
 		axios
-			.get(`${config.apiDomain}sitemap/weeks`, { timeout: 7000 })
+			.get(`${config.apiDomain}sitemap/weeks`, { timeout: 5000 })
 			.then(feedResponse => {
 				console.log(`data sitemap-week fetch: ${Date.now() - s}ms`);
 

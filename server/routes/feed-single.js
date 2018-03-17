@@ -24,7 +24,7 @@ const handler = function(req, res, next) {
 		}
 
 		axios
-			.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`, { timeout: 7000 })
+			.get(`${config.apiDomain}links/${singleParts[2]}?feed=rss`, { timeout: 5000 })
 			.then(feedResponse => {
 				console.log(`data feed-single fetch: ${Date.now() - s}ms`);
 
