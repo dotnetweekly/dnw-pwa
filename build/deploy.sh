@@ -1,5 +1,5 @@
 # rm -rf node_modules
-npm install
+# npm install
 
 rm -rf dist
 sed -i 's/http:\/\/localhost:3000/https:\/\/dnw-api.azurewebsites.net/g' ./app.config.js
@@ -25,6 +25,6 @@ cp -R ./src/assets/googlefce38ef115597145.html ../wwwroot/dist/googlefce38ef1155
 
 cd ../wwwroot
 # rm -rf node_modules
-npm install --only=production
+# npm install --only=production
 # npm install inherits
 # npm install forever
