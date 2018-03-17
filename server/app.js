@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const instrumentationKey = process.env.INSTRUMENTATION_KEY || '';
 let appInsights = require('applicationinsights');
-if (isProd) {
+if (isProd && instrumentationKey) {
 	appInsights.setup(instrumentationKey).start();
 }
 
