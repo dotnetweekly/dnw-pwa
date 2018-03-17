@@ -1,5 +1,5 @@
 # rm -rf node_modules
-# npm install
+npm install
 
 rm -rf dist
 sed -i 's/http:\/\/localhost:3000/https:\/\/dnw-api.azurewebsites.net/g' ./app.config.js
