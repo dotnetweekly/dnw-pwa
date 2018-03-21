@@ -74,11 +74,6 @@ export default {
   methods: {
     loadLinks() {
       fetchInitialData(this.$store, this.$route);
-    },
-    refreshScroll() {
-      if(typeof window !== "undefined" && this.$route.hash){
-        location.href = this.$route.hash;
-      }
     }
   },
   watch: {
@@ -92,7 +87,6 @@ export default {
   prefetch: fetchInitialData,
   mounted() {
     if(typeof window !== "undefined"){
-      setTimeout(() => {this.refreshScroll()});
       this.loadLinks();
     }
   }

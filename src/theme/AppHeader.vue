@@ -33,7 +33,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      dnwSubscriberCount: 3502
+      dnwSubscriberCount: 3522
     }
   },
   computed: {

@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     ...mapActions("authModule", {
-      getCount: "getCount",
       setLoginStatus: "setLoginStatus"
     })
   },
@@ -39,7 +38,6 @@ export default {
       if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
         this.setLoginStatus(true);
       }
-      this.getCount();
     }
   }
 };

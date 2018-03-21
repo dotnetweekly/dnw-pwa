@@ -133,20 +133,24 @@ const cleanIndex = () => {
 };
 
 const purifycss = () => {
-	const styleAsset = self.assetFiles.filter(asset => {
-		return asset.match(/\/assets\/styles\.(.*?)\.css$/);
-	})[0];
-	const appAsset = self.assetFiles.filter(asset => {
-		return asset.match(/\/assets\/js\/app\.(.*?)\.js$/);
-	})[0];
-	// if (styleAsset.length > 0) {
-	// 	return exec(
-	// 		`purifycss ${path.resolve(__dirname, `../dist${styleAsset[0]}`)} ${path.resolve(
-	// 			__dirname,
-	// 			`../dist/server/main.js`
-	// 		)} --min --info --out ${path.resolve(__dirname, `../dist${styleAsset[0]}`)}`
-	// 	);
-	// }
+	return new Promise((resolve, reject) => {
+		const styleAsset = self.assetFiles.filter(asset => {
+			return asset.match(/\/assets\/styles\.(.*?)\.css$/);
+		})[0];
+		const appAsset = self.assetFiles.filter(asset => {
+			return asset.match(/\/assets\/js\/app\.(.*?)\.js$/);
+		})[0];
+
+		const styleData = fs.readFileSync(`${dirPath}${styleAsset}`, 'utf-8');
+		let indexData = fs.readFileSync(dirPath + '/assets/index.html', 'utf-8');
+
+		indexData = indexData.replace(
+			`<link href="${styleAsset}" media="all" rel="stylesheet">`,
+			`<style>${styleData}</style>`
+		);
+		fs.writeFile(dirPath + '/assets/index.html', indexData, 'utf8');
+		fs.unlink(`${dirPath}${styleAsset}`);
+	});
 
 	return;
 };
@@ -157,8 +161,8 @@ const execSW = () => {
 		.then(() => copyServiceWorker())
 		.then(() => {
 			serviceWorker();
-			manifest();
-			return purifycss();
+			return manifest();
+			// return purifycss();
 		});
 };
 
