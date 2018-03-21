@@ -54,10 +54,10 @@ function parseLinks(url, routerMetaItem, state) {
 	const week = state.linksModule.filter.dateWeek;
 	const year = state.linksModule.filter.dateYear;
 	const category = state.linksModule.filter.category || '';
-	const dateRoute = week && year && week != "undefined" && year != "undefined" ? `week/${week}/year/${year}` : '';
-	const dateTitle = week && year && week != "undefined" && year != "undefined" ? ` | Week ${week} Year ${year}` : '';
+	const dateRoute = week && year && week != 'undefined' && year != 'undefined' ? `week/${week}/year/${year}` : '';
+	const dateTitle = week && year && week != 'undefined' && year != 'undefined' ? ` | Week ${week} Year ${year}` : '';
 
-	routerMetaItem.rss = `${config.client}${dateRoute}/feed`;
+	routerMetaItem.rss = dateRoute ? `${config.client}${dateRoute}/feed` : `${config.client}feed`;
 	routerMetaItem.title = `dotNET Weekly${dateTitle}`;
 	routerMetaItem.description = `A free weekly newsletter on .NET latest${dateTitle}`;
 
