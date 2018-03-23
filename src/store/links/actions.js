@@ -1,6 +1,4 @@
 import linksService from "../../services/links.service";
-import defaultState from "./defaultState";
-import * as calendarHelper from "../../helpers/calendar";
 import Vue from "vue";
 
 const actions = {
@@ -14,7 +12,7 @@ const actions = {
       }
     );
   },
-  getLinks({ commit, state }, params) {
+  getLinks({ state }, params) {
     if (typeof window !== "undefined") {
       if (
         (state.links.length > 0 || state.olderLinks.length > 0) &&
@@ -58,7 +56,7 @@ const actions = {
       }
     });
   },
-  setFilterCategory({ commit, state }, category) {
+  setFilterCategory({ state }, category) {
     state.filter.category = category;
   }
 };

@@ -6,7 +6,6 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 
 const base = require("./webpack.base.config");
-const appConfig = require("../app.config.js");
 
 const config = Object.assign({}, base, {
   plugins: (base.plugins || []).concat([
@@ -33,8 +32,6 @@ config.module.rules
     return x.loader == "vue-loader";
   })
   .forEach(x => (x.options.extractCSS = true));
-
-config.plugins.push(new ExtractTextPlugin("assets/styles.css"));
 
 if (process.env.NODE_ENV === "production") {
   config.plugins.push(

@@ -1,9 +1,8 @@
 import Config from "../../app.config.js";
 import appCache from "../app.service.cache.js";
-import axios from "axios";
 
 const linksService = {
-  getNewsletters(filter) {
+  getNewsletters() {
     return new Promise((resolve, reject) => {
       try {
         const path = `${Config.newsletterDomain}api/v1/newsletters`;

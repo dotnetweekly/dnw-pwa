@@ -91,7 +91,8 @@ export default {
           }, 5000);
           // Notification
         })
-        .catch(error => {
+        .catch(() => {
+          // Notification
           this.success = false;
         });
     }

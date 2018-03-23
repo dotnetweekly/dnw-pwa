@@ -15,70 +15,65 @@
   </div>
 </template>
 <script>
-  import {
-    mapGetters
-  } from "vuex";
-  import config from "../../app.config";
-  import dnwLoading from "../components/dnwLoading";
+import { mapGetters } from "vuex";
+import config from "../../app.config";
+import dnwLoading from "../components/dnwLoading";
 
-  const fetchInitialData = (store, route) => {
-    return store.dispatch(`newslettersModule/getNewsletters`, {});
-  };
+const fetchInitialData = store => {
+  return store.dispatch(`newslettersModule/getNewsletters`, {});
+};
 
-  export default {
-    components: {
-      "dnw-loading": dnwLoading
-    },
-    data() {
-      return {
-        newsletterDomain: config.newsletterDomain
-      }
-    },
-    computed: {
-      ...mapGetters("newslettersModule", ["newsletters"]),
-      rows() {
-        const rows = [];
-        let row = [];
-        let count = 0;
+export default {
+  components: {
+    "dnw-loading": dnwLoading
+  },
+  data() {
+    return {
+      newsletterDomain: config.newsletterDomain
+    };
+  },
+  computed: {
+    ...mapGetters("newslettersModule", ["newsletters"]),
+    rows() {
+      const rows = [];
+      let row = [];
 
-        for (var i = 0; i < this.newsletters.length; i++) {
-          const newsletter = this.newsletters[i];
-          row.push({
-            week: newsletter.week,
-            year: newsletter.year
-          });
-          if (row.length === 5) {
-            rows.push(row);
-            row = [];
-          }
+      for (var i = 0; i < this.newsletters.length; i++) {
+        const newsletter = this.newsletters[i];
+        row.push({
+          week: newsletter.week,
+          year: newsletter.year
+        });
+        if (row.length === 5) {
+          rows.push(row);
+          row = [];
         }
+      }
 
-        return rows;
-      }
-    },
-    methods: {
-      loadItems() {
-        fetchInitialData(this.$store, this.$route);
-      }
-    },
-    watch: {
-      $route(to, from) {
-        this.loadItems();
-      }
-    },
-    prefetch: fetchInitialData,
-    mounted() {
-      if (typeof window !== "undefined") {
-        this.loadItems();
-      }
+      return rows;
+    }
+  },
+  methods: {
+    loadItems() {
+      fetchInitialData(this.$store, this.$route);
+    }
+  },
+  watch: {
+    $route() {
+      this.loadItems();
+    }
+  },
+  prefetch: fetchInitialData,
+  mounted() {
+    if (typeof window !== "undefined") {
+      this.loadItems();
     }
   }
-
+};
 </script>
 <style scoped>
-  .newsletter-separator {
-    margin-top: 1.5rem;
-    padding-top: 3rem;
-  }
-
+.newsletter-separator {
+  margin-top: 1.5rem;
+  padding-top: 3rem;
+}
 </style>

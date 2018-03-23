@@ -185,7 +185,7 @@ import dnwUserCard from "../components/dnwHistory/dnwUserHistory";
 import errorHelper from "../helpers/errors";
 import dnwLoading from "../components/dnwLoading";
 
-const fetchInitialData = (store, route) => {
+const fetchInitialData = store => {
   return store.dispatch(`userModule/getProfile`);
 };
 
@@ -219,13 +219,16 @@ export default {
     loadData() {
       fetchInitialData(this.$store, this.$route);
     },
-    executeRecaptcha () {
+    executeRecaptcha() {
       window.recaptchaComponent.execute(this.saveProfile);
     },
     saveProfile(recaptchaKey) {
       this.sending = true;
       axios
-        .post(`user/profile?g-recaptcha-response=${recaptchaKey}`, this.updatedUser)
+        .post(
+          `user/profile?g-recaptcha-response=${recaptchaKey}`,
+          this.updatedUser
+        )
         .then(response => {
           this.sending = false;
           let errors = [];
@@ -253,16 +256,17 @@ export default {
           }, 6000);
           // Notification
         })
-        .catch(err => {
+        .catch(() => {
+          // Notification
           this.$router.push("/");
         });
     }
   },
   watch: {
-    profile(to, from) {
+    profile(to) {
       this.updatedUser = to;
     },
-    $route(to, from) {
+    $route() {
       this.loadData();
     }
   },

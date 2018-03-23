@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     ...errorHelper,
-    executeRecaptcha () {
+    executeRecaptcha() {
       window.recaptchaComponent.execute(this.forgotPassword);
     },
     forgotPassword(recaptchaKey) {
@@ -87,7 +87,9 @@ export default {
             this.success = false;
             this.email = "";
           }, 3000);
-        }).catch(error => {
+        })
+        .catch(() => {
+          // Notification
           this.sending = false;
           this.success = false;
         });

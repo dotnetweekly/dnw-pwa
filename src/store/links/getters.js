@@ -1,5 +1,3 @@
-import * as calendarHelper from "../../helpers/calendar";
-
 const links = state => state.links;
 const olderLinks = state => state.olderLinks;
 const filter = state => state.filter;

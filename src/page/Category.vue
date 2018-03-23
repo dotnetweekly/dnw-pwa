@@ -40,13 +40,13 @@ import dnwMenu from "../components/dnwMenu";
 import dnwSubscribe from "../components/dnwSubscribe";
 import dnwLoading from "../components/dnwLoading";
 
-import * as calendarHelper from "../helpers/calendar";
+// import * as calendarHelper from "../helpers/calendar";
 import setMetadata from "../helpers/metadata";
 
 const fetchInitialData = (store, route) => {
   let params = route.params || {};
-  let week = params.week === 'undefined' ? "" : (params.week || "");
-  let year = params.year === 'undefined' ? "" : (params.year || "");
+  let week = params.week === "undefined" ? "" : params.week || "";
+  let year = params.year === "undefined" ? "" : params.year || "";
   let category = params.category || "";
 
   return store.dispatch(`linksModule/getLinks`, {
@@ -65,10 +65,15 @@ export default {
     "dnw-loading": dnwLoading
   },
   computed: {
-    ...mapGetters("linksModule", ["linksAreLoading", "links", "olderLinks", "filter"]),
+    ...mapGetters("linksModule", [
+      "linksAreLoading",
+      "links",
+      "olderLinks",
+      "filter"
+    ]),
     ...mapGetters("authModule", ["isAuthenticated"]),
-    filterWeekChange () {
-      return this.filterWeek
+    filterWeekChange() {
+      return this.filterWeek;
     }
   },
   methods: {
@@ -77,34 +82,34 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.loadLinks();
     },
-    filterWeekChange () {
+    filterWeekChange() {
       setMetadata(this.$route.path, this.$store.state);
     }
   },
   prefetch: fetchInitialData,
   mounted() {
-    if(typeof window !== "undefined"){
+    if (typeof window !== "undefined") {
       this.loadLinks();
     }
   }
 };
 </script>
 <style>
-  .menu-loading {
-    position: absolute;
-    top: 0;
-    left: -1rem;
-    width: calc(25% + 1rem);
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-  }
+.menu-loading {
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  width: calc(25% + 1rem);
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
 
-  @media (max-width: 900px) {
-    .menu-loading {
-      width: calc(100% + 2rem);
-    }
+@media (max-width: 900px) {
+  .menu-loading {
+    width: calc(100% + 2rem);
   }
+}
 </style>

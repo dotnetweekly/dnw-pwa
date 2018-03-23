@@ -1,8 +1,7 @@
 import linksService from "../../services/links.service";
-import defaultState from "./defaultState";
 
 const actions = {
-  getLink({ commit, state }, params) {
+  getLink({ state }, params) {
     if (typeof window !== "undefined") {
       if (state.link.slug && state.firstLoad && !params.authenticated) {
         state.firstLoad = false;
@@ -33,7 +32,7 @@ const actions = {
       }
     });
   },
-  sendComment({ commit, state }, comment) {}
+  sendComment() {}
 };
 
 export default actions;

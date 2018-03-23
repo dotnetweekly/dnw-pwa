@@ -23,7 +23,7 @@ const trailingSlashRedirect = require("./routes/trailingSlashRedirect");
 
 const resolve = file => path.resolve(__dirname, file);
 
-const shouldCompress = function(req, res) {
+const shouldCompress = function(req) {
   if (req.headers["x-no-compression"]) {
     return false;
   }
@@ -79,11 +79,11 @@ if (isProd) {
 app.use(routes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req, res) {
   res.status(404).send("Not Found");
 });
 
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   console.log(err);
   res.status(500).send("Server Error");
 });

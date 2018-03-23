@@ -4,7 +4,7 @@ export default {
   name: "ga-analytics",
   props: ["ua"],
   watch: {
-    $route(to, from) {
+    $route() {
       this.updateGa();
     }
   },

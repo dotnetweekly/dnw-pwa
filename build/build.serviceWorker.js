@@ -17,7 +17,6 @@ const promisify = (ctx, func = ctx) => (...args) => {
     ]);
   });
 };
-const exec = promisify(_exec);
 
 const excludedFiles = [
   "([\\/|\\\\]server[\\/|\\\\].*)",
@@ -135,7 +134,7 @@ const manifest = () => {
 const cleanIndex = () => {
   return new Promise((resolve, reject) => {
     fs.readFile(dirPath + "/index.html", "utf-8", function(err, data) {
-      fs.unlink(dirPath + "/assets/styles.css");
+      // fs.unlink(dirPath + "/assets/styles.css");
       data = data.replace(
         /<link(.*?)href=\"\/assets\/styles\.css\"(.*?)>/gim,
         ""
@@ -161,13 +160,13 @@ const cleanIndex = () => {
 };
 
 const purifycss = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const styleAsset = self.assetFiles.filter(asset => {
       return asset.match(/\/assets\/styles\.(.*?)\.css$/);
     })[0];
-    const appAsset = self.assetFiles.filter(asset => {
-      return asset.match(/\/assets\/js\/app\.(.*?)\.js$/);
-    })[0];
+    // const appAsset = self.assetFiles.filter(asset => {
+    //   return asset.match(/\/assets\/js\/app\.(.*?)\.js$/);
+    // })[0];
 
     const styleData = fs.readFileSync(`${dirPath}${styleAsset}`, "utf-8");
     let indexData = fs.readFileSync(dirPath + "/assets/index.html", "utf-8");
@@ -178,9 +177,14 @@ const purifycss = () => {
     );
     fs.writeFile(dirPath + "/assets/index.html", indexData, "utf8");
     fs.unlink(`${dirPath}${styleAsset}`);
+    _exec(
+      `cp -R ${path.resolve(
+        __dirname,
+        "../src/assets/fontello/"
+      )} ${path.resolve(__dirname, "../dist/assets/")}`
+    );
+    resolve();
   });
-
-  return;
 };
 
 const execSW = () => {

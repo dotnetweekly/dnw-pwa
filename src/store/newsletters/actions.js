@@ -2,7 +2,7 @@ import newslettersService from "../../services/newsletters.service";
 import defaultState from "./defaultState";
 
 const actions = {
-  getNewsletters({ commit, state }, params) {
+  getNewsletters({ state }, params) {
     if (state.newsletters.length > 0) {
       return;
     }

@@ -14,62 +14,65 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import errorHelper from "../helpers/errors";
-  import dnwLoading from "../components/dnwLoading";
+import axios from "axios";
+import errorHelper from "../helpers/errors";
+import dnwLoading from "../components/dnwLoading";
 
-  export default {
-    components: {
-      "dnw-loading": dnwLoading
-    },
-    data() {
-      return {
-        errors: [],
-        noKey: false,
-        error: "",
-        recaptchaCheck: ""
-      }
-    },
-    methods: {
+export default {
+  components: {
+    "dnw-loading": dnwLoading
+  },
+  data() {
+    return {
+      errors: [],
+      noKey: false,
+      error: "",
+      recaptchaCheck: ""
+    };
+  },
+  methods: {
     ...errorHelper,
-      executeRecaptcha () {
-        if(typeof window === "undefined") {
-          return;
-        }
-        setTimeout(() => {
-          window.recaptchaComponent.execute(this.sendUpdateRequest);
-        }, 1000);
-      },
-      sendUpdateRequest(recaptchaKey) {
-        const verifyKey = this.$route.params.key;
-        if(!verifyKey){
-          this.noKey = true;
-        }
-        this.running = true;
-        axios.post(`/user/updateEmail?g-recaptcha-response=${recaptchaKey}`, { key: verifyKey })
+    executeRecaptcha() {
+      if (typeof window === "undefined") {
+        return;
+      }
+      setTimeout(() => {
+        window.recaptchaComponent.execute(this.sendUpdateRequest);
+      }, 1000);
+    },
+    sendUpdateRequest(recaptchaKey) {
+      const verifyKey = this.$route.params.key;
+      if (!verifyKey) {
+        this.noKey = true;
+      }
+      this.running = true;
+      axios
+        .post(`/user/updateEmail?g-recaptcha-response=${recaptchaKey}`, {
+          key: verifyKey
+        })
         .then(response => {
           this.running = false;
 
-          if(!response.data || !response.data.data) {
+          if (!response.data || !response.data.data) {
             this.noKey = true;
 
             return;
           }
 
-          if(response.data.data.error){
+          if (response.data.data.error) {
             this.error = response.data.data.error;
             return;
           }
           this.$router.push("/profile");
         })
-        .catch(response => {
+        .catch(() => {
           this.noKey = true;
           // this.errors = response.errors;
-        })
-      }
-    },
-    mounted() {
-      this.executeRecaptcha();
+        });
     }
+  },
+  mounted() {
+    this.executeRecaptcha();
   }
+};
 </script>

@@ -36,109 +36,105 @@
   </div>
 </template>
 <script>
-  import {
-    mapGetters
-  } from "vuex";
-  import DNWComments from "../components/dnwComments.vue";
-  import dnwCategoryIcon from "../components/dnwCategoryIcon";
-  import dnwUpvote from "../components/dnwUpvote";
-  import dnwLoading from "../components/dnwLoading";
-  import setMetadata from "../helpers/metadata";
+import { mapGetters } from "vuex";
+import DNWComments from "../components/dnwComments.vue";
+import dnwCategoryIcon from "../components/dnwCategoryIcon";
+import dnwUpvote from "../components/dnwUpvote";
+import dnwLoading from "../components/dnwLoading";
+import setMetadata from "../helpers/metadata";
 
-  const fetchInitialData = (store, route) => {
-    return store.dispatch(`linkModule/getLink`, {
-      slug: route.params.id,
-      authenticated: store.state.authModule.isAuthenticated
-    });
-  };
+const fetchInitialData = (store, route) => {
+  return store.dispatch(`linkModule/getLink`, {
+    slug: route.params.id,
+    authenticated: store.state.authModule.isAuthenticated
+  });
+};
 
-  export default {
-    components: {
-      "dnw-category-icon": dnwCategoryIcon,
-      "dnw-comments": DNWComments,
-      "dnw-upvote": dnwUpvote,
-      "dnw-loading": dnwLoading
-    },
-    computed: {
-      ...mapGetters("linkModule", ["link", "linkLoading"]),
-      ...mapGetters("authModule", ["latestPath"]),
-      routeStateChange() {
-        return this.link
-      }
-    },
-    methods: {
-      loadLink() {
-        fetchInitialData(this.$store, this.$route);
-      },
-      goBackLink() {
-        if (typeof window === "undefined") {
-          return;
-        }
-        if (this.$route.query && this.$route.query.redirect) {
-          this.$router.push(`${this.$route.query.redirect}#${this.link._id}`);
-
-          return;
-        }
-        if (this.latestPath) {
-          this.$router.push(`${this.latestPath}#${this.link._id}`);
-
-          return;
-        }
-
-        this.$router.push(`${this.link.category}#${this.link._id}`);
-      }
-    },
-    watch: {
-      $route(to, from) {
-        this.loadLink();
-      },
-      routeStateChange() {
-        setMetadata(this.$route.path, this.$store.state);
-      }
-    },
-    prefetch: fetchInitialData,
-    mounted() {
-      if (typeof window !== "undefined") {
-        this.loadLink();
-      }
+export default {
+  components: {
+    "dnw-category-icon": dnwCategoryIcon,
+    "dnw-comments": DNWComments,
+    "dnw-upvote": dnwUpvote,
+    "dnw-loading": dnwLoading
+  },
+  computed: {
+    ...mapGetters("linkModule", ["link", "linkLoading"]),
+    ...mapGetters("authModule", ["latestPath"]),
+    routeStateChange() {
+      return this.link;
     }
-  };
+  },
+  methods: {
+    loadLink() {
+      fetchInitialData(this.$store, this.$route);
+    },
+    goBackLink() {
+      if (typeof window === "undefined") {
+        return;
+      }
+      if (this.$route.query && this.$route.query.redirect) {
+        this.$router.push(`${this.$route.query.redirect}#${this.link._id}`);
 
+        return;
+      }
+      if (this.latestPath) {
+        this.$router.push(`${this.latestPath}#${this.link._id}`);
+
+        return;
+      }
+
+      this.$router.push(`${this.link.category}#${this.link._id}`);
+    }
+  },
+  watch: {
+    $route() {
+      this.loadLink();
+    },
+    routeStateChange() {
+      setMetadata(this.$route.path, this.$store.state);
+    }
+  },
+  prefetch: fetchInitialData,
+  mounted() {
+    if (typeof window !== "undefined") {
+      this.loadLink();
+    }
+  }
+};
 </script>
 <style lang="scss">
-  @import "../styles/_singleLink";
-  .upvote-column {
-    width: 80px;
-    flex: none;
-    padding-right: 0;
-  }
+@import "../styles/_singleLink";
+.upvote-column {
+  width: 80px;
+  flex: none;
+  padding-right: 0;
+}
 
-  .upvote {
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
-  }
+.upvote {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}
 
-  .link-category-icon {
-    font-size: 70%;
-    width: 45px;
-    padding-top: 0.5rem;
-    display: block;
-    float: left;
-  }
+.link-category-icon {
+  font-size: 70%;
+  width: 45px;
+  padding-top: 0.5rem;
+  display: block;
+  float: left;
+}
 
-  .link-title {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
+.link-title {
+  padding-left: 0px;
+  padding-right: 0px;
+}
 
-  .link-subline {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem !important;
-  }
+.link-subline {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem !important;
+}
 
-  .link-subline,
-  .link-tags {
-    margin-left: 0.5rem;
-  }
-
+.link-subline,
+.link-tags {
+  margin-left: 0.5rem;
+}
 </style>

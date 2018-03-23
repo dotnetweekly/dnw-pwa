@@ -55,9 +55,9 @@ export default {
     ...mapActions("authModule", {
       setAuthToken: "setAuthToken"
     }),
-    executeRecaptcha () {
+    executeRecaptcha() {
       this.running = true;
-      if(typeof window === "undefined") {
+      if (typeof window === "undefined") {
         return;
       }
       setTimeout(() => {
@@ -71,7 +71,9 @@ export default {
       }
       this.running = true;
       axios
-        .post(`/auth/activate?g-recaptcha-response=${recaptchaKey}`, { key: verifyKey })
+        .post(`/auth/activate?g-recaptcha-response=${recaptchaKey}`, {
+          key: verifyKey
+        })
         .then(response => {
           this.running = false;
           if (response.data.data.error) {

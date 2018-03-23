@@ -38,7 +38,6 @@ export default {
       window.grecaptcha.reset();
     },
     render() {
-      console.log("render");
       if (window.grecaptcha) {
         window.grecaptcha.render(`recaptcha0`, {
           sitekey: this.sitekey,

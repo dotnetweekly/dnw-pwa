@@ -1,6 +1,4 @@
-import Config from "../../app.config.js";
 import appCache from "../app.service.cache.js";
-import axios from "axios";
 
 const categoriesService = {
   getCategories() {

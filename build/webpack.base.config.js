@@ -1,6 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
-const vueConfig = require("./vue-loader.config");
 const isProd = process.env.NODE_ENV === "production";
 
 const config = {

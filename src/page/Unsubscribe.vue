@@ -23,61 +23,62 @@
   </template>
 
   <script>
-  import axios from "axios";
-  import { mapActions } from "vuex";
-  import errorHelper from "../helpers/errors";
-  import dnwLoading from "../components/dnwLoading";
+import axios from "axios";
+import errorHelper from "../helpers/errors";
+import dnwLoading from "../components/dnwLoading";
 
-  export default {
+export default {
   components: {
     "dnw-loading": dnwLoading
   },
-    data() {
-      return {
-        errors: [],
-        success: false,
-        noKey: false,
-        error: "",
-        running: false,
-        recaptchaCheck: ""
-      };
-    },
-    methods: {
-      ...errorHelper,
-      executeRecaptcha () {
-        this.running = true;
-        if(typeof window === "undefined") {
-          return;
-        }
-        setTimeout(() => {
-          window.recaptchaComponent.execute(this.unsubscribeAction);
-        }, 1000);
-      },
-      unsubscribeAction(recaptchaKey) {
-        const verifyKey = this.$route.params.key;
-        if (!verifyKey) {
-          this.noKey = true;
-        }
-        this.running = true;
-        axios
-          .post(`/user/unsubscribe?g-recaptcha-response=${recaptchaKey}`, { key: verifyKey })
-          .then(response => {
-            this.running = false;
-            if (response.data.data.error) {
-              this.noKey = true;
-              this.error = response.data.data.error;
-              return;
-            }
-            this.success = true;
-          })
-          .catch(response => {
-            this.running = false;
-            this.errors = response.errors;
-          });
+  data() {
+    return {
+      errors: [],
+      success: false,
+      noKey: false,
+      error: "",
+      running: false,
+      recaptchaCheck: ""
+    };
+  },
+  methods: {
+    ...errorHelper,
+    executeRecaptcha() {
+      this.running = true;
+      if (typeof window === "undefined") {
+        return;
       }
+      setTimeout(() => {
+        window.recaptchaComponent.execute(this.unsubscribeAction);
+      }, 1000);
     },
-    created() {
-      this.executeRecaptcha();
+    unsubscribeAction(recaptchaKey) {
+      const verifyKey = this.$route.params.key;
+      if (!verifyKey) {
+        this.noKey = true;
+      }
+      this.running = true;
+      axios
+        .post(`/user/unsubscribe?g-recaptcha-response=${recaptchaKey}`, {
+          key: verifyKey
+        })
+        .then(response => {
+          this.running = false;
+          if (response.data.data.error) {
+            this.noKey = true;
+            this.error = response.data.data.error;
+            return;
+          }
+          this.success = true;
+        })
+        .catch(response => {
+          this.running = false;
+          this.errors = response.errors;
+        });
     }
-  };
-  </script>
+  },
+  created() {
+    this.executeRecaptcha();
+  }
+};
+</script>

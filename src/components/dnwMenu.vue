@@ -24,7 +24,6 @@
 import { mapGetters, mapActions } from "vuex";
 import dnwCalendar from "./dnwCalendar";
 import dnwCategoryIcon from "./dnwCategoryIcon";
-import * as calendarHelper from "../helpers/calendar";
 export default {
   computed: {
     ...mapGetters("linksModule", [

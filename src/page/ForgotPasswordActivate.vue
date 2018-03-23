@@ -28,7 +28,7 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control is-expanded has-icons-left">
+        <div class="control is-expanded has-icons-left">
           <div v-if="success" class="dnwIconSmall is-pulled-left">
             <p>
               <span class="icon">
@@ -42,7 +42,7 @@
           <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
           <a v-if="!sending && !success" v-on:click="executeRecaptcha()" class="button is-link is-medium is-pulled-left">Submit</a>
           <a v-if="sending" disabled class="button is-link is-medium ">Submit</a>
-        </p>
+        </div>
       </div>
     </div>
   </div>
@@ -66,9 +66,9 @@ export default {
   },
   methods: {
     ...errorHelper,
-    executeRecaptcha () {
+    executeRecaptcha() {
       this.running = true;
-      if(typeof window === "undefined") {
+      if (typeof window === "undefined") {
         return;
       }
       setTimeout(() => {
@@ -80,9 +80,12 @@ export default {
       this.sending = true;
 
       axios
-        .post(`auth/forgotPassword/${verifyKey}?g-recaptcha-response=${recaptchaKey}`, {
-          password: this.password
-        })
+        .post(
+          `auth/forgotPassword/${verifyKey}?g-recaptcha-response=${recaptchaKey}`,
+          {
+            password: this.password
+          }
+        )
         .then(response => {
           this.sending = false;
           this.running = false;
@@ -102,7 +105,9 @@ export default {
           setTimeout(() => {
             this.success = false;
           }, 1000);
-        }).catch(error => {
+        })
+        .catch(() => {
+          // Notification
           this.running = false;
         });
     }

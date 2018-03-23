@@ -27,19 +27,18 @@
   </ul>
 </template>
 <script>
-  export default {
-    props: ["selectedTab"],
-    methods: {
-      selectTab(tab) {
-        this.$emit('update:selectedTab', tab);
-      }
+export default {
+  props: ["selectedTab"],
+  methods: {
+    selectTab(tab) {
+      this.$emit("update:selectedTab", tab);
     }
   }
+};
 </script>
 
 <style scoped>
-  li a:hover {
-    background-color: #efefef !important;
-  }
+li a:hover {
+  background-color: #efefef !important;
+}
 </style>
-

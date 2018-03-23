@@ -19,40 +19,40 @@ import dnwUserComments from "./dnwUserComments";
 
 export default {
   components: {
-    'dnw-user-history-header': dnwHistoryHeader,
-    'dnw-user-submitted': dnwUserSubmitted,
-    'dnw-user-upvotes': dnwUserUpvotes,
-    'dnw-user-comments': dnwUserComments
+    "dnw-user-history-header": dnwHistoryHeader,
+    "dnw-user-submitted": dnwUserSubmitted,
+    "dnw-user-upvotes": dnwUserUpvotes,
+    "dnw-user-comments": dnwUserComments
   },
   props: ["username"],
   data() {
     return {
-      selectedTab: 'submitted'
-    }
+      selectedTab: "submitted"
+    };
   }
-}
+};
 </script>
 
 <style scoped>
-  .user-history {
-    margin-top: 1rem;
-  }
-  .user-history-header{
-    display: block;
-    width: 100%;
-    margin-bottom: 0;
-    position: relative;
-    top: 2px;
-  }
-  .user-history-body{
-    background-color: #ffffff;
-    display: block;
-    width: 100%;
-    border: 1px solid #dbdbdb;
-    font-size: 80%;
-    overflow-x: auto;
-  }
-  .user-history-body td{
-    border: none;
-  }
+.user-history {
+  margin-top: 1rem;
+}
+.user-history-header {
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  position: relative;
+  top: 2px;
+}
+.user-history-body {
+  background-color: #ffffff;
+  display: block;
+  width: 100%;
+  border: 1px solid #dbdbdb;
+  font-size: 80%;
+  overflow-x: auto;
+}
+.user-history-body td {
+  border: none;
+}
 </style>

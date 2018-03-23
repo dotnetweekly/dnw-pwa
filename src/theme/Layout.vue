@@ -38,6 +38,9 @@ export default {
       if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
         this.setLoginStatus(true);
       }
+      document
+        .querySelector("[data-css='fontello']")
+        .removeAttribute("disabled");
     }
   }
 };
@@ -46,7 +49,6 @@ export default {
 @import "../_variables";
 @import "~bulma";
 @import "../styles/_multiselect";
-@import "../assets/fontello/css/fontello.css";
 
 @import "../styles/_main";
 @import "../styles/_modals";

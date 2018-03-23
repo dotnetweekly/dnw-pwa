@@ -40,7 +40,7 @@ export default {
     ...mapGetters("authModule", ["isAuthenticated", "subscribers"])
   },
   watch: {
-    subscribers(to, from) {
+    subscribers(to) {
       if (typeof window === "undefined") {
         this.dnwSubscriberCount = to;
         return;

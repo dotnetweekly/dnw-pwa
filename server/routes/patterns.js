@@ -10,11 +10,11 @@ const singleRegexLegacy = /^\/feed\/(articles|books|libraries\-tools|events\-tra
 const newsletterLegacy = /^\/newsletter\/show\_newsletter\.php$/;
 
 module.exports = {
-	weekSitemapRegex,
-	weekRegex,
-	weekRegexLegacy,
-	singleRegex,
-	singleRegexNoCategory,
-	singleRegexLegacy,
-	newsletterLegacy
+  weekSitemapRegex,
+  weekRegex,
+  weekRegexLegacy,
+  singleRegex,
+  singleRegexNoCategory,
+  singleRegexLegacy,
+  newsletterLegacy
 };

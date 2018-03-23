@@ -24,11 +24,11 @@ const router = new VueRouter({
   mode: "history",
   linkActiveClass: "is-active",
   base: __dirname,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { x: 0, y: 0 }
+      return { x: 0, y: 0 };
     }
   },
   routes: [
@@ -52,8 +52,11 @@ const router = new VueRouter({
       params: { category: "" }
     },
     { path: "/:category/week/:week/year/:year", component: Category },
-    { path: "/", component: Category,
-    params: { category: "" } },
+    {
+      path: "/",
+      component: Category,
+      params: { category: "" }
+    },
     { path: "*", component: NotFound }
   ]
 });

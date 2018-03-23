@@ -28,52 +28,56 @@
 </div>
 </template>
 <script>
-  import userService from "../../services/user.service";
-  import dnwPaging from "../dnwPaging";
+import userService from "../../services/user.service";
+import dnwPaging from "../dnwPaging";
 
-  export default {
-    components: {
-      'dnw-paging': dnwPaging
-    },
-    props: ["username"],
-    data() {
-      return {
-        links: [],
-        pages: 1,
-        page: 1,
-        loading: true
-      }
-    },
-    watch: {
-      page(to) {
-        this.getLinks(to);
-      }
-    },
-    methods: {
-      getLinks(page) {
-        const username = this.username;
-        userService.getHistory({ type:"upvotes", page, username }).then(data => {
+export default {
+  components: {
+    "dnw-paging": dnwPaging
+  },
+  props: ["username"],
+  data() {
+    return {
+      links: [],
+      pages: 1,
+      page: 1,
+      loading: true
+    };
+  },
+  watch: {
+    page(to) {
+      this.getLinks(to);
+    }
+  },
+  methods: {
+    getLinks(page) {
+      const username = this.username;
+      userService
+        .getHistory({ type: "upvotes", page, username })
+        .then(data => {
           this.pages = data.pages;
           this.links = data.links;
           // this.page = data.page;
           this.loading = false;
-        }).catch(error => {
+        })
+        .catch(() => {
+          // Notification
           this.loading = false;
         });
-      }
-    },
-    created() {
-      this.getLinks(1);
     }
+  },
+  created() {
+    this.getLinks(1);
   }
+};
 </script>
 <style scoped>
-.history-title{
+.history-title {
   width: 70%;
   max-width: 600px;
 }
 
-.history-date{
+.history-date {
   min-width: 200px;
   width: 200px;
 }

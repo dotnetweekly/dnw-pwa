@@ -167,13 +167,15 @@ export default {
   },
   methods: {
     ...errorHelper,
-    executeRecaptcha () {
+    executeRecaptcha() {
       window.recaptchaComponent.execute(this.register);
     },
     register(recaptchaKey) {
       this.isLoading = true;
       axios
-        .post(`/auth/register?g-recaptcha-response=${recaptchaKey}`, { user: this.profile })
+        .post(`/auth/register?g-recaptcha-response=${recaptchaKey}`, {
+          user: this.profile
+        })
         .then(response => {
           this.isLoading = false;
           if (

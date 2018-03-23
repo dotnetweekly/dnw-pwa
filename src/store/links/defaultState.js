@@ -1,5 +1,3 @@
-import * as calendarHelper from "../../helpers/calendar";
-
 const defaultState = {
   firstLoad: true,
   links: [],

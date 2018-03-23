@@ -67,7 +67,7 @@ export default {
     ...mapActions("authModule", {
       logout: "logout"
     }),
-    executeRecaptcha () {
+    executeRecaptcha() {
       this.running = true;
       window.recaptchaComponent.execute(this.login);
     },
@@ -78,7 +78,7 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then((response) => {
+        .then(response => {
           this.running = false;
           if (response && !response.success) {
             this.errors = response.errors;
@@ -88,7 +88,8 @@ export default {
           this.email = "";
           this.password = "";
           this.$router.push("/profile");
-        }).catch((response) => {
+        })
+        .catch(response => {
           this.running = false;
           const data = response.data;
           if (!data.success) {

@@ -55,7 +55,6 @@ function parseLinks(url, routerMetaItem, state) {
   }
   const week = state.linksModule.filter.dateWeek;
   const year = state.linksModule.filter.dateYear;
-  const category = state.linksModule.filter.category || "";
   const dateRoute =
     week && year && week != "undefined" && year != "undefined"
       ? `week/${week}/year/${year}`

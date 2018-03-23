@@ -6,7 +6,6 @@
 </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import dnwUserHistory from "../components/dnwHistory/dnwUserHistory";
 
 export default {
@@ -16,7 +15,7 @@ export default {
   data() {
     return {
       username: null
-    }
+    };
   },
   mounted() {
     this.username = this.$route.params.username;
@@ -24,7 +23,7 @@ export default {
 };
 </script>
 <style>
-.separator{
+.separator {
   border-top: 1px solid rgba(219, 219, 219, 0.5);
   margin-top: 3rem;
   padding-top: 1.5rem;

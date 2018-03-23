@@ -1,10 +1,8 @@
 import axios from "axios";
 import authService from "../../services/auth.service";
-import defaultState from "./defaultState";
-import router from "../../router";
 
 const actions = {
-  setLatestPath({ commit, state }, latestPath) {
+  setLatestPath({ state }, latestPath) {
     state.latestPath = latestPath;
   },
   logout(context) {
@@ -29,7 +27,7 @@ const actions = {
       }
     });
   },
-  getCount({ context, state }) {
+  getCount({ state }) {
     try {
       axios.get("/user/count").then(response => {
         if (response && response.data && response.data.data) {
@@ -38,10 +36,9 @@ const actions = {
       });
     } catch (error) {
       console.log(error);
-      reject(error);
     }
   },
-  setLoginStatus({ context, state }, loginStatus) {
+  setLoginStatus({ state }, loginStatus) {
     state.isAuthenticated = loginStatus;
   },
   setAuthToken(context, token) {
