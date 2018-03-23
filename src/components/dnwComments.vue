@@ -35,9 +35,6 @@
       </article>
     </div>
   </div>
-</article>
-
-    </div>
 </template>
 <script>
 import axios from "axios";
@@ -51,68 +48,71 @@ export default {
       success: false,
       comment: "",
       errors: []
-    }
+    };
   },
   components: {
-    "dnw-comment": DNWComment,
+    "dnw-comment": DNWComment
   },
-  props: [
-    'comments',
-    "linkId"
-  ],
+  props: ["comments", "linkId"],
   computed: {
     ...mapGetters("authModule", ["isAuthenticated"])
   },
   methods: {
     ...mapActions("linkModule", ["sendComment"]),
     ...errorHelper,
-    executeRecaptcha () {
+    executeRecaptcha() {
       window.recaptchaComponent.execute(this.sendComment);
     },
     sendComment(recaptchaKey) {
-      axios.post(`links/comment/${this.linkId}?g-recaptcha-response=${recaptchaKey}`, {
-        comment: this.comment
-      }).then(response => {
-        let errors = [];
-        if(response.data && response.data.data){
-          errors = response.data.data.errors;
-        }
+      axios
+        .post(
+          `links/comment/${this.linkId}?g-recaptcha-response=${recaptchaKey}`,
+          {
+            comment: this.comment
+          }
+        )
+        .then(response => {
+          let errors = [];
+          if (response.data && response.data.data) {
+            errors = response.data.data.errors;
+          }
 
-        if(errors && errors.length > 0){
-          this.errors = errors;
+          if (errors && errors.length > 0) {
+            this.errors = errors;
 
-          return;
-        }
+            return;
+          }
 
-        this.errors = [];
-        this.comment = "";
-        this.success = true;
-        setTimeout(() => {
+          this.errors = [];
+          this.comment = "";
+          this.success = true;
+          setTimeout(() => {
+            this.success = false;
+          }, 5000);
+          // Notification
+        })
+        .catch(error => {
           this.success = false;
-        }, 5000);
-        // Notification
-      }).catch(error => {
-        this.success = false;
-      });
+        });
     }
   }
-}
+};
 </script>
 <style lang="scss">
-  @import "../_variables";
-  .dnw-comments {
-    border-top: $line;
-    margin-top: $is-size-1;
-    padding-top: $is-size-4;
-    font-size: 90%;
-  }
+@import "../_variables";
+.dnw-comments {
+  border-top: $line;
+  margin-top: $is-size-1;
+  padding-top: $is-size-4;
+  font-size: 90%;
+}
 
-  .dnw-comments-wrapper {
-    max-width: $tablet;
-    margin: 0 auto;
-  }
+.dnw-comments-wrapper {
+  max-width: $tablet;
+  margin: 0 auto;
+}
 
-  .dnw-comments-wrapper .content p small {
-    font-size: 70%;
-  }
+.dnw-comments-wrapper .content p small {
+  font-size: 70%;
+}
 </style>

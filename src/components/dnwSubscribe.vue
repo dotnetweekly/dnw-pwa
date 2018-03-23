@@ -50,73 +50,76 @@
   </div>
 </template>
 <style>
-  .hero-body.subscribe-body {
-    padding: 1.5rem;
-  }
-  .subscribe-help{
-    font-style: italic;
-  }
-  .subscribe-form {
-    margin-bottom: 0 !important;
-  }
-  .subscribe-danger{
-    padding: 0.2rem;
-    display: inline-block;
-    background-color: #fff;
-  }
+.hero-body.subscribe-body {
+  padding: 1.5rem;
+}
+.subscribe-help {
+  font-style: italic;
+}
+.subscribe-form {
+  margin-bottom: 0 !important;
+}
+.subscribe-danger {
+  padding: 0.2rem;
+  display: inline-block;
+  background-color: #fff;
+}
 </style>
 <script>
-  import axios from "axios";
-  import { mapGetters } from "vuex";
-  import errorHelper from "../helpers/errors";
-  export default {
-    data() {
-      return {
-        isLoading: false,
-        errors: [],
-        success: false,
-        profile: {
-          email: ""
-        }
-      };
-    },
-    computed: {
-      ...mapGetters("linksModule", ["links"])
-    },
-    mounted() {
-      this.success = false;
-    },
-    methods: {
-      ...errorHelper,
-      executeRecaptcha () {
-        window.recaptchaComponent.execute(this.register);
-      },
-      register(recaptchaKey) {
-        this.isLoading = true;
-        axios
-          .post(`/auth/register?quick=true&g-recaptcha-response=${recaptchaKey}`, { user: this.profile })
-          .then(response => {
-            this.isLoading = false;
-            if (
-              response.data.data.errors &&
-              response.data.data.errors.length > 0
-            ) {
-              this.errors = response.data.data.errors;
-              return;
-            }
-
-            this.errors = [];
-            this.success = true;
-            setTimeout(() => {
-              this.profile.email = "";
-              this.success = false;
-            }, 4000);
-            return;
-          })
-          .catch(response => {
-            this.errors = response.errors || [];
-          });
+import axios from "axios";
+import { mapGetters } from "vuex";
+import errorHelper from "../helpers/errors";
+export default {
+  data() {
+    return {
+      isLoading: false,
+      errors: [],
+      success: false,
+      profile: {
+        email: ""
       }
+    };
+  },
+  computed: {
+    ...mapGetters("linksModule", ["links"])
+  },
+  mounted() {
+    this.success = false;
+  },
+  methods: {
+    ...errorHelper,
+    executeRecaptcha() {
+      window.recaptchaComponent.execute(this.register);
+    },
+    register(recaptchaKey) {
+      this.isLoading = true;
+      axios
+        .post(
+          `/auth/register?quick=true&g-recaptcha-response=${recaptchaKey}`,
+          { user: this.profile }
+        )
+        .then(response => {
+          this.isLoading = false;
+          if (
+            response.data.data.errors &&
+            response.data.data.errors.length > 0
+          ) {
+            this.errors = response.data.data.errors;
+            return;
+          }
+
+          this.errors = [];
+          this.success = true;
+          setTimeout(() => {
+            this.profile.email = "";
+            this.success = false;
+          }, 4000);
+          return;
+        })
+        .catch(response => {
+          this.errors = response.errors || [];
+        });
     }
-  };
-  </script>
+  }
+};
+</script>

@@ -16,7 +16,7 @@
 import { mapActions } from "vuex";
 import AppHeader from "./AppHeader.vue";
 import AppFooter from "./AppFooter.vue";
-import Recaptcha from '../components/recaptcha'
+import Recaptcha from "../components/recaptcha";
 import gaAnalytics from "../components/gaAnalytics.vue";
 export default {
   components: {

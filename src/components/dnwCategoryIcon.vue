@@ -9,7 +9,7 @@
   </span>
 </template>
 <script>
-  export default {
-    props: ["category"]
-  }
+export default {
+  props: ["category"]
+};
 </script>

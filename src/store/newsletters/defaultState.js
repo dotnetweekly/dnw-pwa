@@ -1,5 +1,5 @@
 const defaultState = {
-	newsletters: []
+  newsletters: []
 };
 
 export default defaultState;

@@ -16,23 +16,23 @@
   </div>
 </template>
 <style lang="scss">
-  @import "../_variables";
-  .dnw-loader{
-    margin: 0 0 2em;
-    height: 200px;
-    width: 100%;
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto 1em;
-    display: inline-block;
-    vertical-align: top;
-  }
+@import "../_variables";
+.dnw-loader {
+  margin: 0 0 2em;
+  height: 200px;
+  width: 100%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top;
+}
 
-  /*
+/*
     Set the color of the icon
   */
-  .dnw-loader svg path,
-  .dnw-loader svg rect{
-    fill: $primary;
-  }
+.dnw-loader svg path,
+.dnw-loader svg rect {
+  fill: $primary;
+}
 </style>

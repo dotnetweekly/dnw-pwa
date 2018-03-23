@@ -1,29 +1,31 @@
-const path = require('path')
-const webpack = require('webpack')
-const base = require('./webpack.base.config')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require("path");
+const webpack = require("webpack");
+const base = require("./webpack.base.config");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = Object.assign({}, base, {
-  target: 'node',
+  target: "node",
   devtool: false,
-  entry: './src/server-entry.js',
+  entry: "./src/server-entry.js",
   output: Object.assign({}, base.output, {
-    filename: 'server/[name].js',
-    libraryTarget: 'commonjs2'
+    filename: "server/[name].js",
+    libraryTarget: "commonjs2"
   }),
-  externals: ['axios'],
+  externals: ["axios"],
   plugins: (base.plugins || []).concat([
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"server"',
+      "process.env.NODE_ENV": JSON.stringify(
+        process.env.NODE_ENV || "development"
+      ),
+      "process.env.VUE_ENV": '"server"',
       BROWSER_BUILD: false
     })
   ])
-})
+});
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   config.plugins.push(
-    new ExtractTextPlugin('assets/styles.[hash].css'),
+    new ExtractTextPlugin("assets/styles.[hash].css"),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
@@ -32,11 +34,9 @@ if (process.env.NODE_ENV === 'production') {
         warnings: false
       }
     })
-  )
+  );
 } else {
-  config.plugins.push(
-    new ExtractTextPlugin('assets/styles.css')
-  )
+  config.plugins.push(new ExtractTextPlugin("assets/styles.css"));
 }
 
-module.exports = config
+module.exports = config;

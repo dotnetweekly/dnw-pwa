@@ -1,3 +1,3 @@
-const newsletters = (state) => state.newsletters;
+const newsletters = state => state.newsletters;
 
 export { newsletters };

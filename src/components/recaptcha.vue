@@ -7,18 +7,18 @@
 </template>
 
 <script>
-  import config from "../../app.config"
+import config from "../../app.config";
 
 export default {
-  data () {
+  data() {
     return {
       sitekey: config.recaptchaKey,
       callback: () => {},
       loaded: false
-    }
+    };
   },
   methods: {
-    execute (callback) {
+    execute(callback) {
       this.callback = callback;
       if (!this.loaded) {
         this.render();
@@ -34,24 +34,24 @@ export default {
         window.grecaptcha.execute();
       }
     },
-    reset () {
-      window.grecaptcha.reset()
+    reset() {
+      window.grecaptcha.reset();
     },
-    render () {
+    render() {
       console.log("render");
       if (window.grecaptcha) {
         window.grecaptcha.render(`recaptcha0`, {
           sitekey: this.sitekey,
-          size: 'invisible',
-          callback: (response) => {
+          size: "invisible",
+          callback: response => {
             // emit an event called verify with the response as payload
             // this.$emit('verify', response)
             this.callback(response);
-            this.reset()
+            this.reset();
           }
-        })
+        });
       }
     }
   }
-}
+};
 </script>

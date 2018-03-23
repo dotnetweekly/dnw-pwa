@@ -1,7 +1,7 @@
 const defaultState = {
-	isAuthenticated: false,
-	subscribers: 3522,
-	latestPath: '/'
+  isAuthenticated: false,
+  subscribers: 3530,
+  latestPath: "/"
 };
 
 export default defaultState;

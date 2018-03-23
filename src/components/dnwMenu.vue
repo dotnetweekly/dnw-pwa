@@ -21,54 +21,60 @@
   </div>
 </template>
 <script>
-  import { mapGetters, mapActions } from "vuex";
-  import dnwCalendar from "./dnwCalendar";
-  import dnwCategoryIcon from "./dnwCategoryIcon";
-  import * as calendarHelper from "../helpers/calendar";
-  export default {
-    computed: {
-      ...mapGetters("linksModule", ["links", "filterCategory", "filter",
-        "filterCategories", "filterWeek", "filterYear"])
-    },
-    components: {
-      "dnw-category-icon": dnwCategoryIcon,
-      "dnw-calendar": dnwCalendar
-    },
-    methods: {
-      ...mapActions("linksModule", {
-        setFilterCategory: "setFilterCategory"
-      }),
-      updateCategory(e) {
-        if(!this.filterWeek && !this.filterYear){
-          return;
-        }
-        const week = this.filterWeek;
-        const year = this.filterYear;
-        const newCategory = e.target.value;
-
-        if (newCategory) {
-          this.$router.push(`/${newCategory}/week/${week}/year/${year}`);
-
-          return;
-        }
-        this.$router.push(`/week/${week}/year/${year}`);
-      },
-      isSelected(categoryLabel) {
-        if(!this.filterCategory){
-          return false;
-        }
-        return categoryLabel.trim() === this.filterCategory.trim()
+import { mapGetters, mapActions } from "vuex";
+import dnwCalendar from "./dnwCalendar";
+import dnwCategoryIcon from "./dnwCategoryIcon";
+import * as calendarHelper from "../helpers/calendar";
+export default {
+  computed: {
+    ...mapGetters("linksModule", [
+      "links",
+      "filterCategory",
+      "filter",
+      "filterCategories",
+      "filterWeek",
+      "filterYear"
+    ])
+  },
+  components: {
+    "dnw-category-icon": dnwCategoryIcon,
+    "dnw-calendar": dnwCalendar
+  },
+  methods: {
+    ...mapActions("linksModule", {
+      setFilterCategory: "setFilterCategory"
+    }),
+    updateCategory(e) {
+      if (!this.filterWeek && !this.filterYear) {
+        return;
       }
+      const week = this.filterWeek;
+      const year = this.filterYear;
+      const newCategory = e.target.value;
+
+      if (newCategory) {
+        this.$router.push(`/${newCategory}/week/${week}/year/${year}`);
+
+        return;
+      }
+      this.$router.push(`/week/${week}/year/${year}`);
+    },
+    isSelected(categoryLabel) {
+      if (!this.filterCategory) {
+        return false;
+      }
+      return categoryLabel.trim() === this.filterCategory.trim();
     }
   }
+};
 </script>
 <style lang="scss" scoped>
 @import "../_variables";
 
-.calendar-select{
+.calendar-select {
   margin-top: 0.6rem;
 }
-.category-label{
+.category-label {
   width: 50px;
 }
 .main-menu {

@@ -36,7 +36,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../_variables";
-.link-category-icon{
+.link-category-icon {
   margin-right: 0.2rem;
   width: 25px;
   display: block;

@@ -26,41 +26,43 @@ export default {
   },
   methods: {
     ...errorHelper,
-    executeRecaptcha () {
+    executeRecaptcha() {
       // window.recaptchaComponent.execute(this.vote);
       this.vote();
     },
     setUpvoted(status) {
-      const addVotes = (status ? 1 : -1);
+      const addVotes = status ? 1 : -1;
       this.$store.dispatch("linksModule/refreshLinks");
-      this.$emit('update:hasUpvoted', status);
-      this.$emit('update:upvoteCount', this.upvoteCount + addVotes);
+      this.$emit("update:hasUpvoted", status);
+      this.$emit("update:upvoteCount", this.upvoteCount + addVotes);
     },
     upvote(recaptchaKey) {
       const self = this;
-      this.$emit('update:hasUpvoted', true);
-      axios.post(`links/upvote/${this.linkId}?g-recaptcha-response=${recaptchaKey}`)
-      .then(response => {
-        if (response.data.success) {
-          self.setUpvoted(true);
-        }
-      })
-      .catch(() => {
-
-      });
+      this.$emit("update:hasUpvoted", true);
+      axios
+        .post(
+          `links/upvote/${this.linkId}?g-recaptcha-response=${recaptchaKey}`
+        )
+        .then(response => {
+          if (response.data.success) {
+            self.setUpvoted(true);
+          }
+        })
+        .catch(() => {});
     },
     downvote(recaptchaKey) {
       const self = this;
-      this.$emit('update:hasUpvoted', false);
-      axios.post(`links/downvote/${this.linkId}?g-recaptcha-response=${recaptchaKey}`)
-      .then(response => {
-        if (response.data.success) {
-          self.setUpvoted(false);
-        }
-      })
-      .catch(() => {
-
-      });
+      this.$emit("update:hasUpvoted", false);
+      axios
+        .post(
+          `links/downvote/${this.linkId}?g-recaptcha-response=${recaptchaKey}`
+        )
+        .then(response => {
+          if (response.data.success) {
+            self.setUpvoted(false);
+          }
+        })
+        .catch(() => {});
     },
     vote(recaptchaKey) {
       if (!this.isAuthenticated) {
@@ -87,7 +89,7 @@ export default {
   cursor: pointer;
 }
 
-.upvote-block{
+.upvote-block {
   width: 60px;
   height: 60px;
   flex: none;
@@ -99,8 +101,9 @@ export default {
   border: $line2;
 }
 
-.upvote:focus, .upvote:active, .upvote.hasUpvoted:active {
+.upvote:focus,
+.upvote:active,
+.upvote.hasUpvoted:active {
   border: $line2;
 }
-
 </style>

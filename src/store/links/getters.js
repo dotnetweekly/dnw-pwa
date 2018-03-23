@@ -14,13 +14,21 @@ const filterYear = state =>
   state.filter && state.filter.dateYear ? parseInt(state.filter.dateYear) : "";
 
 const serverWeek = state =>
-  state.filter && state.filter.serverWeek ? parseInt(state.filter.serverWeek) : "";
+  state.filter && state.filter.serverWeek
+    ? parseInt(state.filter.serverWeek)
+    : "";
 const serverYear = state =>
-  state.filter && state.filter.serverYear ? parseInt(state.filter.serverYear) : "";
+  state.filter && state.filter.serverYear
+    ? parseInt(state.filter.serverYear)
+    : "";
 const serverMonth = state =>
-  state.filter && state.filter.serverMonth ? parseInt(state.filter.serverMonth) : "";
+  state.filter && state.filter.serverMonth
+    ? parseInt(state.filter.serverMonth)
+    : "";
 const serverDate = state =>
-  state.filter && state.filter.serverDate ? parseInt(state.filter.serverDate) : "";
+  state.filter && state.filter.serverDate
+    ? parseInt(state.filter.serverDate)
+    : "";
 
 const linksAreLoading = state => state.linksAreLoading;
 const firstLoad = state => state.firstLoad;

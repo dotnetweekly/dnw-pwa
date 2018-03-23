@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     selectPage(page) {
-      this.$emit('update:page', page);
+      this.$emit("update:page", page);
     },
     refreshPages: function(page) {
       if (!page) {

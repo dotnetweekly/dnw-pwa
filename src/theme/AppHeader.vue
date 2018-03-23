@@ -33,8 +33,8 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      dnwSubscriberCount: 3522
-    }
+      dnwSubscriberCount: 3530
+    };
   },
   computed: {
     ...mapGetters("authModule", ["isAuthenticated", "subscribers"])
@@ -105,7 +105,8 @@ a.navbar-item.main-logo {
 }
 
 .header-profile {
-  span, a {
+  span,
+  a {
     float: left;
   }
 }
@@ -117,14 +118,17 @@ a.navbar-item.main-logo {
 }
 
 @media screen and (max-width: $tablet) {
-  .header-profile, .header-cta, .header-menu{
+  .header-profile,
+  .header-cta,
+  .header-menu {
     width: 100%;
     display: inline-block;
   }
 }
 
 @media screen and (min-width: "421px") {
-  .navbar > .container, .main-logo {
+  .navbar > .container,
+  .main-logo {
     display: flex !important;
   }
 }
@@ -139,21 +143,24 @@ a.navbar-item.main-logo {
 }
 
 @media screen and (max-width: $mobile) {
-  .header-profile-inner{
+  .header-profile-inner {
     margin: 0 auto;
     display: inline-block;
   }
-  .header-user-count{
+  .header-user-count {
     margin: 0 auto;
     display: inline-block;
   }
-  .header-menu, .main-logo,
-  .header-cta, .header-profile{
+  .header-menu,
+  .main-logo,
+  .header-cta,
+  .header-profile {
     display: inline-block;
     width: 100%;
     text-align: center;
   }
-  .main-logo > img, .dnw-logo-txt{
+  .main-logo > img,
+  .dnw-logo-txt {
     vertical-align: middle;
   }
   .column.tight {

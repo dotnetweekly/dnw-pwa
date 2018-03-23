@@ -1,21 +1,23 @@
-import Vue from 'vue';
-import * as calendarHelper from './calendar';
+import Vue from "vue";
+import * as calendarHelper from "./calendar";
 
-Vue.filter('formatDate', function(value) {
-	const date = new Date(value);
-	if (value) {
-		return `${calendarHelper.getDayName(date.getDay())}, ${date.getFullYear()}-${date.getMonth() +
-			1}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`;
-	}
+Vue.filter("formatDate", function(value) {
+  const date = new Date(value);
+  if (value) {
+    return `${calendarHelper.getDayName(
+      date.getDay()
+    )}, ${date.getFullYear()}-${date.getMonth() + 1}-${
+      date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+    }`;
+  }
 });
 
-Vue.directive('focus', {
-  inserted: function (el) {
+Vue.directive("focus", {
+  inserted: function(el) {
     setTimeout(() => {
-      el.focus()
-    }
-    ,0);
+      el.focus();
+    }, 0);
   }
-})
+});
 
 export default {};
