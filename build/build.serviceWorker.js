@@ -139,10 +139,8 @@ const cleanIndex = () => {
         /<link(.*?)href=\"\/assets\/styles\.css\"(.*?)>/gim,
         ""
       );
-      data = data.replace(
-        '<script src="/assets/js/vendor.js"></script><script src="/assets/js/app.js"></script>',
-        ""
-      );
+      data = data.replace('<script src="/assets/js/vendor.js"></script>', "");
+      data = data.replace('<script src="/assets/js/app.js"></script>', "");
       data = data.replace(
         /type="text\/javascript"/gim,
         ' type="text/javascript"'
