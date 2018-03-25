@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const serialize = require("serialize-javascript");
+const minify = require("html-minifier").minify;
 
 const app = require("../expressApp");
 const config = require("../../app.config");
@@ -92,8 +93,9 @@ const handler = function(req, res) {
         )}</script>`
       );
       res.setHeader("Content-Length", Buffer.byteLength(html));
-      microCache.set(reqUrl, { type: "html", data: html });
-      res.write(html);
+      const minifiedHtml = minify(html);
+      microCache.set(reqUrl, { type: "html", data: minifiedHtml });
+      res.write(minifiedHtml);
       res.end();
     });
   } catch (error) {

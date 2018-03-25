@@ -14,6 +14,7 @@ const path = require("path");
 const compression = require("compression");
 const force = require("express-force-domain");
 const favicon = require("serve-favicon");
+var expressStaticGzip = require("express-static-gzip");
 
 const app = require("./expressApp");
 const config = require("../app.config");
@@ -68,7 +69,12 @@ app.use(force(config.client.replace(/\/$/, "")));
 app.use(feedQueryRedirect);
 
 if (isProd) {
-  app.use("/", express.static(resolve("../dist")));
+  app.use(
+    "/",
+    expressStaticGzip(resolve("../dist"), {
+      enableBrotli: true
+    })
+  );
   app.use(favicon(resolve("../dist/favicon.ico")));
 } else {
   app.use("/dist", express.static(resolve("../dist")));

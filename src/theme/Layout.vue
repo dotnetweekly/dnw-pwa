@@ -47,7 +47,21 @@ export default {
 </script>
 <style lang="scss">
 @import "../_variables";
-@import "~bulma";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/layout/_all";
+@import "~bulma/sass/grid/_all";
+@import "~bulma/sass/elements/button";
+@import "~bulma/sass/elements/container";
+@import "~bulma/sass/elements/content";
+@import "~bulma/sass/elements/form";
+@import "~bulma/sass/elements/icon";
+@import "~bulma/sass/elements/table";
+@import "~bulma/sass/elements/tag";
+@import "~bulma/sass/components/navbar";
+@import "~bulma/sass/components/tabs";
+@import "~bulma/sass/components/card";
+@import "~bulma/sass/components/message";
 @import "../styles/_multiselect";
 
 @import "../styles/_main";
