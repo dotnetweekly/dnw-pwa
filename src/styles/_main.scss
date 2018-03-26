@@ -1,102 +1,111 @@
 body {
-  font-size: $font-size;
+	font-size: $font-size;
 }
 
-#app{
-  min-height: 600px;
+#app {
+	min-height: 600px;
 }
 
 .is-full-width {
-  width: 100%;
+	width: 100%;
 }
 
 .is-borderless {
-  border: 0 !important;
+	border: 0 !important;
 }
 
 .is-margin-center {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 .overflow-dotted {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden !important;
-  text-overflow: ellipsis;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden !important;
+	text-overflow: ellipsis;
 }
 
 .constant-flex {
-  display: flex !important;
+	display: flex !important;
 }
 
 .is-pointer {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .tight {
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 .main-section.section {
-  background-color: $background;
+	background-color: $background;
 }
 
 @media screen and (max-width: $tablet-large) {
-  .main-section.section {
-    padding-top: 1rem;
-  }
+	.main-section.section {
+		padding-top: 1rem;
+	}
 }
 
 footer.footer {
-  background-color: $white;
-  box-shadow: 0px -1px 2px 0px rgba(10, 10, 10, 0.1);
+	background-color: $white;
+	box-shadow: 0px -1px 2px 0px rgba(10, 10, 10, 0.1);
 }
 
 .columns {
-  flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 
 .dnwIconSmall {
-  background-color: $primary;
-  color: $white;
-  border-radius: 90px;
-  font-size: 100%;
-  padding: 0.5rem 0.6rem;
-  i:before {
-    line-height: 1.5rem;
-  }
+	background-color: $primary;
+	color: $white;
+	border-radius: 90px;
+	font-size: 100%;
+	padding: 0.5rem 0.6rem;
+	i:before {
+		line-height: 1.5rem;
+	}
 }
 
 .dnwIconLarge {
-  background-color: $primary;
-  color: $white;
-  border-radius: 80px;
-  font-size: 200%;
-  padding: 3rem;
-  i:before {
-    line-height: 4rem;
-  }
+	background-color: $primary;
+	color: $white;
+	border-radius: 80px;
+	font-size: 200%;
+	padding: 3rem;
+	i:before {
+		line-height: 4rem;
+	}
 }
 
 .is-unstyled {
-  list-style: none !important;
-  margin: 0;
-  padding: 0;
+	list-style: none !important;
+	margin: 0;
+	padding: 0;
 }
 
 .separator {
-  border-top: 1px solid rgba(219, 219, 219, 0.5);
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  font-size: 90%;
+	border-top: 1px solid rgba(219, 219, 219, 0.5);
+	margin-top: 3rem;
+	padding-top: 1.5rem;
+	font-size: 90%;
 }
 
 .dnwIconSuccessMessage {
-  padding-top: 0.5rem;
-  padding-left: 4rem;
+	padding-top: 0.5rem;
+	padding-left: 4rem;
 }
 
-.grecaptcha-badge{
-  z-index: 1;
+.grecaptcha-badge {
+	z-index: 1;
+}
+
+.link-dark {
+	color: $dark;
+	text-decoration: underline;
+}
+
+.link-dark:hover {
+	color: $secondary;
 }

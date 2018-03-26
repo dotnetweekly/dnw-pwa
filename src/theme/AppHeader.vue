@@ -11,13 +11,17 @@
       <div class="column tight"></div>
       <div class="header-menu">
         <div class="header-cta">
-          <router-link v-if="isAuthenticated" alt="add a link" to="/add" class="is-text">+ Add a link</router-link>
-          <router-link v-if="!isAuthenticated" alt="login" to="/login" class="is-text">+ Add a link</router-link>
+          <router-link v-if="isAuthenticated" alt="add a link" to="/add" class="add-a-link is-text">+ Add a link</router-link>
+          <router-link v-if="!isAuthenticated" alt="login" to="/login" class="add-a-link is-text">+ Add a link</router-link>
         </div>
         <div class="header-profile">
           <div class="header-profile-inner">
-            <router-link v-if="isAuthenticated" to="/profile"><i class="icon-user" aria-hidden="true"></i></router-link>
-            <router-link v-if="!isAuthenticated" to="/login"><i class="icon-user" aria-hidden="true"></i></router-link>
+            <router-link v-if="isAuthenticated" to="/profile" title="profile">
+              <i title="profile" class="icon-user" alt="profile" aria-hidden="true"></i>
+            </router-link>
+            <router-link v-if="!isAuthenticated" to="/login" title="profile">
+              <i title="profile" class="icon-user" alt="profile" aria-label="profile" aria-hidden="true"></i>
+            </router-link>
             <a v-if="isAuthenticated" v-on:click="logout()" class="header-auth-link">Logout</a>
             <router-link v-if="!isAuthenticated" class="header-auth-link" to="/login">Login</router-link>
             <span v-if="!isAuthenticated" class="header-auth-link auth-link-separator">|</span>

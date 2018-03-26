@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const serialize = require("serialize-javascript");
 const minify = require("html-minifier").minify;
+var zlib = require("zlib");
 
 const app = require("../expressApp");
 const config = require("../../app.config");
@@ -74,7 +75,14 @@ const handler = function(req, res) {
       if (hit.type === "xml") {
         res.header("Content-Type", "application/xml");
       }
-      return res.end(hit.data);
+      zlib.deflate(minify(hit.data), function(err, buffer) {
+        if (err) throw err;
+        res.header("Content-Encoding", "deflate");
+
+        res.end(buffer);
+      });
+      // return res.end(minify(hit.data));
+      return;
     }
 
     renderer.renderToString(context, (err, html) => {
@@ -95,8 +103,14 @@ const handler = function(req, res) {
       res.setHeader("Content-Length", Buffer.byteLength(html));
       const minifiedHtml = minify(html);
       microCache.set(reqUrl, { type: "html", data: minifiedHtml });
-      res.write(minifiedHtml);
-      res.end();
+      zlib.deflate(minify(minifiedHtml), function(err, buffer) {
+        if (err) throw err;
+        res.header("Content-Encoding", "deflate");
+
+        res.end(buffer);
+      });
+      // res.write(minifiedHtml);
+      // res.end();
     });
   } catch (error) {
     return res.sendStatus(500);

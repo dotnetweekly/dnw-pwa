@@ -2,10 +2,13 @@
   <div>
     <p></p>
     <dnw-calendar></dnw-calendar>
-    <p></p>
+    <div class="separator"></div>
+    <div class="control">
+      <label for="link-categories">Categories</label>
+    </div>
     <div class="calendar-select control has-icons-left">
       <div class="select is-full-width">
-        <select class="is-full-width" v-on:change="updateCategory">
+        <select id="link-categories" name="link-categories" class="is-full-width" v-on:change="updateCategory">
           <option
             v-if="filterCategories"
             v-for="category in filterCategories"

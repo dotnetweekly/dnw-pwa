@@ -25,8 +25,11 @@
             <div class="column">
               <form v-on:submit="executeRecaptcha" action="javascript:void(0)" method="POST" accept-charset="utf-8">
                 <div class="subscribe-form field is-grouped">
+                  <div class="control subscribe-email-label">
+                    <label for="email">Email</label>
+                  </div>
                   <div class="control has-icons-left is-expanded">
-                    <input v-focus type="email" v-model="profile.email" name="email"
+                    <input id="email" v-focus type="email" v-model="profile.email" name="email"
                     :class="{ 'input': true, 'is-flat': true, 'email': true, 'is-danger': hasError('email')}"
                     placeholder="email address" required="">
                     <span class="icon is-small is-left">
@@ -50,6 +53,9 @@
   </div>
 </template>
 <style>
+.subscribe-email-label {
+  padding-top: 0.3rem;
+}
 .hero-body.subscribe-body {
   padding: 1.5rem;
 }
@@ -63,6 +69,20 @@
   padding: 0.2rem;
   display: inline-block;
   background-color: #fff;
+}
+@media (max-width: 600px) {
+  .subscribe-form .control {
+    width: 100%;
+    padding-bottom: 0.25rem;
+    display: block !important;
+  }
+  .subscribe-form {
+    width: 100%;
+    display: block !important;
+  }
+  .subscribe-body .columns.is-vcentered {
+    margin-bottom: 0;
+  }
 }
 </style>
 <script>

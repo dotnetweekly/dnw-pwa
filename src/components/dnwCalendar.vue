@@ -3,6 +3,7 @@
     <div class="columns constant-flex dnwCalendarHeader" v-if="filterCalendar && filterCalendar.weeks">
       <div class="column date-arrow is-one-quarter has-text-right is-pointer">
         <router-link
+          v-bind:title="'Week ' + previousMonth.week "
           :to="'/week/' + previousMonth.week + '/year/' + previousMonth.year">
           <i class="icon-left-open" aria-hidden="true"></i>
         </router-link>
@@ -11,6 +12,7 @@
       <div  class="column date-arrow is-one-quarter has-text-left is-pointer"
         v-if="isMonthInPast()">
         <router-link
+          v-bind:title="'Week ' + nextMonth.week "
           :to="'/week/' + nextMonth.week + '/year/' + nextMonth.year">
           <i class="icon-right-open" aria-hidden="true"></i>
         </router-link>
@@ -37,6 +39,8 @@
              v-bind:key="index">
             <td>
                 <router-link v-if="isInPast(calendarWeek.week, calendarWeek.year)"
+                v-bind:title="'Week ' + calendarWeek.week "
+                v-bind:alt="'Week ' + calendarWeek.week "
                 :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                   {{calendarWeek.week}}
                 </router-link>
@@ -48,6 +52,8 @@
                 dayInPast: weekDay.inPast,
               }">
               <router-link
+                v-bind:alt="'Week ' + weekDay.date ? weekDay.date.getDate() : '' "
+                v-bind:title="'Week ' + calendarWeek.week "
               :to="'/week/' + calendarWeek.week + '/year/' + calendarWeek.year">
                 {{ weekDay.date ? weekDay.date.getDate() : "" }}
               </router-link>

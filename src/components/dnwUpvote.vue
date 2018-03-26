@@ -2,7 +2,7 @@
   <div :class="{ 'upvote': true, 'has-text-centered': true, 'upvote-block': true, 'hasUpvoted': hasUpvoted }">
     <a v-on:click="executeRecaptcha" :class="{ 'upvote-block': true, 'has-text-centered': true } ">
       <i class="icon-up-open" aria-hidden="true"></i>
-      <p>
+      <p class="upvote-count">
         {{ upvoteCount }}
       </p>
     </a>
@@ -97,6 +97,11 @@ export default {
   display: inline-block;
 }
 
+.upvote-block p,
+.upvote-count {
+  color: $black;
+}
+
 .upvote.hasUpvoted {
   border: $line2;
 }
@@ -105,5 +110,6 @@ export default {
 .upvote:active,
 .upvote.hasUpvoted:active {
   border: $line2;
+  color: $secondary;
 }
 </style>

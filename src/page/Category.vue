@@ -16,7 +16,7 @@
           <span v-if="olderLinks && olderLinks.length > 0">Below you can see some older links</span></h2>
         <p class="has-text-centered">
           <span>Don't see the cool .NET link you found this week?</span>
-          <router-link alt="add a link" to="/add">Add your favorite dotNET link</router-link>
+          <router-link class="link-dark" alt="add a link" to="/add">Add your favorite dotNET link</router-link>
         </p>
         <div class="separator"></div>
         <dnw-link v-if="olderLinks && olderLinks.length > 0" v-for="link in olderLinks"
