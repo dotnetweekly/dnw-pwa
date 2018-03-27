@@ -1,43 +1,44 @@
-
 @import "../_variables";
 
-.link-title-wrapper{
-  margin-bottom: 0;
+.link-title-wrapper {
+	margin-bottom: 0;
 }
 
-.link-content, .link-more {
-  font-size: 20px;
+.link-content,
+.link-more {
+	font-size: 20px;
 }
 
-.link-subline{
-  font-size: 80%;
-  margin-bottom: $is-size-7 !important;
+.link-subline {
+	font-size: 16px;
+	font-style: italic;
+	margin-bottom: $is-size-7 !important;
 }
 
-.link-title{
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+.link-title {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
 }
 
-.link-back-button a{
-  padding-bottom: $is-size-7;
-  display: block;
+.link-back-button a {
+	padding-bottom: $is-size-7;
+	display: block;
 }
 
 .is-pulled-left {
-  float: left;
+	float: left;
 }
 
 .link-content {
-  padding-bottom: $is-size-2;
+	padding-bottom: $is-size-2;
 }
 
 .link-more {
-  width: 100%;
-  text-align: center;
+	width: 100%;
+	text-align: center;
 }
 
 .link-more a {
-  padding: $is-size-4;
-  font-size: 20px;
+	padding: $is-size-4;
+	font-size: 20px;
 }

@@ -219,7 +219,7 @@ export default {
 @import "../_variables";
 
 .dnwCalendarHeader {
-  font-size: 90%;
+  font-size: 16px;
 }
 
 @media screen and (max-width: $tablet-large) {
@@ -227,7 +227,7 @@ export default {
     width: auto !important;
   }
   .dnwCalendarHeader {
-    font-size: 80%;
+    font-size: 16px;
   }
 }
 
@@ -236,7 +236,7 @@ export default {
 }
 
 .dnwCalendar {
-  font-size: 70%;
+  font-size: 16px;
 }
 
 table,
@@ -247,7 +247,7 @@ td {
 }
 
 td a {
-  padding: 0.5em 0.75em !important;
+  padding: 0.5em !important;
   display: block;
 }
 
@@ -262,7 +262,7 @@ tr.weekInFuture td:first-child,
 td.disabled {
   opacity: 0.3;
   font-style: italic;
-  padding: 0.5em 0.75em !important;
+  padding: 0.5em !important;
 }
 
 td.disabled {

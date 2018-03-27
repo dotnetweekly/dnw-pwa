@@ -50,7 +50,7 @@ export default {
   padding: 0 0 0 $is-size-4;
 }
 .link-subline {
-  font-size: $is-size-7;
+  font-size: 16px;
 }
 .link-tags {
   .tag {

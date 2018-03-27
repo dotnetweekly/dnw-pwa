@@ -89,7 +89,6 @@ if (process.env.NODE_ENV === "production") {
       purifyOptions: {
         info: true,
         whitelist: [
-          "*:not*",
           ".field-label.is-normal",
           ".message.is-info .message-body",
           ".link-more",

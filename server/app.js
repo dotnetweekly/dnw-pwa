@@ -25,10 +25,12 @@ const trailingSlashRedirect = require("./routes/trailingSlashRedirect");
 const resolve = file => path.resolve(__dirname, file);
 
 const shouldCompress = function(req) {
-  if (req.headers["x-no-compression"]) {
+  return true;
+
+  /* if (req.headers["x-no-compression"]) {
     return false;
   }
-  return true;
+  return true; */
 };
 
 const strictTransportSecurity = function(req, res, next) {

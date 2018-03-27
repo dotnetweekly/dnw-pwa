@@ -17,7 +17,8 @@
           <div class="columns is-vcentered">
             <div class="column">
               <p>
-                Want to receive every Tuesday the best links of the .NET realm?
+                Want to receive every Tuesday the best links of the .NET realm?<br/>
+                Once subscribed you can login, submit a link, upvote and receive the weekly newsletter.<br/>
               </p>
             </div>
           </div>
@@ -43,16 +44,23 @@
                 </div>
                 <p v-if="hasError('email')" class="subscribe-danger help is-danger">{{getError("email")}}</p>
               </form>
-              <p class="help subscribe-help">Once subscribed you can login, submit a link, upvote and receive the weekly newsletter. We do not share your email!</p>
             </div>
           </div>
         </div>
       </div>
     </section>
     <div class="separator" v-if="links && links.length === 0"></div>
+    <p class="has-text-centered subscriber-count">
+      3540 happy subscribers. Join today!
+    </p>
   </div>
 </template>
 <style>
+.subscriber-count {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-style: italic;
+}
 .subscribe-email-label {
   padding-top: 0.3rem;
 }

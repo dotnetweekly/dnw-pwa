@@ -3,10 +3,6 @@
     <div class="container">
       <router-link class="navbar-item main-logo" to="/" title="dotNET Weekly" exact>
         <img alt="dotNET Weekly" src="/assets/logo.jpg" /><span class="dnw-logo-txt">dotNET Weekly</span>
-        <div class="header-user-count tags has-addons">
-          <span class="tag"><i aria-hidden="true" class="icon-user"></i></span>
-          <span class="tag is-info">{{dnwSubscriberCount}}</span>
-        </div>
       </router-link>
       <div class="column tight"></div>
       <div class="header-menu">

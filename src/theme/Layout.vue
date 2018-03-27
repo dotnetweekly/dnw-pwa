@@ -3,13 +3,13 @@
     <router-view name="modal"></router-view>
     <app-header></app-header>
     <main class="main-section section">
-          <div class="container content">
-            <recaptcha ref="recaptcha"></recaptcha>
-            <router-view></router-view>
-          </div>
-        </main>
-        <app-footer></app-footer>
-        <ga-analytics ua="UA-31484897-2"></ga-analytics>
+      <div class="container content">
+        <recaptcha ref="recaptcha"></recaptcha>
+        <router-view></router-view>
+      </div>
+    </main>
+    <app-footer></app-footer>
+    <ga-analytics ua="UA-31484897-2"></ga-analytics>
   </div>
 </template>
 <script>
