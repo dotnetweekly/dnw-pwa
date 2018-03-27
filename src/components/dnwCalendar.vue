@@ -280,6 +280,10 @@ tr.weekInPast:hover {
 }
 
 @media (min-width: $tablet) and (max-width: 1070px) {
+  .dnwCalendarHeader,
+  .dnwCalendar {
+    font-size: 16px;
+  }
   .content table td,
   .content table th,
   td a {

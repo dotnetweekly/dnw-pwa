@@ -74,9 +74,9 @@ export default {
 }
 
 .header-auth-link {
-  font-size: 50%;
   vertical-align: middle;
   line-height: 2.7rem;
+  font-size: 16px;
 }
 
 .header-menu {

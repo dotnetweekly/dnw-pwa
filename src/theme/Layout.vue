@@ -2,14 +2,14 @@
   <div id="app">
     <router-view name="modal"></router-view>
     <app-header></app-header>
-    <section class="main-section section">
-      <div class="container content">
-        <recaptcha ref="recaptcha"></recaptcha>
-        <router-view></router-view>
-      </div>
-    </section>
-    <app-footer></app-footer>
-    <ga-analytics ua="UA-31484897-2"></ga-analytics>
+    <main class="main-section section">
+          <div class="container content">
+            <recaptcha ref="recaptcha"></recaptcha>
+            <router-view></router-view>
+          </div>
+        </main>
+        <app-footer></app-footer>
+        <ga-analytics ua="UA-31484897-2"></ga-analytics>
   </div>
 </template>
 <script>
