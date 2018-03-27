@@ -109,3 +109,9 @@ footer.footer {
 .link-dark:hover {
 	color: $secondary;
 }
+
+@media screen and (min-width: 900px) {
+	.field-body > .field:not(.is-narrow) {
+		flex-grow: 1;
+	}
+}
