@@ -65,6 +65,7 @@ export default {
       window.recaptchaComponent.execute(this.sendComment);
     },
     sendComment(recaptchaKey) {
+      this.sending = true;
       axios
         .post(
           `links/comment/${this.linkId}?g-recaptcha-response=${recaptchaKey}`,
