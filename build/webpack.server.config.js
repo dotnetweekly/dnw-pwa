@@ -17,7 +17,7 @@ const config = Object.assign({}, base, {
         process.env.NODE_ENV || "development"
       ),
       "process.env.VUE_ENV": '"server"',
-      BROWSER_BUILD: false
+      "process.BROWSER": false
     })
   ])
 });

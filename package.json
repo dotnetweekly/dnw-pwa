@@ -10,10 +10,7 @@
 		"node": "8.9.3",
 		"npm": "5.5.1"
 	},
-	"keywords": [
-		"dotnetweekly",
-		"progressive-web-app"
-	],
+	"keywords": [ "dotnetweekly", "progressive-web-app" ],
 	"author": "bstavroulakis <bstavroulakis@gmail.com>",
 	"license": "MIT",
 	"bugs": {

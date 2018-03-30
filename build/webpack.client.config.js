@@ -16,7 +16,7 @@ const config = Object.assign({}, base, {
       "process.env.NODE_ENV": JSON.stringify(
         process.env.NODE_ENV || "development"
       ),
-      BROWSER_BUILD: true
+      "process.BROWSER": true
     }),
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({

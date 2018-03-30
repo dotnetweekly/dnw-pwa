@@ -1,4 +1,4 @@
-/*eslint no-unused-vars: "warn"*/
+/*eslint no-unused-vars: "off"*/
 
 import Vue from "vue";
 import VueDirective from "./helpers/directives";

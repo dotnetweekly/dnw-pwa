@@ -30,7 +30,7 @@ export default {
       setLoginStatus: "setLoginStatus"
     })
   },
-  mounted() {
+  beforeMount() {
     window.recaptchaComponent = this.$refs.recaptcha;
     if (typeof window !== "undefined") {
       let expiration = window.localStorage.getItem("dnwTokenExpiration");
