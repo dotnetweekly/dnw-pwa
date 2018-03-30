@@ -117,6 +117,7 @@ export default {
   methods: {
     ...errorHelper,
     executeRecaptcha() {
+      this.isLoading = true;
       window.recaptchaComponent.execute(this.register);
     },
     register(recaptchaKey) {

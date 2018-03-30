@@ -30,8 +30,10 @@ export default {
       setLoginStatus: "setLoginStatus"
     })
   },
-  beforeMount() {
+  mounted() {
     window.recaptchaComponent = this.$refs.recaptcha;
+  },
+  beforeMount() {
     if (typeof window !== "undefined") {
       let expiration = window.localStorage.getItem("dnwTokenExpiration");
       var unixTimestamp = new Date().getTime() / 1000;

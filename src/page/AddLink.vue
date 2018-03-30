@@ -171,6 +171,7 @@ export default {
       return `${option}`;
     },
     executeRecaptcha() {
+      this.sending = true;
       window.recaptchaComponent.execute(this.addLink);
     },
     addLink(recaptchaKey) {
@@ -194,6 +195,7 @@ export default {
           this.link.title = "";
           this.link.url = "";
           this.link.content = "";
+          this.sending = false;
           setTimeout(() => {
             this.success = false;
           }, 5000);

@@ -168,6 +168,7 @@ export default {
   methods: {
     ...errorHelper,
     executeRecaptcha() {
+      this.isLoading = true;
       window.recaptchaComponent.execute(this.register);
     },
     register(recaptchaKey) {
@@ -191,6 +192,7 @@ export default {
           return;
         })
         .catch(response => {
+          this.isLoading = false;
           this.errors = response.errors || [];
         });
     }

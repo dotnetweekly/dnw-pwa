@@ -61,6 +61,7 @@ export default {
     ...mapActions("linkModule", ["sendComment"]),
     ...errorHelper,
     executeRecaptcha() {
+      this.sending = true;
       window.recaptchaComponent.execute(this.sendComment);
     },
     sendComment(recaptchaKey) {
@@ -72,6 +73,7 @@ export default {
           }
         )
         .then(response => {
+          this.sending = false;
           let errors = [];
           if (response.data && response.data.data) {
             errors = response.data.data.errors;
@@ -93,6 +95,7 @@ export default {
         })
         .catch(() => {
           // Notification
+          this.sending = false;
           this.success = false;
         });
     }

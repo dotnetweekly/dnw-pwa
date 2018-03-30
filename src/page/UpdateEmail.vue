@@ -36,6 +36,7 @@ export default {
       if (typeof window === "undefined") {
         return;
       }
+      this.running = false;
       setTimeout(() => {
         window.recaptchaComponent.execute(this.sendUpdateRequest);
       }, 1000);
@@ -66,6 +67,7 @@ export default {
           this.$router.push("/profile");
         })
         .catch(() => {
+          this.running = false;
           this.noKey = true;
           // this.errors = response.errors;
         });

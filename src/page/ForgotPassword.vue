@@ -62,6 +62,7 @@ export default {
   methods: {
     ...errorHelper,
     executeRecaptcha() {
+      this.sending = true;
       window.recaptchaComponent.execute(this.forgotPassword);
     },
     forgotPassword(recaptchaKey) {

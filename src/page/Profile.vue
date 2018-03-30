@@ -220,6 +220,7 @@ export default {
       fetchInitialData(this.$store, this.$route);
     },
     executeRecaptcha() {
+      this.sending = true;
       window.recaptchaComponent.execute(this.saveProfile);
     },
     saveProfile(recaptchaKey) {

@@ -67,7 +67,7 @@ export default {
   methods: {
     ...errorHelper,
     executeRecaptcha() {
-      this.running = true;
+      this.sending = true;
       if (typeof window === "undefined") {
         return;
       }
@@ -88,7 +88,6 @@ export default {
         )
         .then(response => {
           this.sending = false;
-          this.running = false;
           const errors = response.data.data.errors;
 
           if (errors && errors.length > 0) {
@@ -108,7 +107,7 @@ export default {
         })
         .catch(() => {
           // Notification
-          this.running = false;
+          this.sending = false;
         });
     }
   }
