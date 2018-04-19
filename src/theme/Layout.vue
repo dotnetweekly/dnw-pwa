@@ -34,8 +34,6 @@ export default {
     if (typeof window !== "undefined" && this.$refs.recaptcha) {
       window.recaptchaComponent = this.$refs.recaptcha;
     }
-  },
-  beforeMount() {
     if (typeof window !== "undefined") {
       let expiration = window.localStorage.getItem("dnwTokenExpiration");
       var unixTimestamp = new Date().getTime() / 1000;
