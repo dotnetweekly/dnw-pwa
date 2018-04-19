@@ -31,28 +31,8 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      dnwSubscriberCount: 3530
-    };
-  },
   computed: {
     ...mapGetters("authModule", ["isAuthenticated", "subscribers"])
-  },
-  watch: {
-    subscribers(to) {
-      if (typeof window === "undefined") {
-        this.dnwSubscriberCount = to;
-        return;
-      }
-      let interval = setInterval(() => {
-        if (this.dnwSubscriberCount >= to) {
-          clearInterval(interval);
-          return;
-        }
-        this.dnwSubscriberCount++;
-      }, 50);
-    }
   },
   methods: {
     logout() {

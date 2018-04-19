@@ -31,7 +31,7 @@ export default {
     })
   },
   mounted() {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && this.$refs.recaptcha) {
       window.recaptchaComponent = this.$refs.recaptcha;
     }
   },
@@ -42,9 +42,13 @@ export default {
       if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
         this.setLoginStatus(true);
       }
-      document
-        .querySelector("[data-css='fontello']")
-        .removeAttribute("disabled");
+
+      const fontelloDom = document.querySelector("[data-css='fontello']");
+        
+      if (fontelloDom) {
+        fontelloDom.removeAttribute("disabled");
+      }
+        
     }
   }
 };
