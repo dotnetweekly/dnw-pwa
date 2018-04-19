@@ -86,7 +86,9 @@ export default {
       this.loadLinks();
     },
     filterWeekChange() {
-      setMetadata(this.$route.path, this.$store.state);
+      if (typeof window !== "undefined") {
+        setMetadata(this.$route.path, this.$store.state);
+      }
     }
   },
   prefetch: fetchInitialData,

@@ -62,15 +62,12 @@ app.use(compression({ threshold: 0, filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
-app.use(trailingSlashRedirect);
 
 if (isProd) {
+  app.use(trailingSlashRedirect);
   app.use(secure);
-}
-app.use(force(config.client.replace(/\/$/, "")));
-app.use(feedQueryRedirect);
-
-if (isProd) {
+  app.use(force(config.client.replace(/\/$/, "")));
+  app.use(feedQueryRedirect);
   app.use(
     "/",
     expressStaticGzip(resolve("../dist"), {

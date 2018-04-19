@@ -31,7 +31,9 @@ export default {
     })
   },
   mounted() {
-    window.recaptchaComponent = this.$refs.recaptcha;
+    if (typeof window !== "undefined") {
+      window.recaptchaComponent = this.$refs.recaptcha;
+    }
   },
   beforeMount() {
     if (typeof window !== "undefined") {

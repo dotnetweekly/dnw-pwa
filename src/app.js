@@ -36,7 +36,9 @@ axios.interceptors.response.use(undefined, err => {
 });
 
 router.afterEach((to, from) => {
-  setMetadata(to.path);
+  if (typeof window !== "undefined") {
+    setMetadata(to.path);
+  }
   if (from.path == "/login") {
     return;
   }

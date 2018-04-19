@@ -17,8 +17,9 @@
           <div class="columns is-vcentered">
             <div class="column">
               <p>
-                Want to receive every Tuesday the best links of the .NET realm?<br/>
-                Once subscribed you can login, submit a link, upvote and receive the weekly newsletter.<br/>
+                Want to receive every Tuesday the best links of the .NET realm?
+                <br/> Once subscribed you can login, submit a link, upvote and receive the weekly newsletter.
+                <br/>
               </p>
             </div>
           </div>
@@ -30,9 +31,8 @@
                     <label for="email">Email</label>
                   </div>
                   <div class="control has-icons-left is-expanded">
-                    <input id="email" v-focus type="email" v-model="profile.email" name="email"
-                    :class="{ 'input': true, 'is-flat': true, 'email': true, 'is-danger': hasError('email')}"
-                    placeholder="email address" required="">
+                    <input id="email" v-focus type="email" v-model="profile.email" name="email" :class="{ 'input': true, 'is-flat': true, 'email': true, 'is-danger': hasError('email')}"
+                      placeholder="email address" required="">
                     <span class="icon is-small is-left">
                       <i aria-hidden="true" class="icon-mail"></i>
                     </span>
@@ -51,7 +51,7 @@
     </section>
     <div class="separator" v-if="links && links.length === 0"></div>
     <p class="has-text-centered subscriber-count">
-      3540 happy subscribers. Join today!
+      3583 happy subscribers. Join today!
     </p>
   </div>
 </template>
@@ -61,23 +61,29 @@
   padding-bottom: 0.5rem;
   font-style: italic;
 }
+
 .subscribe-email-label {
   padding-top: 0.3rem;
 }
+
 .hero-body.subscribe-body {
   padding: 1.5rem;
 }
+
 .subscribe-help {
   font-style: italic;
 }
+
 .subscribe-form {
   margin-bottom: 0 !important;
 }
+
 .subscribe-danger {
   padding: 0.2rem;
   display: inline-block;
   background-color: #fff;
 }
+
 @media (max-width: 600px) {
   .subscribe-form .control {
     width: 100%;
@@ -125,7 +131,9 @@ export default {
       axios
         .post(
           `/auth/register?quick=true&g-recaptcha-response=${recaptchaKey}`,
-          { user: this.profile }
+          {
+            user: this.profile
+          }
         )
         .then(response => {
           this.isLoading = false;

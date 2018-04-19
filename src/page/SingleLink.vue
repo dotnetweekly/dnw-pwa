@@ -91,7 +91,9 @@ export default {
       this.loadLink();
     },
     routeStateChange() {
-      setMetadata(this.$route.path, this.$store.state);
+      if (typeof window !== "undefined") {
+        setMetadata(this.$route.path, this.$store.state);
+      }
     }
   },
   prefetch: fetchInitialData,
@@ -126,11 +128,6 @@ export default {
 .link-title {
   padding-left: 0px;
   padding-right: 0px;
-}
-
-.link-subline {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem !important;
 }
 
 .link-subline,
