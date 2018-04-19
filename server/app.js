@@ -65,8 +65,8 @@ app.use(allowCrossDomain);
 
 if (isProd) {
   app.use(trailingSlashRedirect);
-  // app.use(secure);
-  // app.use(force(config.client.replace(/\/$/, "")));
+  app.use(secure);
+  app.use(force(config.client.replace(/\/$/, "")));
   app.use(feedQueryRedirect);
   app.use(
     "/",

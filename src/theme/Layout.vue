@@ -44,11 +44,9 @@ export default {
       }
 
       const fontelloDom = document.querySelector("[data-css='fontello']");
-        
       if (fontelloDom) {
         fontelloDom.removeAttribute("disabled");
       }
-        
     }
   }
 };

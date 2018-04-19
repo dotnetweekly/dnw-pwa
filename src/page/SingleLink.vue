@@ -8,8 +8,12 @@
     <div v-if="!linkLoading">
       <div class="columns link-title-wrapper">
         <div class="column upvote-column">
-          <dnw-upvote class="column" :linkId="link._id" :hasUpvoted.sync="link.hasUpvoted" :upvoteCount.sync="link.upvoteCount">
+          <dnw-upvote class="column"
+          :linkId="link._id"
+          :hasUpvoted.sync="link.hasUpvoted"
+          :upvoteCount.sync="link.upvoteCount">
           </dnw-upvote>
+          <a class="twitter-share-button" :href="`https://twitter.com/intent/tweet?text=${this.link.title}`">Tweet</a>
         </div>
         <div class="column">
           <h1 class="link-title">
@@ -51,6 +55,11 @@ const fetchInitialData = (store, route) => {
 };
 
 export default {
+  data() {
+    return {
+      tweetInfo: ""
+    };
+  },
   components: {
     "dnw-category-icon": dnwCategoryIcon,
     "dnw-comments": DNWComments,
@@ -61,12 +70,29 @@ export default {
     ...mapGetters("linkModule", ["link", "linkLoading"]),
     ...mapGetters("authModule", ["latestPath"]),
     routeStateChange() {
+      this.getTweet();
       return this.link;
     }
   },
   methods: {
     loadLink() {
       fetchInitialData(this.$store, this.$route);
+    },
+    getTweet() {
+      if (this.link && typeof window !== "undefined") {
+        this.loadTweet();
+      }
+
+      return "";
+    },
+    loadTweet() {
+      setTimeout(() => {
+        /* eslint-disable no-undef */
+        if (twttr && twttr.widgets) {
+          /* eslint-disable no-undef */
+          twttr.widgets.load();
+        }
+      });
     },
     goBackLink() {
       if (typeof window === "undefined") {
