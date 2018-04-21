@@ -32,6 +32,7 @@ const generateAssetHash = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       getAllAssets().then(assetFiles => {
+        console.log(assetFiles);
         self.assetFiles = assetFiles;
         const indexIndex = self.assetFiles.indexOf("/index.html");
         if (indexIndex > -1) {
@@ -128,7 +129,6 @@ const manifest = () => {
     data = data.replace("${config.appThemeColor}", config.appThemeColor);
     fs.writeFile(dirPath + "/assets/manifest.json", data, "utf8");
   });
-  console.log("Manifest Done");
 };
 
 const cleanIndex = () => {
@@ -151,6 +151,13 @@ const cleanIndex = () => {
       );
       fs.writeFile(dirPath + "/assets/index.html", data, "utf8");
       fs.unlink(dirPath + "/index.html");
+
+      _exec(
+        `cp -R ${path.resolve(
+          __dirname,
+          "../src/assets/fontello/"
+        )} ${path.resolve(__dirname, "../dist/assets/")}`
+      );
       resolve();
     });
     console.log("Index Cleaned");
@@ -175,12 +182,6 @@ const purifycss = () => {
     );
     fs.writeFile(dirPath + "/assets/index.html", indexData, "utf8");
     fs.unlink(`${dirPath}${styleAsset}`);
-    _exec(
-      `cp -R ${path.resolve(
-        __dirname,
-        "../src/assets/fontello/"
-      )} ${path.resolve(__dirname, "../dist/assets/")}`
-    );
     resolve();
   });
 };
