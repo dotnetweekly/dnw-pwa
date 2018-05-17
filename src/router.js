@@ -97,6 +97,13 @@ const Unsubscribe = process.BROWSER
       )
   : require("./page/Unsubscribe.vue").default;
 
+const PrivacyPolicy = process.BROWSER
+  ? () =>
+      System.import(
+        /* webpackChunkName:'PrivacyPolicy' */ "./page/PrivacyPolicy.vue"
+      )
+  : require("./page/PrivacyPolicy.vue").default;
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -113,6 +120,7 @@ const router = new VueRouter({
   routes: [
     { path: "/offline-redirect", component: OfflineRedirect },
     { path: "/about", component: About },
+    { path: "/privacy-policy", component: PrivacyPolicy },
     { path: "/newsletters", component: Newsletters },
     { path: "/login", components: { modal: Login } },
     { path: "/register", component: Register },

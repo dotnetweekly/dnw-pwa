@@ -4,8 +4,7 @@
     <p>
       <article class="message is-info">
         <div class="message-body">
-          dotNET Weekly is free weekly newsletter on .NET latest. Every Tuesday.<br/>
-          We do not share your email. No spam, promise!
+          dotNET Weekly is free weekly newsletter on .NET latest. Every Tuesday.
         </div>
       </article>
       <div class="column is-one-third">
