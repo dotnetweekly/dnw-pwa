@@ -26,7 +26,7 @@
 		"build": "node build/build.js",
 		"build:server": "cross-env NODE_ENV=production webpack --config ./build/webpack.server.config.js --progress --hide-modules",
 		"test": "NODE_PATH=node_modules jest --config=jest.config.json --no-cache",
-		"test:watch": "npm test -- --watch"
+		"test:watch": "npm run test -- --watch"
 	},
 	"optionalDependencies": {
 		"fsevents": "*"
