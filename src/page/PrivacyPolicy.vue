@@ -13,7 +13,7 @@
         We will collect personal identification information from Users only if they voluntarily submit such information to us. You may visit the Site anonymously.
         Users can always refuse to supply personally identification information, except that it may prevent them from engaging in certain Site related activities.
       </p>
-      <p>Every personal record has been retrieved through affirmative consent.</p>
+      <p>Personal records such as Name, Email, Username, Password have been retrieved through affirmative consent.</p>
       <p>You can view the personal data you submitted at your profile page. You can also request for us to delete your personal data any time by emailing us.</p>
       <h2>Web browser local storage</h2>
       <p>

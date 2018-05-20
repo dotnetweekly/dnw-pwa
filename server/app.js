@@ -64,6 +64,7 @@ app.use(cacheControl);
 app.use(allowCrossDomain);
 
 if (isProd) {
+  app.use(require("helmet")());
   app.use(trailingSlashRedirect);
   app.use(secure);
   app.use(force(config.client.replace(/\/$/, "")));

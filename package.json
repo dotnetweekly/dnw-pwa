@@ -42,6 +42,7 @@
 		"express-force-https": "^1.0.0",
 		"express-static-gzip": "^0.3.2",
 		"forever": "^0.15.3",
+		"helmet": "^3.12.1",
 		"html-minifier": "^3.5.12",
 		"localforage": "^1.5.3",
 		"lru-cache": "^4.1.1",
