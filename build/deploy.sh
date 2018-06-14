@@ -25,9 +25,9 @@ cp -R ./src/assets/logo.jpg ../wwwroot/dist/assets/logo.jpg
 cp -R ./src/assets/robots.txt ../wwwroot/dist/robots.txt
 cp -R ./src/assets/googlefce38ef115597145.html ../wwwroot/dist/googlefce38ef115597145.html
 
-cd ../wwwroot
+# cd ../wwwroot
 # rm -rf node_modules
 # npm install --only=production
 # npm install inherits
 # npm install forever
-npm install helmet
+# npm install helmet
