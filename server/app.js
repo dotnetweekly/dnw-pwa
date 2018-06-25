@@ -58,7 +58,7 @@ const allowCrossDomain = function(req, res, next) {
 };
 
 app.disable("x-powered-by");
-app.use(compression({ threshold: 0, filter: shouldCompress }));
+app.use(compression({ filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);

@@ -103,6 +103,7 @@ const handler = function(req, res) {
         removeAttributeQuotes: true
       });
       res.setHeader("Content-Length", Buffer.byteLength(minifiedHtml));
+      res.setHeader("Content-Encoding", "gzip");
       microCache.set(reqUrl, { type: "html", data: minifiedHtml });
       zlib.deflate(minifiedHtml, function(err, buffer) {
         if (err) throw err;

@@ -11,7 +11,9 @@ var config = {
     "/assets/styles.css",
     "/assets/js/app.js",
     "/assets/js/vendor.js",
-    "/offline-redirect"
+    "/offline-redirect",
+    "/assets/fontello/css/fontello.css",
+    "/assets/fontello/font/fontello.woff2"
   ],
   paths: {
     api: "http://localhost:3000/",
