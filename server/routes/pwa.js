@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const serialize = require("serialize-javascript");
 var zlib = require("zlib");
+var minify = require("html-minifier").minify;
 
 const app = require("../expressApp");
 const config = require("../../app.config");
@@ -98,15 +99,18 @@ const handler = function(req, res) {
           isJSONTrue
         )}</script>`
       );
-      res.setHeader("Content-Length", Buffer.byteLength(html));
-      microCache.set(reqUrl, { type: "html", data: html });
-      /*zlib.deflate(minifiedHtml, function(err, buffer) {
+      const minifiedHtml = minify(html, {
+        removeAttributeQuotes: true
+      });
+      res.setHeader("Content-Length", Buffer.byteLength(minifiedHtml));
+      microCache.set(reqUrl, { type: "html", data: minifiedHtml });
+      zlib.deflate(minifiedHtml, function(err, buffer) {
         if (err) throw err;
 
         res.header("Content-Encoding", "deflate");
         res.end(buffer);
-      });*/
-      res.end(html);
+      });
+      // res.end(html);
       // res.end();
     });
   } catch (error) {
