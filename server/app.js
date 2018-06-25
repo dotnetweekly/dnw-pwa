@@ -24,14 +24,7 @@ const trailingSlashRedirect = require("./routes/trailingSlashRedirect");
 
 const resolve = file => path.resolve(__dirname, file);
 
-const shouldCompress = function(req) {
-  return true;
-
-  /* if (req.headers["x-no-compression"]) {
-    return false;
-  }
-  return true; */
-};
+app.use(compression({ filter: true }));
 
 const strictTransportSecurity = function(req, res, next) {
   res.header(
@@ -58,7 +51,6 @@ const allowCrossDomain = function(req, res, next) {
 };
 
 app.disable("x-powered-by");
-app.use(compression({ filter: shouldCompress }));
 app.use(strictTransportSecurity);
 app.use(cacheControl);
 app.use(allowCrossDomain);
