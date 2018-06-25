@@ -27,6 +27,7 @@ cp -R ./src/assets/googlefce38ef115597145.html ../wwwroot/dist/googlefce38ef1155
 
 cd ../wwwroot
 npm install zlib
+npm install html-minifier
 # rm -rf node_modules
 # npm install --only=production
 # npm install inherits
