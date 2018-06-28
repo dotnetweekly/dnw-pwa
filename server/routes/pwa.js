@@ -75,10 +75,10 @@ const handler = function(req, res) {
       if (hit.type === "xml") {
         res.header("Content-Type", "application/xml");
       }
-      zlib.deflate(hit.data, function(err, buffer) {
+      zlib.gzip(hit.data, function(err, buffer) {
         if (err) throw err;
 
-        res.header("Content-Encoding", "deflate");
+        res.header("Content-Encoding", "gzip");
         res.end(buffer);
       });
       return;
@@ -105,10 +105,10 @@ const handler = function(req, res) {
       res.setHeader("Content-Length", Buffer.byteLength(minifiedHtml));
       res.setHeader("Content-Encoding", "gzip");
       microCache.set(reqUrl, { type: "html", data: minifiedHtml });
-      zlib.deflate(minifiedHtml, function(err, buffer) {
+      zlib.gzip(minifiedHtml, function(err, buffer) {
         if (err) throw err;
 
-        res.header("Content-Encoding", "deflate");
+        res.header("Content-Encoding", "gzip");
         res.end(buffer);
       });
       // res.end(html);

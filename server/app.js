@@ -23,8 +23,11 @@ const feedQueryRedirect = require("./routes/feed-query-redirect");
 const trailingSlashRedirect = require("./routes/trailingSlashRedirect");
 
 const resolve = file => path.resolve(__dirname, file);
+const shouldCompress = function(req) {
+  return true;
+};
 
-app.use(compression({ filter: true }));
+app.use(compression({ filter: shouldCompress }));
 
 const strictTransportSecurity = function(req, res, next) {
   res.header(
