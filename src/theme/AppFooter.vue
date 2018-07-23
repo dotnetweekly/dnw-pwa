@@ -4,6 +4,9 @@
       <div class="content">
         <div class="footer-menu has-text-left is-pulled-left">
           <router-link to="/newsletters">Newsletters</router-link>
+          <!--
+          <router-link to="/sponsorship">Sponsorship</router-link>
+          -->
           <router-link to="/about">About</router-link>
           <router-link to="/privacy-policy">Privacy Policy</router-link>
         </div>

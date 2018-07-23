@@ -227,7 +227,9 @@ export default {
       .getCategories()
       .then(response => {
         if (response) {
-          this.categoryOptions = response;
+          this.categoryOptions = response.filter(x => {
+            return x.slug != "sponsored" && x.slug != "job-listing";
+          });
           this.link.category = this.categoryOptions[0];
         }
       })

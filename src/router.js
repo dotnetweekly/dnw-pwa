@@ -23,7 +23,8 @@ import OfflineRedirect from "./theme/OfflineRedirect.vue";
 const Newsletters = process.BROWSER
   ? () =>
       System.import(
-        /* webpackChunkName:'Newsletters' */ "./page/Newsletters.vue"
+        /* webpackChunkName:'Newsletters' */
+        "./page/Newsletters.vue"
       )
   : require("./page/Newsletters.vue").default;
 
@@ -72,37 +73,50 @@ const SingleLink = process.BROWSER
 const UpdateEmail = process.BROWSER
   ? () =>
       System.import(
-        /* webpackChunkName:'UpdateEmail' */ "./page/UpdateEmail.vue"
+        /* webpackChunkName:'UpdateEmail' */
+        "./page/UpdateEmail.vue"
       )
   : require("./page/UpdateEmail.vue").default;
 
 const ForgotPassword = process.BROWSER
   ? () =>
       System.import(
-        /* webpackChunkName:'ForgotPassword' */ "./page/ForgotPassword.vue"
+        /* webpackChunkName:'ForgotPassword' */
+        "./page/ForgotPassword.vue"
       )
   : require("./page/ForgotPassword.vue").default;
 
 const ForgotPasswordActivate = process.BROWSER
   ? () =>
       System.import(
-        /* webpackChunkName:'ForgotPasswordActivate' */ "./page/ForgotPasswordActivate.vue"
+        /* webpackChunkName:'ForgotPasswordActivate' */
+        "./page/ForgotPasswordActivate.vue"
       )
   : require("./page/ForgotPasswordActivate.vue").default;
 
 const Unsubscribe = process.BROWSER
   ? () =>
       System.import(
-        /* webpackChunkName:'Unsubscribe' */ "./page/Unsubscribe.vue"
+        /* webpackChunkName:'Unsubscribe' */
+        "./page/Unsubscribe.vue"
       )
   : require("./page/Unsubscribe.vue").default;
 
 const PrivacyPolicy = process.BROWSER
   ? () =>
       System.import(
-        /* webpackChunkName:'PrivacyPolicy' */ "./page/PrivacyPolicy.vue"
+        /* webpackChunkName:'PrivacyPolicy' */
+        "./page/PrivacyPolicy.vue"
       )
   : require("./page/PrivacyPolicy.vue").default;
+
+const Sponsorship = process.BROWSER
+  ? () =>
+      System.import(
+        /* webpackChunkName:'PrivacyPolicy' */
+        "./page/Sponsorship.vue"
+      )
+  : require("./page/Sponsorship.vue").default;
 
 Vue.use(VueRouter);
 
@@ -114,37 +128,101 @@ const router = new VueRouter({
     if (savedPosition) {
       return savedPosition;
     } else {
-      return { x: 0, y: 0 };
+      return {
+        x: 0,
+        y: 0
+      };
     }
   },
   routes: [
-    { path: "/offline-redirect", component: OfflineRedirect },
-    { path: "/about", component: About },
-    { path: "/privacy-policy", component: PrivacyPolicy },
-    { path: "/newsletters", component: Newsletters },
-    { path: "/login", components: { modal: Login } },
-    { path: "/register", component: Register },
-    { path: "/forgot-password", component: ForgotPassword },
-    { path: "/forgot-password/:key?", component: ForgotPasswordActivate },
-    { path: "/activate/:key?", component: Activate },
-    { path: "/unsubscribe/:key?", component: Unsubscribe },
-    { path: "/updateEmail/:key?", component: UpdateEmail },
-    { path: "/add", component: AddLink },
-    { path: "/profile", component: Profile },
-    { path: "/users/:username", component: User },
-    { path: "/:category/:id", component: SingleLink },
+    {
+      path: "/offline-redirect",
+      component: OfflineRedirect
+    },
+    {
+      path: "/about",
+      component: About
+    },
+    {
+      path: "/privacy-policy",
+      component: PrivacyPolicy
+    },
+    {
+      path: "/newsletters",
+      component: Newsletters
+    },
+    {
+      path: "/login",
+      components: {
+        modal: Login
+      }
+    },
+    {
+      path: "/register",
+      component: Register
+    },
+    {
+      path: "/forgot-password",
+      component: ForgotPassword
+    },
+    {
+      path: "/forgot-password/:key?",
+      component: ForgotPasswordActivate
+    },
+    {
+      path: "/activate/:key?",
+      component: Activate
+    },
+    {
+      path: "/unsubscribe/:key?",
+      component: Unsubscribe
+    },
+    {
+      path: "/updateEmail/:key?",
+      component: UpdateEmail
+    },
+    {
+      path: "/add",
+      component: AddLink
+    },
+    {
+      path: "/profile",
+      component: Profile
+    },
+    {
+      path: "/sponsorship",
+      component: Sponsorship
+    },
+    {
+      path: "/users/:username",
+      component: User
+    },
+    {
+      path: "/:category/:id",
+      component: SingleLink
+    },
     {
       path: "/week/:week/year/:year",
       component: Category,
-      params: { category: "" }
+      params: {
+        category: ""
+      }
     },
-    { path: "/:category/week/:week/year/:year", component: Category },
+    {
+      path: "/:category/week/:week/year/:year",
+      component: Category
+    },
     {
       path: "/",
       component: Category,
-      params: { category: "" }
+      params: {
+        category: ""
+      }
     },
-    { path: "*", component: NotFound }
+    {
+      path: "*",
+      component: NotFound
+    }
   ]
 });
 

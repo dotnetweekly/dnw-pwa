@@ -5,6 +5,7 @@ import linksModule from "./links";
 import userModule from "./user";
 import linkModule from "./link";
 import newslettersModule from "./newsletters";
+import sponsorsModule from "./sponsors";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     linksModule,
     userModule,
     linkModule,
-    newslettersModule
+    newslettersModule,
+    sponsorsModule
   }
 });
 

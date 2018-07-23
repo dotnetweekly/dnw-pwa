@@ -61,13 +61,8 @@
         <label class="label">Twitter (public)</label>
       </div>
       <div class="field-body">
-        <div class="field has-addons">
-            <p class="control is-marginless">
-              <a class="button is-static">
-                @
-              </a>
-            </p>
-            <p class="control is-expanded is-marginless">
+          <div class="field is-marginless">
+            <p class="control is-expanded has-icons-left is-marginless">
               <input
               v-on:keyup.enter="executeRecaptcha"
               :class="{'input': true, 'is-danger': hasError('twitter')}"
