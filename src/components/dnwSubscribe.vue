@@ -51,7 +51,7 @@
     </section>
     <div class="separator" v-if="links && links.length === 0"></div>
     <p class="has-text-centered subscriber-count">
-      3744 happy subscribers. Join today!
+      3844 happy subscribers. Join today!
     </p>
   </div>
 </template>
