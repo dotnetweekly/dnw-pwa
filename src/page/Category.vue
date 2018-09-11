@@ -30,6 +30,13 @@
       <div class="has-text-centered">
         <p>A free weekly newsletter on .NET latest</p>
       </div>
+      <div class="separator"></div>
+      <div class="has-text-centered">
+        <a href="//pluralsight.pxf.io/c/1222672/513838/7490">
+          <img src="//a.impactradius-go.com/display-ad/7490-513838" border="0" alt="" style="max-width:728px;width:100%"/>
+        </a>
+        <img height="0" width="0" src="//pluralsight.pxf.io/i/1222672/513838/7490" style="position:absolute;visibility:hidden;" border="0" />
+      </div>
     </div>
   </div>
 </div>
