@@ -47,7 +47,7 @@
             fontelloDom.removeAttribute("disabled");
           }
         }
-      }, 1500);
+      }, 500);
     }
   };
 </script>

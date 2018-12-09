@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div v-if="running">
-      <dnw-loading></dnw-loading>
-    </div>
+    <div v-if="running"><dnw-loading></dnw-loading></div>
     <div v-if="success" class="column has-text-centered">
       <p>
         <span class="dnwIconLarge icon is-large">
@@ -23,75 +21,83 @@
     </div>
     <div v-if="noKey">
       <p>{{ error }}</p>
-      <p v-if="hasError('recaptcha')" class="help is-danger">{{getError("recaptcha")}}</p>
-      <p>Please <router-link to="/register">register</router-link> first to activate your account.</p>
-      <p>If you already have and account you can <router-link to="/login">login</router-link> here.</p>
+      <p v-if="hasError('recaptcha')" class="help is-danger">
+        {{ getError("recaptcha") }}
+      </p>
+      <p>
+        Please <router-link to="/register">register</router-link> first to
+        activate your account.
+      </p>
+      <p>
+        If you already have and account you can
+        <router-link to="/login">login</router-link> here.
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import { mapActions } from "vuex";
-import errorHelper from "../helpers/errors";
-import dnwLoading from "../components/dnwLoading";
+  import axios from "axios";
+  import { mapActions } from "vuex";
+  import errorHelper from "../helpers/errors";
+  import dnwLoading from "../components/dnwLoading";
 
-export default {
-  components: {
-    "dnw-loading": dnwLoading
-  },
-  data() {
-    return {
-      errors: [],
-      success: false,
-      noKey: false,
-      error: "",
-      running: false,
-      recaptchaCheck: ""
-    };
-  },
-  methods: {
-    ...errorHelper,
-    ...mapActions("authModule", {
-      setAuthToken: "setAuthToken"
-    }),
-    executeRecaptcha() {
-      this.running = true;
-      if (typeof window === "undefined") {
-        return;
-      }
-      setTimeout(() => {
-        window.recaptchaComponent.execute(this.activateAction);
-      }, 1000);
+  export default {
+    components: {
+      "dnw-loading": dnwLoading
     },
-    activateAction(recaptchaKey) {
-      const verifyKey = this.$route.params.key;
-      if (!verifyKey) {
-        this.noKey = true;
+    data() {
+      return {
+        errors: [],
+        success: false,
+        noKey: false,
+        error: "",
+        running: false,
+        recaptchaCheck: ""
+      };
+    },
+    methods: {
+      ...errorHelper,
+      ...mapActions("authModule", {
+        setAuthToken: "setAuthToken"
+      }),
+      executeRecaptcha() {
+        this.running = true;
+        if (typeof window === "undefined") {
+          return;
+        }
+        setTimeout(() => {
+          window.recaptchaComponent.execute(this.activateAction);
+        }, 2500);
+      },
+      activateAction(recaptchaKey) {
+        const verifyKey = this.$route.params.key;
+        if (!verifyKey) {
+          this.noKey = true;
+        }
+        this.running = true;
+        axios
+          .post(`/auth/activate?g-recaptcha-response=${recaptchaKey}`, {
+            key: verifyKey
+          })
+          .then(response => {
+            this.running = false;
+            if (response.data.data.error) {
+              this.noKey = true;
+              this.error = response.data.data.error;
+              return;
+            }
+            this.setAuthToken(response.data.data);
+            this.success = true;
+          })
+          .catch(response => {
+            this.running = false;
+            this.errors = response.errors;
+          });
       }
-      this.running = true;
-      axios
-        .post(`/auth/activate?g-recaptcha-response=${recaptchaKey}`, {
-          key: verifyKey
-        })
-        .then(response => {
-          this.running = false;
-          if (response.data.data.error) {
-            this.noKey = true;
-            this.error = response.data.data.error;
-            return;
-          }
-          this.setAuthToken(response.data.data);
-          this.success = true;
-        })
-        .catch(response => {
-          this.running = false;
-          this.errors = response.errors;
-        });
+    },
+    created() {
+      this.executeRecaptcha();
     }
-  },
-  created() {
-    this.executeRecaptcha();
-  }
-};
+  };
 </script>
