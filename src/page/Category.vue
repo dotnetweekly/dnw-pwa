@@ -46,16 +46,17 @@
         </div>
         <div class="separator"></div>
         <div class="">
-          <h3>
-            <a href="//pluralsight.pxf.io/c/1222672/467210/7490"
-              >Courses, paths and skill assessments for just $29 a month at
-              Pluralsight!</a
-            >
-          </h3>
-          <img
+          <a href="//pluralsight.pxf.io/c/1222672/560022/7490"
+            ><img
+              src="//a.impactradius-go.com/display-ad/7490-560022"
+              border="0"
+              alt=""
+              width="320"
+              height="100"/></a
+          ><img
             height="0"
             width="0"
-            src="//pluralsight.pxf.io/i/1222672/467210/7490"
+            src="//pluralsight.pxf.io/i/1222672/560022/7490"
             style="position:absolute;visibility:hidden;"
             border="0"
           />
